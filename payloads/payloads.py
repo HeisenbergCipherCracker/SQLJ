@@ -1,95 +1,60 @@
-import re 
+import re
 import asyncio
 
-#########################################################################################
+auth_bypass_list_ls = []
+generic_union_ls = []
+generic_sql_inj_ls = []
+generic_error_ls = []
+time_based_sql_ls = []
 
-generic_sql_injection_ls = []
+async def auth_bypasses():
+    with open(r"D:\SQLjj\SQLJ\payloads\authBypass.txt", "r") as file:
+        contents = file.read()
+        strings = re.findall(r"'([^']*)'", contents)
+        auth_bypass_list_ls.extend(strings)
 
-error_based_sql_injection_ls = []
+    return auth_bypass_list_ls
 
-time_based_sql_injection_ls = []
+# Call the async function and print the result
+# print(asyncio.run(auth_bypasses()))
 
-generic_union_sql_injection_ls = []
+async def generic_union_inj():
+    with open(r"D:\SQLjj\SQLJ\payloads\Generic_union_sqlinj.txt", "r") as file:
+        contents = file.read()
+        strings = re.findall(r"'([^']*)'", contents)
+        generic_union_ls.extend(strings)
 
-auth_bypass_injection = []
+    return generic_union_ls
 
+async def generic_sql_inj():
+    with open(r"D:\SQLjj\SQLJ\payloads\generic_sql_ijc.txt", "r") as file:
+        contents = file.read()
+        strings = re.findall(r"'([^']*)'", contents)
+        generic_sql_inj_ls.extend(strings)
 
-#######################################################################################
+    return generic_sql_inj_ls
 
+async def generic_error_based():
+    with open(r"D:\SQLjj\SQLJ\payloads\generic_error_based.txt", "r") as file:
+        contents = file.read()
+        strings = re.findall(r"'([^']*)'", contents)
+        generic_error_ls.extend(strings)
 
+    return generic_error_ls
 
+async def time_based_sql():
+    with open(r"D:\SQLjj\SQLJ\payloads\time_based_sql.txt", "r") as file:
+        contents = file.read()
+        strings = re.findall(r"'([^']*)'", contents)
+        time_based_sql_ls.extend(strings)
 
-class Singleton(type):
-    """Create a singleton class for metaclass preparation """
-    _instances = {} #* Create a insinstance null
-    
-    def __call__(cls, *args, **kwargs): #* using call to when we called the class
-        #!only one instance allowed
-        if cls not in cls._instances: #* see if there is an instance of class or not 
-            instance = super().__call__(*args, **kwargs) #* if it is not the instance it use the super method to give it attributes
-            cls._instances[cls] = instance 
-        return cls._instances[cls] #* returns the value
-    
-class Payloads(metaclass=Singleton):
-    
-    @staticmethod
-    async def generic_SQL_injection_payload():
-        file_path = r"D:\SQLjj\SQLJ\payloads\generic_sql_ijc.txt"
-        # file_path = "path/to/your/file.txt"  # Replace with the path to your file
-# Open the file in read mode
-        with open(file_path, "r") as file:
-            # Read the file line by line
-            payload_lines = [line.strip() for line in file.readlines()]
+    return time_based_sql_ls
 
-        # Print each line
-        for line in payload_lines:
-            global generic_sql_injection_ls
-            generic_sql_injection_ls.append(line)
-    
-    @staticmethod   
-    async def generic_error_based_SQL_injection():
-        file_path = r"D:\SQLjj\SQLJ\payloads\generic_error_based.txt"
-        # file_path = "path/to/your/file.txt"  # Replace with the path to your file
-        with open(file_path,'r') as file:
-            payload_lines = [line.strip() for line in file.readlines()]
-            for line in payload_lines:
-                global error_based_sql_injection_ls
-                error_based_sql_injection_ls.append(line)
-                
-    @staticmethod
-    async def time_based_SQL_injecdtion():
-        file_path = r"D:\SQLjj\SQLJ\payloads\time_based_sql.txt"
-        # file_path = "path/to/your/file.txt"  # Replace with the path to your file
-        with open(file_path,'r') as file:
-            payload_lines = [line.strip() for line in file.readlines()]
-            for line in payload_lines:
-                global time_based_sql_injection_ls
-                time_based_sql_injection_ls.append(line)
-                
-    
-    @staticmethod     
-    async def generic_union_based_SQL_injection():
-        file_path = r"D:\SQLjj\SQLJ\payloads\Generic_union_sqlinj.txt"
-        
-        with open(file_path,'r') as file:
-            payload_lines = [line.strip() for line in file.readlines()]
-            for line in payload_lines:
-                global generic_sql_injection_ls
-                generic_sql_injection_ls.append(line)
-                
-    @staticmethod      
-    async def auth_bypass():
-        # file_path = r"D:\SQLjj\SQLJ\payloads\auth_bypass.txt"
-        file_path = r"D:\SQLjj\SQLJ\payloads\authBypass.txt"
-        # file_path = "path/to/your/file.txt"  # Replace with the path to your file
-        with open(file_path,'r') as file:
-            payload_lines = [line.strip() for line in file.readlines()]
-            for line in payload_lines:
-                global auth_bypass_injection
-                auth_bypass_injection.append(line)
-                
-                
-payload = Payloads()
-asyncio.run(payload.generic_error_based_SQL_injection())
-        
+async def main():
+    await auth_bypasses()
+    await generic_union_inj()
+    await generic_sql_inj()
+    await generic_error_based()
+    await time_based_sql()
 
+asyncio.run(main())
