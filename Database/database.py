@@ -47,5 +47,9 @@ async def main_prog():
     await retrieve_data()
 
     # asyncio.run(retrieve_data())
-    print(extraction)
-asyncio.run(main_prog())
+#     print(extraction)
+# asyncio.run(main_prog())
+
+
+async def data_base_for_captures():
+    pass
