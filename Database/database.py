@@ -1,8 +1,14 @@
 import sqlite3
 import sys
 sys.path.append(r"D:\SQLjj\SQLJ\payloads")
+sys.path.append(r"D:\SQLjj\SQLJ\exploit")
 from payloads import main, auth_bypass_list_ls, generic_error_ls, generic_sql_inj_ls, generic_union_ls
 import asyncio
+from exploit.authbypass_inj import capturesAUTHBYPASS
+from exploit.Error_based_injection import capturesERRBASED
+from exploit.genericSQL import generic_capture
+from exploit.Timebasedinj import time_based_injection_capture
+from exploit.Unionselect import UNIOn_capture
 
 ###############################################################################
 extraction = []
