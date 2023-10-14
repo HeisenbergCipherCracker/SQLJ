@@ -93,9 +93,7 @@ async def main():
     except Exception as e:
         print(e)
         
-if __name__ == "main":
-    while True:
-        main()
+# if __name__ =
             
 
             
@@ -103,7 +101,12 @@ if __name__ == "main":
             
             
             
-        
-            
-            
-asyncio.run(main())
+       
+if __name__ == "main": 
+    while True: 
+        asyncio.run(main())
+
+else:
+    while True:
+        asyncio.run(main())
+    
