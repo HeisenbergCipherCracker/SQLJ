@@ -39,6 +39,7 @@ logo = """
 """
 
 options = """
+Pre-release 1.0
 1.authbypassSQL
 2.ErrorbasedINJection
 3.GenericSQL
