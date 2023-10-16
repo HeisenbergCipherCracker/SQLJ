@@ -122,10 +122,18 @@ async def main():
        
 if __name__ == "main": 
     while True: 
-        asyncio.run(main())
+        try:
+            asyncio.run(main())
+        except KeyboardInterrupt:
+            continue
 
 else:
+    
     #TODO: i can remove while True maybe
     while True:
-        asyncio.run(main())
+        try:
+            asyncio.run(main())
+            
+        except KeyboardInterrupt:
+            continue
     
