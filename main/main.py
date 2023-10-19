@@ -24,6 +24,8 @@ from Timebasedinj import Time_based_sql_injection
 from Unionselect import union_based_SQL_inj
 #################################################################################
 from colorama import Fore,init
+######################################################################################################
+from Memmoeyerr import Memory_handling
 
 init()
 
@@ -136,4 +138,7 @@ else:
             
         except KeyboardInterrupt:
             continue
+        except MemoryError:
+            res = Memory_handling()
+            await res
     
