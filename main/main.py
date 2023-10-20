@@ -67,6 +67,13 @@ async def main():
         try:
             if url == "host":
                 await Get_host_name(Host=input("enter the host:"))
+                
+            elif url == "cls":
+                print(logo)
+                os.system('cls' if os.name == 'nt' else 'clear')
+            
+            elif url == "exit":
+                sys.exit()
         except:
             pass
         # if url == "cls"
@@ -125,6 +132,22 @@ async def main():
             
     except Exception as e:
         print(Fore.RED+"[ERROR] An error occurred:",e)
+    
+    except MemoryError:
+            import psutil
+            # Get the system memory information
+            memory = psutil.virtual_memory()
+
+            # Calculate the threshold for 80% memory usage
+            threshold = memory.total * 0.9
+
+            # Check if the used memory is greater than the threshold
+            Err =  memory.used <= threshold
+            while not Err:
+                memory = psutil.virtual_memory()
+                Err = memory.used <= threshold
+                print("Please Release you RAM space to continue the application")
+                await asyncio.sleep(5)
         
 # if __name__ =
             
@@ -151,19 +174,20 @@ else:
             
         except KeyboardInterrupt:
             continue
-        except MemoryError:
-            import psutil
-            # Get the system memory information
-            memory = psutil.virtual_memory()
+        # except MemoryError:
+            # p
+            # import psutil
+            # # Get the system memory information
+            # memory = psutil.virtual_memory()
 
-            # Calculate the threshold for 80% memory usage
-            threshold = memory.total * 0.9
+            # # Calculate the threshold for 80% memory usage
+            # threshold = memory.total * 0.9
 
-            # Check if the used memory is greater than the threshold
-            Err =  memory.used <= threshold
-            while not Err:
-                memory = psutil.virtual_memory()
-                Err = memory.used <= threshold
-                print("Please Release you RAM space to continue the application")
-                await asyncio.sleep(5)
+            # # Check if the used memory is greater than the threshold
+            # Err =  memory.used <= threshold
+            # while not Err:
+            #     memory = psutil.virtual_memory()
+            #     Err = memory.used <= threshold
+            #     print("Please Release you RAM space to continue the application")
+            #     await asyncio.sleep(5)
     
