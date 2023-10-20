@@ -7,3 +7,5 @@ pip install re
 pip install bs4
 pip install inspect
 pip inspect traceback
+pip install socket
+pip install datetime
