@@ -5,7 +5,10 @@ import authbypass_inj
 from authbypass_inj import auth_SQL_inj
 import sys
 import os
+from Get_host_name import Get_host_name
 
+################################################################
+host = (f"host {int}")
 
 ##########################################################################
 from authbypass_inj import auth_SQL_inj,auth_main
@@ -53,6 +56,7 @@ Pre-release 1.0
 # url = None
 
 async def main():
+    global host
     """The main function and the user side of the program."""
     try:
         # while Tr
@@ -60,6 +64,11 @@ async def main():
         print(logo)
         await asyncio.sleep(1)
         url = input(Fore.GREEN+"[INFO] enter the url of the target:") #* Asks the user of URL
+        try:
+            if url == "host":
+                await Get_host_name(Host=input("enter the host:"))
+        except:
+            pass
         # if url == "cls"
         # await auth_SQL_inj(url)
         print(options)
@@ -103,10 +112,14 @@ async def main():
             case "show options": #* show options
                 print(options)
                 
+
+                
             case "--help":
                 pass
             case _:
                 pass
+            
+            
             
                 
             
@@ -138,7 +151,7 @@ else:
             
         except KeyboardInterrupt:
             continue
-        except MemoryError:
-            res = Memory_handling()
-            await res
+        # except MemoryError:
+        #     res = Memory_handling()
+        #     await res
     
