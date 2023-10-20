@@ -79,7 +79,7 @@ async def main():
         # if url == "cls"
         # await auth_SQL_inj(url)
         print(options)
-        ch = input(Fore.BLUE+"enter the exploit attack:") #* ASK the attack type of user
+        ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") #* ASK the attack type of user
         match ch:
             case "1":
                 # url = input("enter the target url:")
