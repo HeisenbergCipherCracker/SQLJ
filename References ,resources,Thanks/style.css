@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #333333;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  p {
+    color: #666666;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  /* Dynamic shapes using CSS animations */
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .car {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    background-color: #333333;
+    animation: drive 4s linear infinite;
+  }
+  
+  .car::before {
+    content: "SQLJ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #ffffff;
+  }
+  
+  @keyframes drive {
+    0% {
+      left: -200px;
+    }
+    100% {
+      left: calc(100% + 200px);
+    }
+  }
+  
+  .shape {
+    width: 100px;
+    height: 100px;
+    background-color: #ff7f50;
+    position: relative;
+    margin: 0 auto;
+    animation: rotate 2s linear infinite;
+  }
+  
+  .shape::before,
+  .shape::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 50px solid transparent;
+    border-bottom-color: #ff7f50;
+  }
+  
+  .shape::before {
+    top: -50px;
+    left: -50px;
+    transform: rotate(45deg);
+  }
+  
+  .shape::after {
+    bottom: -50px;
+    right: -50px;
+    transform: rotate(45deg);
+  }
