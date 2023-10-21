@@ -29,6 +29,16 @@ from Unionselect import union_based_SQL_inj
 from colorama import Fore,init
 ######################################################################################################
 from Memmoeyerr import Memory_handling
+#########################################################################
+from Headers_added_in_used_UNION_SELECT_ATTACK import union_based_SQL_inj_HEADER
+###############################################################################
+from Auth_bypass_inj_with_HEADERS import auth_SQL_inj_HEADER
+################################################################################################
+from Error_based_inj_with_headers import Error_based_inj_HEADER
+################################################################
+from Generic_SQL_with_header import generic_sql_attack_HEADER
+####################################################################################
+from Time_based_Header_inj import Time_based_sql_injection_HEADER
 
 init()
 
@@ -119,7 +129,29 @@ async def main():
             case "show options": #* show options
                 print(options)
                 
-
+            case "1 --header":
+                await auth_SQL_inj_HEADER(url)
+            
+            case "2 --header":
+                await Error_based_inj_HEADER(url)
+                
+            case "3 --header":
+                await generic_sql_attack_HEADER(url)
+            
+            case "4 --header":
+                await Time_based_sql_injection_HEADER(url)
+            
+            case "5 --header":
+                await union_based_SQL_inj_HEADER(url)
+            
+            case "Full --header":
+                await asyncio.gather(
+                auth_SQL_inj_HEADER(url),
+                Error_based_inj_HEADER(url),
+                generic_sql_attack_HEADER(url),
+                Time_based_sql_injection_HEADER(url),
+                union_based_SQL_inj_HEADER(url)
+                )
                 
             case "--help":
                 pass
