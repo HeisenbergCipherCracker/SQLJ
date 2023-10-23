@@ -1,6 +1,6 @@
 import sys
 import sys
-sys.path.append('D:/SQLjj/SQLJ/exploit')
+sys.path.append('D:\SQLjj\SQLJ\lib\scripts')
 import authbypass_inj
 from authbypass_inj import auth_SQL_inj
 import sys
