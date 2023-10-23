@@ -39,6 +39,10 @@ from Error_based_inj_with_headers import Error_based_inj_HEADER
 from Generic_SQL_with_header import generic_sql_attack_HEADER
 ####################################################################################
 from Time_based_Header_inj import Time_based_sql_injection_HEADER
+##########################################################################
+from database import create_database_for_Captures
+##############################################################
+from AccessDatabase import Access_the_data_base
 
 init()
 
