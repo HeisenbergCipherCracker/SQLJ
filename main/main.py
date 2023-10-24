@@ -43,6 +43,8 @@ from Time_based_Header_inj import Time_based_sql_injection_HEADER
 from database import create_database_for_Captures
 ##############################################################
 from AccessDatabase import Access_the_data_base
+###################################################################
+from AccessDatabase import Access_the_data_base
 
 init()
 
@@ -148,6 +150,9 @@ async def main():
             case "5 --header":
                 await union_based_SQL_inj_HEADER(url)
             
+            case "dbs --access":
+                await Access_the_data_base()
+            
             case "Full --header":
                 await asyncio.gather(
                 auth_SQL_inj_HEADER(url),
@@ -156,7 +161,6 @@ async def main():
                 Time_based_sql_injection_HEADER(url),
                 union_based_SQL_inj_HEADER(url)
                 )
-                
             case "--help":
                 pass
             case _:
