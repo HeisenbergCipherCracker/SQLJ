@@ -75,7 +75,7 @@ async def auth_SQL_inj_HEADER(urls):
                             # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                             await asyncio.sleep(5) #! This prevent the program from crashing 
                             if "error" in ack.text: #* if the error word was in the test result we inform the user
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"\n|Headers:|",headers)
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"\n|Headers:|",header)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
