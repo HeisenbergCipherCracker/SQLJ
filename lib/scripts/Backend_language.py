@@ -2,10 +2,10 @@ import requests
 from colorama import Fore,init
 import asyncio
 
-async def find_backend_language():
+async def find_backend_language(Link):
     init()
 
-    url = "http://testfire.net/login.jsp"
+    url = Link
 
     response = requests.head(url)
 
