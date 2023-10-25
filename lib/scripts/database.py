@@ -44,7 +44,6 @@ async def create_table():
 async def display_table_Attacktype():
     con = sqlite3.connect("Result.db")
     cur = con.cursor()
-
     # Display the values in the table
     cur.execute("SELECT attacktype FROM Datas")
     # cur.execute("SELECT Data FROM Datas")
@@ -55,11 +54,26 @@ async def display_table_Attacktype():
 
     con.close()
 
+async def Display_info_of_the_Datas():
+    con = sqlite3.connect("Result.db")
+    cur = con.cursor()
+    # Display the values in the table
+    cur.execute("SELECT Data FROM Datas")
+    # cur.execute("SELECT Data FROM Datas")
+    rows = cur.fetchall()
+    print("Values in the table:")
+    for row in rows:
+        print("Data:",row)
+
 async def Run_the_create_table_command():
     await create_table()
     # await display_table_Attacktype()
-async def Show_the_database_info():
+async def Show_the_database_info_for_attacktype():
     await Run_the_create_table_command()
     await display_table_Attacktype()
+
+async def show_database_info_for_datas():
+    await Run_the_create_table_command()
+    await Display_info_of_the_Datas()
     
 asyncio.run(display_table_Attacktype())
