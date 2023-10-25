@@ -8,7 +8,7 @@ import inspect
 import traceback
 from bs4 import BeautifulSoup
 import database
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 import sqlite3
 
 init()
@@ -107,17 +107,34 @@ async def Error_based_inj_HEADER(urls):
             else:
                 print(f"[{datetime.now()}]",Fore.RED + "Looks like the host is down with the ip address: {socket.gethostbyname(url)}","|Attack:|",attack_type,"\n|Headers:|",headers)
                   
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data) VALUES (?)"
-        values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        # Check if the "attacktype" column already exists in the table
+        # cur.execute("PRAGMA table_info(Datas)")
+        # columns = cur.fetchall()
+        # column_names = [column[1] for column in columns]
+
+        # Insert the values into the table
+        ################################################################################################
+        """Add the needed values such as the attack type of the SQL injection and the final result to the database. """
+        sql = "INSERT INTO Datas (Data, attacktype) VALUES (?, ?)"
+        values = [
+            (str(ack.text), attack_type),
+            (str(headers), attack_type),
+            (str(ack.status_code), attack_type),
+            (str(vuln), attack_type),
+            (str(htmlVULN), attack_type),
+            (str(errword), attack_type),
+            (str(word), attack_type),
+            (str(req.status_code), attack_type),
+            (str(ack.text), attack_type)
+        ]
 
         cur.executemany(sql, values)
-
         conn.commit()
-        conn.close()      
+        conn.close()
                     
                     
     # except Exception as e:

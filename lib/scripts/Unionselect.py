@@ -5,7 +5,7 @@ import requests
 from colorama import Fore,init
 from datetime import datetime
 import socket
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 import sqlite3
 
 #################################################################
@@ -108,7 +108,7 @@ async def union_based_SQL_inj(urls):
             else:
                 print(f"[{datetime.now()}]","[ERROR]Could not connect to the website.Host seems to be down or not available at the time","|Attack:|",attack_type)
         
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 

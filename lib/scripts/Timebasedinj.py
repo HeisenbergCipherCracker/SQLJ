@@ -4,7 +4,7 @@ import re
 import requests
 from colorama import Fore,init
 from datetime import datetime
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 import sqlite3
 import time
 
@@ -106,7 +106,7 @@ async def Time_based_sql_injection(urls):
                 
         # time_based_injection_capture.append(str(htmlVULN))
         # time_based_injection_capture.append(str(vuln))
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 

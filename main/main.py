@@ -6,6 +6,7 @@ from authbypass_inj import auth_SQL_inj
 import sys
 import os
 from Get_host_name import Get_host_name
+from database import *
 
 ################################################################
 host = (f"host {int}")
@@ -40,7 +41,7 @@ from Generic_SQL_with_header import generic_sql_attack_HEADER
 ####################################################################################
 from Time_based_Header_inj import Time_based_sql_injection_HEADER
 ##########################################################################
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 ##############################################################
 from AccessDatabase import Access_the_data_base
 ###################################################################
@@ -151,7 +152,10 @@ async def main():
                 await union_based_SQL_inj_HEADER(url)
             
             case "dbs --access":
-                await Access_the_data_base()
+                # await Access_the_data_base()
+                await Display_info_of_the_Datas()
+                await display_table_Attacktype()
+                
             
             case "Full --header":
                 await asyncio.gather(

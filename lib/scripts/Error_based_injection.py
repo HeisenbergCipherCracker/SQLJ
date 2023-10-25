@@ -8,7 +8,7 @@ import inspect
 import traceback
 from bs4 import BeautifulSoup
 import sqlite3
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 
 init()
 
@@ -102,7 +102,7 @@ async def Error_based_inj(urls):
             else:
                 print(f"[{datetime.now()}]",Fore.RED + "Looks like the host is down with the ip address: {socket.gethostbyname(url)}","|Attack:|",attack_type)
         
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 

@@ -5,7 +5,7 @@ import requests
 from colorama import Fore,init
 from datetime import datetime
 # import sock
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 import sqlite3
 
 
@@ -101,7 +101,7 @@ async def auth_SQL_inj(urls):
                 
         # capturesAUTHBYPASS.append(str(htmlVULN))
         # capturesAUTHBYPASS.append(str(vuln))
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 

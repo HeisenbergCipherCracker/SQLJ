@@ -11,7 +11,7 @@ import socket
 import time
 from datetime import datetime
 import sqlite3
-from database import create_database_for_Captures
+# from database import create_database_for_Captures
 
 init()
 
@@ -113,7 +113,7 @@ async def generic_sql_attack_HEADER(urls):
                         
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
                         print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|",attack_type,"\n|Headers:|",headers)                    
-        await create_database_for_Captures()
+        # await create_database_for_Captures()
         conn = sqlite3.connect("ResultCap.db")
         cur = conn.cursor()
 
