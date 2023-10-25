@@ -46,11 +46,11 @@ async def display_table():
     cur = con.cursor()
 
     # Display the values in the table
-    cur.execute("SELECT * FROM Datas")
+    cur.execute("SELECT attacktype FROM Datas")
     rows = cur.fetchall()
     print("Values in the table:")
     for row in rows:
-        print(row)
+        print("Type of attack:",row)
 
     con.close()
 
