@@ -174,7 +174,7 @@ async def main():
                       """)
              
                 await Display_info_of_the_Datas()
-                await display_table_Attacktype()
+                # await display_table_Attacktype()
                 
             
             case "Full --header":

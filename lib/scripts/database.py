@@ -57,16 +57,28 @@ async def display_table_Attacktype():
 
     con.close()
 
+# async def Display_info_of_the_Datas():
+#     con = sqlite3.connect("Result.db")
+#     cur = con.cursor()
+#     # Display the values in the table
+#     cur.execute("SELECT Data FROM Datas")
+#     # cur.execute("SELECT Data FROM Datas")
+#     rows = cur.fetchall()
+#     print("Values in the table:")
+#     for row in rows:
+#         print(Fore.GREEN+"Data:",row[0])
 async def Display_info_of_the_Datas():
     con = sqlite3.connect("Result.db")
     cur = con.cursor()
     # Display the values in the table
-    cur.execute("SELECT Data FROM Datas")
-    # cur.execute("SELECT Data FROM Datas")
+    cur.execute("SELECT Data, attacktype FROM Datas")
     rows = cur.fetchall()
     print("Values in the table:")
     for row in rows:
-        print(Fore.GREEN+"Data:",row[0])
+        try:
+            print(Fore.GREEN + "Attack Type:", row[1], "Data:", row[0])
+        except IndexError:
+            print("Error: Unexpected number of columns in the database table")
 
 async def Run_the_create_table_command():
     await create_table()

@@ -102,13 +102,23 @@ async def auth_SQL_inj(urls):
         # capturesAUTHBYPASS.append(str(htmlVULN))
         # capturesAUTHBYPASS.append(str(vuln))
         # await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
+        conn = sqlite3.connect("Result.db")
         cur = conn.cursor()
+        values = [
+            (ack.text, "attacktype_value_1"),
+            (str(headers), "attacktype_value_2"),
+            (str(ack.status_code), "attacktype_value_3"),
+            (str(vuln), "attacktype_value_4"),
+            (str(htmlVULN), "attacktype_value_5"),
+            (str(errword), "attacktype_value_6"),
+            (str(word), "attacktype_value_7"),
+            (str(req.status_code), "attacktype_value_8"),
+            (str(ack.text), "attacktype_value_9")
+        ]
 
-        sql = "INSERT INTO Datas (Data) VALUES (?)"
-        values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
-
-        cur.executemany(sql, values)
+        # sql = "INSERT INTO Datas (Data) VALUES (?)"
+        # cur.executemany("INSERT INTO Datas (Data, attacktype) VALUES (?, ?)", values)
+        cur.executemany("INSERT INTO Datas (Data, attacktype) VALUES (?, ?)", values)
 
         conn.commit()
         conn.close()
