@@ -6,7 +6,7 @@ from colorama import Fore,init
 init()
 
 async def create_table():
-    con = sqlite3.connect("SQLJcap.db")
+    con = sqlite3.connect("Result.db")
     cur = con.cursor()
 
     # Create the table if it does not exist
