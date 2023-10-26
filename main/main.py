@@ -155,6 +155,24 @@ async def main():
             
             case "dbs --access":
                 # await Access_the_data_base()
+                # import os
+                if os.name == 'nt':  # For Windows
+                    os.system('cls')
+                else:  # For Mac and Linux
+                    os.system('clear')
+                    print(""" 
+                      
+                      
+                      
+                       ____  ____                              _      
+|  _ \| __ )    ___ ___  _ __  ___  ___ | | ___ 
+| | | |  _ \   / __/ _ \| '_ \/ __|/ _ \| |/ _ \
+| |_| | |_) | | (_| (_) | | | \__ \ (_) | |  __/
+|____/|____/   \___\___/|_| |_|___/\___/|_|\___|
+                      
+                      
+                      """)
+             
                 await Display_info_of_the_Datas()
                 await display_table_Attacktype()
                 
