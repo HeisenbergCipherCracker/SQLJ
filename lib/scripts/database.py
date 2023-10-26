@@ -1,6 +1,9 @@
 import sqlite3
 import random
 import asyncio
+from colorama import Fore,init
+
+init()
 
 async def create_table():
     con = sqlite3.connect("SQLJcap.db")
@@ -48,9 +51,9 @@ async def display_table_Attacktype():
     cur.execute("SELECT attacktype FROM Datas")
     # cur.execute("SELECT Data FROM Datas")
     rows = cur.fetchall()
-    print("Values in the table:")
+    print(Fore.GREEN+"Values in the table:")
     for row in rows:
-        print("Type of attack:",row)
+        print(Fore.GREEN+"Type of attack:",row)
 
     con.close()
 
@@ -63,7 +66,7 @@ async def Display_info_of_the_Datas():
     rows = cur.fetchall()
     print("Values in the table:")
     for row in rows:
-        print("Data:",row[0])
+        print(Fore.GREEN+"Data:",row[0])
 
 async def Run_the_create_table_command():
     await create_table()
