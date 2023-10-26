@@ -63,7 +63,7 @@ async def Display_info_of_the_Datas():
     rows = cur.fetchall()
     print("Values in the table:")
     for row in rows:
-        print("Data:",row)
+        print("Data:",row[0])
 
 async def Run_the_create_table_command():
     await create_table()
@@ -76,4 +76,4 @@ async def show_database_info_for_datas():
     await Run_the_create_table_command()
     await Display_info_of_the_Datas()
     
-asyncio.run(display_table_Attacktype())
+asyncio.run(Display_info_of_the_Datas())
