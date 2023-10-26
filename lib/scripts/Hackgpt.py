@@ -16,18 +16,26 @@
 
 # display_values()
 import openai
+from colorama import Fore,init
+
+init()
+
 openai.api_key = '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'
 def chat(prompt,key):
-    openai.api_key = key
-    response = openai.Completion.create(
-        engine='text-davinci-002',
-        prompt=prompt,
-        max_tokens=50,
-        n=1,
-        stop=None,
-        temperature=0.7
-    )
-    return response.choices[0].text.strip()
+    try:
+        openai.api_key = key
+        response = openai.Completion.create(
+            engine='text-davinci-002',
+            prompt=prompt,
+            max_tokens=50,
+            n=1,
+            stop=None,
+            temperature=0.7
+        )
+        return response.choices[0].text.strip()
+    
+    except openai.error:
+        print(Fore.RED+"Error in hackgpt console: Could not connect to OpenAI API")
 
 while True:
     user_input = input("User: ")
