@@ -85,7 +85,7 @@ async def Time_based_sql_injection_HEADER(urls):
                             await asyncio.sleep(3)
                         
                         if errword:
-                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"with the count of:",len(htmlVULN),"|Attack:|",attack_type,"\n|Headers:|",headers)
+                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found: in the response code of:|", ack.text,"with the count of:",len(htmlVULN),"|Attack:|",attack_type,"\n|Headers:|",headers)
                             await asyncio.sleep(3)
                             
                         
