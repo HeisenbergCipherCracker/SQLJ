@@ -2,7 +2,7 @@ import os
 import asyncio
 import re
 import requests
-from colorama import Fore,init
+from colorama import Fore,init,Style
 from datetime import datetime
 # import sock
 import sqlite3
@@ -65,7 +65,7 @@ async def auth_SQL_inj_HEADER(urls):
             req = requests.get(url=urls,verify=False) #* Sends a request and set the verify flag as false
             # assert req.status_code == 200
             if req.status_code == 200: #* If the host is up we inform the user
-                ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the ip address: {urls} Do you want to send the payload to the website? ")
+                ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN}Do you want to send the payload above to the website?** ")
 
                 if ask.lower() == "y": #* if y
                     for line in sorted_payload.split("\n"): #* Create a for loop in the program
@@ -79,11 +79,11 @@ async def auth_SQL_inj_HEADER(urls):
                         await Prepare_the_headers()
                         for headerR in headers:
                             ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) #* send a post requests with a payload
-                            print(f"[{datetime.now()}]","|Current payload: |", line ,"|with status code|:",ack.status_code,"\n|Headers:|",header) #* prints the current status code with its payload
+                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") #* prints the current status code with its payload
                             # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                             await asyncio.sleep(5) #! This prevent the program from crashing 
                             if "error" in ack.text: #* if the error word was in the test result we inform the user
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the response code:|", ack.text,"\n|Headers:|",header)
+                                print(f"[{datetime.now()}]{Fore.RESET}{Fore.LIGHTWHITE_EX}|**[INFO]Vulnerability found in the response code:|ack.text\n|Headers:|{header}**")
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
