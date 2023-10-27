@@ -191,6 +191,7 @@ async def main():
                 pass
             
             case "backend --lang":
+                """This is not always indicating the precise backend language of the big websites. """
                 # while True:
                 await find_backend_language(url)
                 i = input("")

@@ -3,6 +3,8 @@ from colorama import Fore,init
 import asyncio
 
 async def find_backend_language(Link):
+    """This is not always indicating the precise backend language of the big websites. """
+
     init()
 
     # url = Link
