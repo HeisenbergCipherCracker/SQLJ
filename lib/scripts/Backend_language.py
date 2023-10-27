@@ -15,4 +15,4 @@ async def find_backend_language(Link):
     else:
         print(Fore.RED+f"[INFO]Backend language not found for website:{Fore.RESET+url}")
         
-asyncio.run(find_backend_language())
+# asyncio.run(find_backend_language())

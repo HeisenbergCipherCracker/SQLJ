@@ -48,6 +48,8 @@ from Time_based_Header_inj import Time_based_sql_injection_HEADER
 from AccessDatabase import Access_the_data_base
 ###################################################################
 from AccessDatabase import Access_the_data_base
+#################################################################
+from Backend_language import find_backend_language
 
 init()
 
@@ -187,8 +189,12 @@ async def main():
                 )
             case "--help":
                 pass
+            
+            case "backend --lang":
+                await find_backend_language(url)
             case _:
                 pass
+            
             
             
             
