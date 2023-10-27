@@ -158,9 +158,9 @@ async def main():
             case "dbs --access":
                 # await Access_the_data_base()
                 # import os
-                if os.name == 'nt':  # For Windows
+                if os.name == 'nt':  #* For Windows
                     os.system('cls')
-                else:  # For Mac and Linux
+                else:  # *For Mac and Linux
                     os.system('clear')
                     print(""" 
                       
@@ -191,7 +191,16 @@ async def main():
                 pass
             
             case "backend --lang":
+                # while True:
                 await find_backend_language(url)
+                i = input("")
+                if i == "y":
+                    pass
+                    # break
+                elif i == "q":
+                    raise SystemExit
+                
+                
             case _:
                 pass
             
