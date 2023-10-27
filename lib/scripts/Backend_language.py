@@ -5,14 +5,16 @@ import asyncio
 async def find_backend_language(Link):
     init()
 
-    url = Link
+    # url = Link
 
-    response = requests.head(url)
+    response = requests.head(Link)
 
     if "Server" in response.headers:
         server_header = response.headers["Server"]
-        print(Fore.GREEN+"[INFO] looks like the Backend language is with", Fore.RESET+Fore.RED+server_header)
+        # print(Fore.GREEN+"[INFO] looks like the Backend language is with", Fore.RESET+Fore.RED+server_header)
+        return f"Looks like the backend language of {Link} is with {server_header}.Do you want to continue?(y/n/q)"
     else:
-        print(Fore.RED+f"[INFO]Backend language not found for website:{Fore.RESET+url}")
+        return f"Could not found any info related to the backend on the website {Link}"
         
-# asyncio.run(find_backend_language())
+print(asyncio.run(find_backend_language("https://mediawach.com/introducing-the-short-film-modir-e-madrese/")))
+# print(type(ask))
