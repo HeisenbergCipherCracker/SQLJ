@@ -88,7 +88,7 @@ async def auth_SQL_inj_HEADER(urls):
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: #* if the regex pattern founds we inform the user
-                                print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found in the response code: |", ack.text," | vulnerability count: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|","\n|Headers:|",header)
+                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:|{header}**")
                                 await asyncio.sleep(3) #* Stop the program for 5 sec
                             
                             if htmlVULN:
