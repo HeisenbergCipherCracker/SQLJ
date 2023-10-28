@@ -246,7 +246,21 @@ async def main():
                     await Back_end_auto(url)
                     a = input("")
                     if a == "y":
-                        break
+                        print(Fore.YELLOW+"**[INFO]Testing injection parameters...")
+                        await asyncio.gather(
+                        auth_SQL_inj(url),
+                        Error_based_inj(url),
+                        generic_sql_attack(url),
+                        Time_based_sql_injection(url),
+                        union_based_SQL_inj(url)
+                        )
+                        threads = [db.create_table(),db.display_the_info()]
+                        for thread in threads:
+                            print("The final result of the exploitation:\n")
+                            tr = threading.Thread(target=thread)
+                            tr.start()
+                            tr.join()
+                        
                     # elif "n":
                     #     break
                     elif a == "q":
