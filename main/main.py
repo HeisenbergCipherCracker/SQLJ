@@ -191,7 +191,7 @@ async def main():
                 # await create_table()
                 # await Display_info_of_the_Datas()
                 while True:
-                    i = input("Press any key to display the info:")
+                    i = input("**[INFO]Press any key to display the info:**")
                     db = Database()
                     threads = [db.create_table(),db.display_the_info()]
                     for thread in threads:
