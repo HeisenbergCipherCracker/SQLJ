@@ -175,5 +175,5 @@ async def Time_based_sql_injection(urls):
 # asyncio.run(Error_based_inj())
 # if __name__ != "main":
 #     pass      
-asyncio.run(Time_based_sql_injection("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(Time_based_sql_injection("https://redtiger.labs.overthewire.org/level1.php"))
 #   TODO:Consider the await delay (sleep())

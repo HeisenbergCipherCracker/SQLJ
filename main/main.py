@@ -51,6 +51,14 @@ from AccessDatabase import Access_the_data_base
 from AccessDatabase import Access_the_data_base
 #################################################################
 from Backend_language import find_backend_language
+################################################################
+from database import create_table
+#################################################
+from Hackgpt import chat,M_chat
+######################################
+from Backend_language import Back_end_auto
+
+"""Tested against: http://testphp.vulnweb.com/disclaimer.php """
 
 init()
 
@@ -177,7 +185,7 @@ async def main():
                       
                       
                       """)
-             
+                await create_table()
                 await Display_info_of_the_Datas()
                 # await display_table_Attacktype()
                 
@@ -205,8 +213,23 @@ async def main():
                     raise SystemExit
                 
                 
-            case _:
+            case "o":
                 pass
+            
+            case "esc":
+                raise SystemExit
+            
+            case "auto":
+                while True:
+                    await Back_end_auto(url)
+                    a = input("")
+                    if a == "y":
+                        break
+                    # elif "n":
+                    #     break
+                    elif a == "q":
+                        raise SystemExit
+            
             
             
             

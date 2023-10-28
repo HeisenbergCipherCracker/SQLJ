@@ -66,7 +66,9 @@ async def auth_SQL_inj_binary(urls):
                         # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                         await asyncio.sleep(5) #! This prevent the program from crashing 
                         if "error" in ack.text: #* if the error word was in the test result we inform the user
-                            print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text)
+                            error_string = re.search(r'(error)', ack.text, re.IGNORECASE)
+                            if error_string_name:
+                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", error_string_name.group().decode('utf-8'))
                             
                         vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -81,12 +83,16 @@ async def auth_SQL_inj_binary(urls):
                         word = "id" in req.text #* inform the user the other results
                         errword = "error" in req.text
                         if word:
-                            print(f"[{datetime.now()}]",Fore.RESET+Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
-                            await asyncio.sleep(3)
+                                error_string = re.search(r'\bid\b', ack.text, re.IGNORECASE)
+                                if error_string_id:
+                                    print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","|Error:|",error_string_id.group().decode('utf-8'))
+                                    await asyncio.sleep(3)
                         
                         if errword:
-                            print(f"[{datetime.now()}]",Fore.RESET+Fore.RED +"|Vulnerability found in the Error based attack Status|:","|" ,Fore.RESET+Fore.GREEN+errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
-                            await asyncio.sleep(3)
+                                error_string = re.search(r'\berror\b', ack.text, re.IGNORECASE)
+                                if error_string_err:
+                                    print(f"[{datetime.now()}]",Fore.RED +"|Vulnerability found in the Error based attack Status|:","|" ,Fore.GREEN+errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","|Error:|",error_string_err.group().decode('utf-8'))
+                                    await asyncio.sleep(3)
                             
                         
                             
@@ -95,7 +101,7 @@ async def auth_SQL_inj_binary(urls):
                         done = True
                     
                     if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                        print(f"[{datetime.now()}]",Fore.GREEN+Fore.RESET+"[INFO]Could connect to the website but did found injectable area on the website.",Fore.RESET+Fore.YELLOW+"|Attack:|",Fore.RESET+Fore.LIGHTMAGENTA_EX+"authentication bypass SQL injection")
+                        print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.",Fore.YELLOW+"|Attack:|",Fore.LIGHTMAGENTA_EX+"authentication bypass SQL injection")
                         
             else:
                 print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection")
@@ -152,7 +158,7 @@ async def auth_SQL_inj_binary(urls):
         while not Err:
             memory = psutil.virtual_memory()
             Err = memory.used <= threshold
-            print(Fore.RESET+Fore.RED+f"[{datetime.now()}] [INFO]Please Release you RAM space to continue the application"+Fore.RESET+Fore.GREEN+"|Attack:|",Fore.RESET+Fore.LIGHTRED_EX+attack_type)
+            print(Fore.RED+f"[{datetime.now()}] [INFO]Please Release you RAM space to continue the application"+Fore.RESET+Fore.GREEN+"|Attack:|",Fore.RESET+Fore.LIGHTRED_EX+attack_type)
             await asyncio.sleep(5)
 # asyncio.run(Memory_handling())
         
@@ -173,4 +179,4 @@ async def auth_SQL_inj_binary(urls):
 async def auth_main(urL):
     await auth_SQL_inj_binary(urL)
 
-# asyncio.run(auth_SQL_inj_binary("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(auth_SQL_inj_binary("http://testfire.net/login.jsp"))

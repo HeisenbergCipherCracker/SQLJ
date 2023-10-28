@@ -20,8 +20,8 @@ from colorama import Fore,init
 
 init()
 
-openai.api_key = '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'
-def chat(prompt,key):
+# openai.api_key = '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'
+async def chat(prompt,key):
     try:
         openai.api_key = key
         response = openai.Completion.create(
@@ -37,9 +37,13 @@ def chat(prompt,key):
     except openai.error:
         print(Fore.RED+"Error in hackgpt console: Could not connect to OpenAI API")
 
-while True:
-    user_input = input("User: ")
-    if user_input.lower() == 'exit':
-        break
-    response = chat(user_input)
-    print("ChatGPT: " + response)
+async def M_chat():
+    try:
+        while True:
+            user_input = input("User: ")
+            if user_input.lower() == 'exit':
+                break
+            response = chat(user_input)
+            print("ChatGPT: " + response)
+    except Exception as err:
+        print(Fore.BLACK+"Error in hackgpt console:",err)
