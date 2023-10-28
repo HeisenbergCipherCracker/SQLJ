@@ -202,6 +202,8 @@ async def main():
                     if i == "q":
                         # raise SystemExit
                         break
+                    elif i == "esc":
+                        raise SystemExit
                     else:
                         continue
                         
