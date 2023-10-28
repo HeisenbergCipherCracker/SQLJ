@@ -118,31 +118,15 @@ async def auth_SQL_inj_HEADER(urls):
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
             
         # await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
+        conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
 
-        # Check if the "attacktype" column already exists in the table
-        # cur.execute("PRAGMA table_info(Datas)")
-        # columns = cur.fetchall()
-        # column_names = [column[1] for column in columns]
-
-        # Insert the values into the table
-        ################################################################################################
-        """Add the needed values such as the attack type of the SQL injection and the final result to the database. """
-        sql = "INSERT INTO Datas (Data, attacktype) VALUES (?, ?)"
-        values = [
-            (str(ack.text), attack_type),
-            (str(headers), attack_type),
-            (str(ack.status_code), attack_type),
-            (str(vuln), attack_type),
-            (str(htmlVULN), attack_type),
-            (str(errword), attack_type),
-            (str(word), attack_type),
-            (str(req.status_code), attack_type),
-            (str(ack.text), attack_type)
-        ]
+        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
+        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
 
         cur.executemany(sql, values)
+
         conn.commit()
         conn.close()
         #############################################################################################################

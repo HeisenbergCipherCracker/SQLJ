@@ -104,14 +104,12 @@ async def Time_based_sql_injection(urls):
             else:
                 print(f"[{datetime.now()}]",Fore.RED+"[INFO] Host seems to be down.","|Attack:|",attack_type)
                 
-        # time_based_injection_capture.append(str(htmlVULN))
-        # time_based_injection_capture.append(str(vuln))
-        # await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
+        conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data) VALUES (?)"
-        values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
+        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
 
         cur.executemany(sql, values)
 

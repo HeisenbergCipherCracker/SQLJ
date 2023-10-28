@@ -109,20 +109,17 @@ async def union_based_SQL_inj(urls):
                 print(f"[{datetime.now()}]","[ERROR]Could not connect to the website.Host seems to be down or not available at the time","|Attack:|",attack_type)
         
         # await create_database_for_Captures()
-        conn = sqlite3.connect("ResultCap.db")
+        conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data) VALUES (?)"
-        values = [(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
+        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
 
         cur.executemany(sql, values)
 
         conn.commit()
         conn.close()
-                
-        # UNIOn_capture.append(str(vuln))
-        # UNIOn_capture.append(str(htmlVULN))
-                        
                     
     
     except ConnectionAbortedError as e:
