@@ -120,9 +120,9 @@ class Database:
         rows = cur.fetchall()
         print("Values in the table:")
         for row in rows:
-            print(row[0])
-            print(row[1])
-            print(row[2])
+            print(Fore.GREEN+"Data:",row[0])
+            print(Fore.GREEN+"dateandtime",row[1])
+            print(Fore.GREEN+"Attacktype",row[2])
         con.close()
 
     @staticmethod
