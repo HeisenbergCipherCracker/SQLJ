@@ -195,7 +195,7 @@ async def main():
                     db = Database()
                     threads = [db.create_table(),db.display_the_info()]
                     for thread in threads:
-                        tr = threading.Thread(thread)
+                        tr = threading.Thread(target=thread)
                         tr.start()
                         tr.join()
                     
