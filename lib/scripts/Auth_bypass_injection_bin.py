@@ -50,7 +50,7 @@ async def auth_SQL_inj_binary(urls):
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) #* Sends a request and set the verify flag as false
             if req.status_code == 200: #* If the host is up we inform the user
-                ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the ip address: {urls} Do you want to send the payload to the website? ")
+                ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with url: {urls} \n Do you want to send the payload to the website? ")
 
                 if ask.lower() == "y": #* if y
                     for line in sorted_payload.split("\n"): #* Create a for loop in the program

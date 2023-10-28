@@ -65,7 +65,7 @@ async def auth_SQL_inj_HEADER(urls):
             req = requests.get(url=urls,verify=False) #* Sends a request and set the verify flag as false
             # assert req.status_code == 200
             if req.status_code == 200: #* If the host is up we inform the user
-                ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN}Do you want to send the payload above to the website?** ")
+                ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
 
                 if ask.lower() == "y": #* if y
                     for line in sorted_payload.split("\n"): #* Create a for loop in the program

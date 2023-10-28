@@ -49,7 +49,7 @@ async def union_based_SQL_inj(urls):
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False)
             if req.status_code == 200:
-                ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls } Do you want to send the payload to the website according to the above payload? ")
+                ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls } \n Do you want to send the payload to the website according to the above payload? ")
                 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"):

@@ -265,6 +265,12 @@ async def main():
                     #     break
                     elif a == "q":
                         raise SystemExit
+                    
+                    elif a == "n":
+                        break
+                    
+                    else:
+                        continue
             
             
             
