@@ -7,6 +7,7 @@ import sys
 import os
 from Get_host_name import Get_host_name
 from colorama import Style
+import threading
 
 #################################################################33
 from database import *
@@ -57,6 +58,8 @@ from database import create_table
 from Hackgpt import chat,M_chat
 ######################################
 from Backend_language import Back_end_auto
+###################################################3
+from database import Database,Display_the_database_info_of_captures,Create_table_for_the_captures_datas
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
 
@@ -185,8 +188,25 @@ async def main():
                       
                       
                       """)
-                await create_table()
-                await Display_info_of_the_Datas()
+                # await create_table()
+                # await Display_info_of_the_Datas()
+                while True:
+                    i = input("Press any key to display the info:")
+                    db = Database()
+                    threads = [db.create_table(),db.display_the_info()]
+                    for thread in threads:
+                        tr = threading.Thread(thread)
+                        tr.start()
+                        tr.join()
+                    
+                    if i == "q":
+                        # raise SystemExit
+                        break
+                    else:
+                        continue
+                        
+                    
+                    
                 # await display_table_Attacktype()
                 
             

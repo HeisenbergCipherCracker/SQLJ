@@ -57,16 +57,16 @@ async def display_table_Attacktype():
 
     con.close()
 
-# async def Display_info_of_the_Datas():
-#     con = sqlite3.connect("Result.db")
-#     cur = con.cursor()
-#     # Display the values in the table
-#     cur.execute("SELECT Data FROM Datas")
-#     # cur.execute("SELECT Data FROM Datas")
-#     rows = cur.fetchall()
-#     print("Values in the table:")
-#     for row in rows:
-#         print(Fore.GREEN+"Data:",row[0])
+async def Display_info_of_the_Datas():
+    con = sqlite3.connect("Result.db")
+    cur = con.cursor()
+    # Display the values in the table
+    cur.execute("SELECT Data FROM Datas")
+    # cur.execute("SELECT Data FROM Datas")
+    rows = cur.fetchall()
+    print("Values in the table:")
+    for row in rows:
+        print(Fore.GREEN+"Data:",row[0])
 async def Display_info_of_the_Datas():
     con = sqlite3.connect("Result.db")
     cur = con.cursor()
@@ -92,3 +92,61 @@ async def show_database_info_for_datas():
     await Display_info_of_the_Datas()
     
 # asyncio.run(Display_info_of_the_Datas())
+
+import sqlite3
+import asyncio
+
+import sqlite3
+import asyncio
+
+class Database:
+    def __init__(self, table=None, column=None):
+        self.table = table
+        self.column = column
+
+    @staticmethod
+    def create_table():
+        con = sqlite3.connect("SQLJresult.db")
+        cur = con.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS Datas (id INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, datetime TEXT, attacktype TEXT)")
+        con.commit()
+        con.close()
+
+    @staticmethod
+    def display_the_info():
+        con = sqlite3.connect("SQLJresult.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Datas")
+        rows = cur.fetchall()
+        print("Values in the table:")
+        for row in rows:
+            print(row[0])
+            print(row[1])
+            print(row[2])
+        con.close()
+
+    @staticmethod
+    def insert_value():
+        con = sqlite3.connect("SQLJresult.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO Datas (Data, attacktype) VALUES ('test', 'test')")
+        con.commit()
+        con.close()
+
+async def Create_table_for_the_captures_datas():
+    db = Database
+    await db.create_table()
+    # await Database.create_table()
+    # await Database.insert_value()
+    # await Database.display_the_info()
+    
+async def Display_the_database_info_of_captures():
+    db = Database
+    await Create_table_for_the_captures_datas()
+    await db.display_the_info()
+    
+
+
+# asyncio.run(Database.display_the_info())
+    
+
