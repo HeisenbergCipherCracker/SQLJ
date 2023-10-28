@@ -6,6 +6,7 @@ from authbypass_inj import auth_SQL_inj
 import sys
 import os
 from Get_host_name import Get_host_name
+from colorama import Style
 
 #################################################################33
 from database import *
@@ -52,6 +53,8 @@ from AccessDatabase import Access_the_data_base
 from Backend_language import find_backend_language
 
 init()
+
+Style.BRIGHT
 
 
 logo = """
