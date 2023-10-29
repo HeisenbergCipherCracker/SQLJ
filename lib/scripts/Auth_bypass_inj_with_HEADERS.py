@@ -105,7 +105,7 @@ async def auth_SQL_inj_HEADER(urls):
                             errword = "error" in req.text
                             if word:
                                 print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logging.info(f"[INFO] vulnerability may exists in the target url(id parameters):{urls} attack type:{attack_type} in the time:{datetime.now()}")
                                 await asyncio.sleep(3)
                             
                             if errword:
@@ -200,5 +200,5 @@ async def auth_SQL_inj_HEADER(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
+# asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
 # print(capturesAUTHBYPASS)

