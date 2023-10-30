@@ -1,6 +1,7 @@
 import sys
 import sys
-sys.path.append('D:\SQLjj\SQLJ\lib\scripts')
+# sys.path.append('D:\SQLjj\SQLJ\lib\scripts') #* for windows
+sys.path.append('/mnt/d/SQLjj/SQLJ/lib/scripts') #* for linux
 import authbypass_inj
 from authbypass_inj import auth_SQL_inj
 import sys
@@ -8,6 +9,7 @@ import os
 from Get_host_name import Get_host_name
 from colorama import Style
 import threading
+import requests
 
 #################################################################33
 from database import *

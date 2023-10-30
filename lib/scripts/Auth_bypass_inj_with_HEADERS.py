@@ -10,7 +10,6 @@ import sqlite3
 from headers import Prepare_the_headers,headers,header
 import logging
 
-
 ############################################################################
 attack_type = "authentication bypass SQL injection"
 #############################################################################
