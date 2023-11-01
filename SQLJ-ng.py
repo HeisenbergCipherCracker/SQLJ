@@ -29,6 +29,7 @@ from lib.scripts.authbypass_inj import *
 from lib.scripts.Error_based_inj_with_headers import *
 from lib.scripts.Timebasedinj import *
 from Core.Socketapi.findports import Find_open_ports_of_the_target
+from Dictionaryattack.payloads import run_brute_force
 
 
 
@@ -210,6 +211,9 @@ async def main():
                     # break
                 elif i == "q":
                     raise SystemExit
+            
+            case "brute force":
+                run_brute_force(url,0,0)
                 
                 
             case "o":
@@ -262,6 +266,9 @@ async def main():
             
     except Exception as e:
         print(Fore.RED+"[ERROR] An error occurred:",e)
+    
+    except ImportError:
+        print(Fore.RED+"[!]Installation error,please ensure that the file is downloaded correctly." )
     
     except MemoryError:
             import psutil
