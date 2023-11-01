@@ -2,22 +2,16 @@ import sys
 import sys
 # sys.path.append('D:\SQLjj\SQLJ\lib\scripts') #* for windows
 # sys.path.append('/mnt/d/SQLjj/SQLJ/lib/scripts') #* for linux
-# import authbypass_inj
-# from authbypass_inj import auth_SQL_inj
 import sys
 import os
-# from Get_host_name import Get_host_name
 from colorama import Style
 import threading
 import requests
-# from database import *
 host = (f"host {int}")
-# from authbypass_inj import auth_SQL_inj,auth_main
 import asyncio
 import sys
 import os
 
-# Add the parent directory of the lib directory to the module search path
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
