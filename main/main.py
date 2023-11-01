@@ -45,24 +45,7 @@ from scripts.Timebasedinj import *
 from scripts.Portfinder import *
 
 
-# from Error_based_injection import Error_based_inj
-# from genericSQL import generic_sql_attack
-# from Timebasedinj import Time_based_sql_injection
-# from Unionselect import union_based_SQL_inj
-# from colorama import Fore,init
-# from Memmoeyerr import Memory_handling
-# from Headers_added_in_used_UNION_SELECT_ATTACK import union_based_SQL_inj_HEADER
-# from Auth_bypass_inj_with_HEADERS import auth_SQL_inj_HEADER
-# from Error_based_inj_with_headers import Error_based_inj_HEADER
-# from Generic_SQL_with_header import generic_sql_attack_HEADER
-# from Time_based_Header_inj import Time_based_sql_injection_HEADER
-# from AccessDatabase import Access_the_data_base
-# from AccessDatabase import Access_the_data_base
-# from Backend_language import find_backend_language
-# from database import create_table
-# from Hackgpt import chat,M_chat
-# from Backend_language import Back_end_auto
-# from database import Database,Display_the_database_info_of_captures,Create_table_for_the_captures_datas
+
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
 
