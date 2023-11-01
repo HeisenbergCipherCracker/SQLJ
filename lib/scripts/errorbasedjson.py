@@ -32,12 +32,12 @@ capturesAUTHBYPASS = []
 
 
 
-async def auth_SQL_inj_json(urls):
+async def err_based_json(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         global pattern,htmlpattern 
         done = False 
-        filename = "auth_bypass.txt" 
+        filename = "Error_based.txt" 
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
@@ -195,7 +195,7 @@ async def auth_SQL_inj_json(urls):
 
 
 async def auth_main(urL):
-    await auth_SQL_inj_json(urL)
+    await err_based_json(urL)
 
 # asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
-asyncio.run(auth_SQL_inj_json("https://redtiger.labs.overthewire.org/"))
+# asyncio.run(err_based_json("https://redtiger.labs.overthewire.org/"))
