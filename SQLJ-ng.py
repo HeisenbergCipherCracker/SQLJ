@@ -68,10 +68,10 @@ async def main():
     """The main function and the user side of the program."""
     try:
         # while Tr
-        global logo,options #*Declare the variables as global
+        global logo,options 
         print(logo)
         await asyncio.sleep(1)
-        url = input(Fore.GREEN+"[INFO] enter the url of the target:") #* Asks the user of URL
+        url = input(Fore.GREEN+"[INFO] enter the url of the target:") 
         try:
             if url == "host":
                 await Get_host_name(Host=input("enter the host:"))
@@ -87,28 +87,28 @@ async def main():
         # if url == "cls"
         # await auth_SQL_inj(url)
         print(options)
-        ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") #* ASK the attack type of user
+        ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") 
         match ch:
             case "1":
                 # url = input("enter the target url:")
-                await auth_SQL_inj(url) #* Declare the auth bypass injection in case 1
+                await auth_SQL_inj(url) 
                 # asyncio.run(auth_SQL_inj(url))
 
                 
             case "2":
-                await Error_based_inj(url) #* Declare the Error_based_injection in case of 2
+                await Error_based_inj(url)
                 # asyncio.run(Error_based_inj(url))
                 
                 
             case "3":
-                await generic_sql_attack(url) #* Declare the generic_sql_injection in case of 3
+                await generic_sql_attack(url) 
                 # asyncio.run(generic_sql_attack(url))
                 
             case "4":
-                await Time_based_sql_injection(url) #* Declare the time based SQL injection in case of 4
+                await Time_based_sql_injection(url) 
                 
             case "5":
-                await union_based_SQL_inj(url) #* Declare the union based injection in case of 5
+                await union_based_SQL_inj(url) 
                 
             case "Full":
                 await asyncio.gather(
@@ -119,14 +119,14 @@ async def main():
                 Time_based_sql_injection(url),
                 union_based_SQL_inj(url))
                 
-            case "cls": #* Clear the terminal and print the logo
+            case "cls": 
                 print(logo)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 
-            case "exit": #* Exit
+            case "exit": 
                 exit()
                 
-            case "show options": #* show options
+            case "show options": 
                 print(options)
                 
             case "1 --header":
