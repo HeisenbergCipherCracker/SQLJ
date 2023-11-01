@@ -3,6 +3,13 @@ from colorama import Fore, init
 
 init()
 
+"""   
+
+Reference:https://stackoverflow.com/questions/32382793/inheritance-threading-thread-class-does-not-work
+
+
+"""
+
 class SimpleThread(Thread):
     def __init__(self, target, name):
         super().__init__(target=target, name=name)
@@ -17,8 +24,8 @@ def foo():
 def foo2():
     print("45")
 
-t1 = ThreadCustom(target=foo, name="Thread 1")
-t2 = ThreadCustom(target=foo2, name="Thread 2")
+t1 = SimpleThread(target=foo,name="Thread 1")
+t2 = SimpleThread(target=foo2, name="Thread 2")
 t1.start()
 t2.start()
 t1.join()
