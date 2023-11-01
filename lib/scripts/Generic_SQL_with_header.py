@@ -12,6 +12,9 @@ import time
 from datetime import datetime
 import sqlite3
 import logging
+import sys
+parent_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(parent_dir)
 # from database import create_database_for_Captures
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 

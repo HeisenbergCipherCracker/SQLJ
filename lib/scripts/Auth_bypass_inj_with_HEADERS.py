@@ -1,4 +1,5 @@
 import os
+import sys
 import asyncio
 import re
 import requests
@@ -7,7 +8,11 @@ from datetime import datetime
 # import sock
 import sqlite3
 # from database import create_database_for_Captures
-from headers import Prepare_the_headers,headers,header
+parent_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(parent_dir)
+
+
+from headers import *
 import logging
 
 ############################################################################

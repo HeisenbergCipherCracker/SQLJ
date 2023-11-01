@@ -8,6 +8,9 @@ import socket
 # from database import create_database_for_Captures
 import sqlite3
 import logging
+import sys
+parent_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(parent_dir)
 
 #################################################################
 attack_type = "Header_union_sselect_sql_injection"

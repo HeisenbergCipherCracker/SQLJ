@@ -1,37 +1,68 @@
 import sys
 import sys
-sys.path.append('D:\SQLjj\SQLJ\lib\scripts') #* for windows
+# sys.path.append('D:\SQLjj\SQLJ\lib\scripts') #* for windows
 # sys.path.append('/mnt/d/SQLjj/SQLJ/lib/scripts') #* for linux
-import authbypass_inj
-from authbypass_inj import auth_SQL_inj
+# import authbypass_inj
+# from authbypass_inj import auth_SQL_inj
 import sys
 import os
-from Get_host_name import Get_host_name
+# from Get_host_name import Get_host_name
 from colorama import Style
 import threading
 import requests
-from database import *
+# from database import *
 host = (f"host {int}")
-from authbypass_inj import auth_SQL_inj,auth_main
+# from authbypass_inj import auth_SQL_inj,auth_main
 import asyncio
-from Error_based_injection import Error_based_inj
-from genericSQL import generic_sql_attack
-from Timebasedinj import Time_based_sql_injection
-from Unionselect import union_based_SQL_inj
-from colorama import Fore,init
-from Memmoeyerr import Memory_handling
-from Headers_added_in_used_UNION_SELECT_ATTACK import union_based_SQL_inj_HEADER
-from Auth_bypass_inj_with_HEADERS import auth_SQL_inj_HEADER
-from Error_based_inj_with_headers import Error_based_inj_HEADER
-from Generic_SQL_with_header import generic_sql_attack_HEADER
-from Time_based_Header_inj import Time_based_sql_injection_HEADER
-from AccessDatabase import Access_the_data_base
-from AccessDatabase import Access_the_data_base
-from Backend_language import find_backend_language
-from database import create_table
-from Hackgpt import chat,M_chat
-from Backend_language import Back_end_auto
-from database import Database,Display_the_database_info_of_captures,Create_table_for_the_captures_datas
+import sys
+import os
+
+# Add the parent directory of the lib directory to the module search path
+lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
+sys.path.append(lib_path)
+
+# Now you can import from lib.scripts.authbypass_inj
+from scripts.authbypass_inj import htmlpattern
+from scripts.Error_based_injection import *
+from scripts.genericSQL import *
+from scripts.Time_based_Header_inj import *
+from scripts.Auth_bypass_inj_with_HEADERS import *
+from scripts.Unionselect import *
+from scripts.Memmoryerr import *
+from scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+from scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+from scripts.Generic_SQL_with_header import *
+from scripts.Get_host_name import *
+from scripts.AccessDatabase import *
+from scripts.Backend_language import *
+from scripts.Time_based_Header_inj import *
+from scripts.database import *
+from scripts.Hackgpt import *
+from scripts.Backend_language import *
+from scripts.authbypass_inj import *
+from scripts.Error_based_inj_with_headers import *
+from scripts.Timebasedinj import *
+from scripts.Portfinder import *
+
+
+# from Error_based_injection import Error_based_inj
+# from genericSQL import generic_sql_attack
+# from Timebasedinj import Time_based_sql_injection
+# from Unionselect import union_based_SQL_inj
+# from colorama import Fore,init
+# from Memmoeyerr import Memory_handling
+# from Headers_added_in_used_UNION_SELECT_ATTACK import union_based_SQL_inj_HEADER
+# from Auth_bypass_inj_with_HEADERS import auth_SQL_inj_HEADER
+# from Error_based_inj_with_headers import Error_based_inj_HEADER
+# from Generic_SQL_with_header import generic_sql_attack_HEADER
+# from Time_based_Header_inj import Time_based_sql_injection_HEADER
+# from AccessDatabase import Access_the_data_base
+# from AccessDatabase import Access_the_data_base
+# from Backend_language import find_backend_language
+# from database import create_table
+# from Hackgpt import chat,M_chat
+# from Backend_language import Back_end_auto
+# from database import Database,Display_the_database_info_of_captures,Create_table_for_the_captures_datas
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
 
@@ -92,10 +123,12 @@ async def main():
                 # url = input("enter the target url:")
                 await auth_SQL_inj(url) #* Declare the auth bypass injection in case 1
                 # asyncio.run(auth_SQL_inj(url))
+
                 
             case "2":
                 await Error_based_inj(url) #* Declare the Error_based_injection in case of 2
                 # asyncio.run(Error_based_inj(url))
+                
                 
             case "3":
                 await generic_sql_attack(url) #* Declare the generic_sql_injection in case of 3
@@ -132,14 +165,17 @@ async def main():
             case "2 --header":
                 await Error_based_inj_HEADER(url)
                 
+                
             case "3 --header":
                 await generic_sql_attack_HEADER(url)
             
             case "4 --header":
                 await Time_based_sql_injection_HEADER(url)
+        
             
             case "5 --header":
                 await union_based_SQL_inj_HEADER(url)
+            
             
             case "dbs --access":
                 # await Access_the_data_base()
@@ -213,36 +249,41 @@ async def main():
             case "esc":
                 raise SystemExit
             
+            case "port -f":
+                await Find_open_ports_of_the_target(ipV4=input("Enter the ipV4 of the target:"))
+            
             case "auto":
-                while True:
-                    await Back_end_auto(url)
-                    a = input("")
-                    if a == "y":
-                        print(Fore.YELLOW+"**[INFO]Testing injection parameters...")
-                        await asyncio.gather(
-                        auth_SQL_inj(url),
-                        Error_based_inj(url),
-                        generic_sql_attack(url),
-                        Time_based_sql_injection(url),
-                        union_based_SQL_inj(url)
-                        )
-                        threads = [db.create_table(),db.display_the_info()]
-                        for thread in threads:
-                            print("The final result of the exploitation:\n")
-                            tr = threading.Thread(target=thread)
-                            tr.start()
-                            tr.join()
-                        
-                    # elif "n":
-                    #     break
-                    elif a == "q":
-                        raise SystemExit
+                # while True:
+                await Back_end_auto(url)
+                a = input("")
+                if a == "y":
+                    print(Fore.YELLOW+"**[INFO]Testing injection parameters...")
+                    await asyncio.gather(
+                    auth_SQL_inj(url),
+                    Error_based_inj(url),
+                    generic_sql_attack(url),
+                    Time_based_sql_injection(url),
+                    union_based_SQL_inj(url)
+                    )
+                    threads = [db.create_table(),db.display_the_info()]
+                    for thread in threads:
+                        print("The final result of the exploitation:\n")
+                        tr = threading.Thread(target=thread)
+                        tr.start()
+                        tr.join()
                     
-                    elif a == "n":
-                        break
-                    
-                    else:
-                        continue
+                # elif "n":
+                #     break
+                elif a == "q":
+                    raise SystemExit
+                
+                elif a == "n":
+                    # break
+                    sys.exit(0)
+                
+                else:
+                    # continue
+                    pass
             
             
             
