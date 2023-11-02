@@ -30,7 +30,10 @@ from lib.scripts.Error_based_inj_with_headers import *
 from lib.scripts.Timebasedinj import *
 from Core.Socketapi.findports import Find_open_ports_of_the_target
 from Dictionaryattack.payloads import run_brute_force
-
+from lib.mysqlblind.binsqlinj import bin_blind_sql_inj
+from lib.mysqlblind.makesetinj import make_set_blind_sql_inj
+from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
+from lib.mysqlblind.mysqlsybstring import substring_sql_inj
 
 
 
