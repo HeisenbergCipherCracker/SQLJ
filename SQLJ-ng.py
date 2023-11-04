@@ -30,10 +30,7 @@ from lib.scripts.Error_based_inj_with_headers import *
 from lib.scripts.Timebasedinj import *
 from Core.Socketapi.findports import Find_open_ports_of_the_target
 from Dictionaryattack.payloads import run_brute_force
-from lib.mysqlblind.binsqlinj import bin_blind_sql_inj
-from lib.mysqlblind.makesetinj import make_set_blind_sql_inj
-from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
-from lib.mysqlblind.mysqlsybstring import substring_sql_inj
+from lib.mysqlblind.conditionalblindsql import *
 
 
 
@@ -221,8 +218,13 @@ async def main():
             case "brute force":
                 run_brute_force(url,0,0)
             
+<<<<<<< HEAD
             case "substring":
                 await substring_sql_inj(url)
+=======
+            case "cond":
+                await conditional_SQL_inj(url)
+>>>>>>> ebdab78a91ede3418d02785db257ec2f41cffb9c
                 
                 
             case "o":
