@@ -60,7 +60,7 @@ headers = {
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
-async def auth_SQL_inj_HEADER(urls):
+async def My_sql_XML_attack(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """
@@ -203,7 +203,7 @@ async def auth_SQL_inj_HEADER(urls):
         
      
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
+# async def auth_main(urL):
+#     await auth_SQL_inj(urL)
 
-asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
+# asyncio.run(My_sql_XML_attack("http://testfire.net/login.jsp"))

@@ -60,7 +60,7 @@ headers = {
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
-async def auth_SQL_inj_HEADER(urls):
+async def Name_const_inj(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """
@@ -142,17 +142,17 @@ async def auth_SQL_inj_HEADER(urls):
                     logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
             
         # await create_database_for_Captures()
-        conn = sqlite3.connect("SQLJresult.db")
-        cur = conn.cursor()
+        # conn = sqlite3.connect("SQLJresult.db")
+        # cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
-        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
-        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
+        # sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
+        # # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
+        # values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
 
-        cur.executemany(sql, values)
+        # cur.executemany(sql, values)
 
-        conn.commit()
-        conn.close()
+        # conn.commit()
+        # conn.close()
         #############################################################################################################
     except Exception as e:
         print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
@@ -203,7 +203,7 @@ async def auth_SQL_inj_HEADER(urls):
         
      
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
+# async def auth_main(urL):
+#     await auth_SQL_inj(urL)
 
-asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
+# asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
