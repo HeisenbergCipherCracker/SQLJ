@@ -32,6 +32,7 @@ from Core.Socketapi.findports import Find_open_ports_of_the_target
 from Dictionaryattack.payloads import run_brute_force
 from lib.mysqlblind.conditionalblindsql import *
 from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
+from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
 
 
 
@@ -201,6 +202,9 @@ async def main():
                 )
             case "--help":
                 pass
+
+            case "ex value inj":
+                await Extract_value_injection(url)
             
             case "make set inj":
                 await make_set_blind_sql_inj(url)
