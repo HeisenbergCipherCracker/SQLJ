@@ -60,11 +60,7 @@ headers = {
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
-<<<<<<< HEAD
-async def conditional_SQL_inj(urls):
-=======
 async def conditional_blind_sql_inj(urls):
->>>>>>> fc45511c87fa6f0dd054913dd4d873b303f6913e
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """
@@ -199,8 +195,5 @@ async def conditional_blind_sql_inj(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-<<<<<<< HEAD
 # asyncio.run(conditional_SQL_inj("http://testfire.net/login.jsp"))
-=======
 # asyncio.run(conditional_blind_sql_inj("http://testfire.net/login.jsp"))
->>>>>>> fc45511c87fa6f0dd054913dd4d873b303f6913e
