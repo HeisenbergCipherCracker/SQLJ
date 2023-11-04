@@ -204,6 +204,9 @@ async def main():
             case "--help":
                 pass
             
+            case "make set inj":
+                await make_set_blind_sql_inj(url)
+            
             case "backend --lang":
                 """This is not always indicating the precise backend language of the big websites. """
                 # while True:
@@ -217,6 +220,9 @@ async def main():
             
             case "brute force":
                 run_brute_force(url,0,0)
+            
+            case "substring":
+                await substring_sql_inj(url)
                 
                 
             case "o":
