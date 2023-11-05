@@ -39,6 +39,7 @@ from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
 from lib.OracleSQLinjection.DBname import DB_name_ATTACK
 from lib.OracleSQLinjection.Databasels import Database_LISTING
 from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
+from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -215,6 +216,9 @@ async def main():
                 
             case "--help":
                 pass
+            
+            case "http":
+                await INVALID_HTTP_REQ(url)
 
             case "name const":
                 await Name_const_inj(url)
