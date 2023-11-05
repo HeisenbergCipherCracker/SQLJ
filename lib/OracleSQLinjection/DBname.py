@@ -64,12 +64,12 @@ headers = {
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
-async def ORACLE_SQL_injection(urls):
+async def DB_name_ATTACK(urls):
     try:
         """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern  
         done = False 
-        filename = "Oracleinj.txt" 
+        filename = "DBname.txt" 
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
