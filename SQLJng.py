@@ -207,20 +207,25 @@ async def main():
                 
             
             case "Full --header":
-                await asyncio.gather(
-                auth_SQL_inj_HEADER(url),
-                await asyncio.sleep(5),
-                Error_based_inj_HEADER(url),
-                await asyncio.sleep(5),
-                generic_sql_attack_HEADER(url),
-                await asyncio.sleep(5),
-                Time_based_sql_injection_HEADER(url),
-                await asyncio.sleep(5),
-                union_based_SQL_inj_HEADER(url),
-                await asyncio.sleep(5),
-                LIST_COLUMNS_ORACLE(url),
-                await asyncio.sleep(5)
-                )
+                try:
+                    await asyncio.gather(
+                    auth_SQL_inj_HEADER(url),
+                    await asyncio.sleep(5),
+                    Error_based_inj_HEADER(url),
+                    await asyncio.sleep(5),
+                    generic_sql_attack_HEADER(url),
+                    await asyncio.sleep(5),
+                    Time_based_sql_injection_HEADER(url),
+                    await asyncio.sleep(5),
+                    union_based_SQL_inj_HEADER(url),
+                    await asyncio.sleep(5),
+                    LIST_COLUMNS_ORACLE(url),
+                    await asyncio.sleep(5)
+                    )
+                
+                except (asyncio.CancelledError,asyncio.IncompleteReadError,asyncio.LimitOverrunError,asyncio.SendfileNotAvailableError):
+                    logging.error("Error occurred in the main program due to the asyncio errors while performing a full attack.")
+                    raise
                 
             case "--help":
                 pass
