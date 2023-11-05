@@ -1,0 +1,1 @@
+	SELECT utl_inaddr.get_host_name((select banner from v$version where rownum=1)) FROM dual
