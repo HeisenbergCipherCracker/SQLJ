@@ -30,9 +30,12 @@ from lib.scripts.Error_based_inj_with_headers import *
 from lib.scripts.Timebasedinj import *
 from Core.Socketapi.findports import Find_open_ports_of_the_target
 from Dictionaryattack.payloads import run_brute_force
-from lib.mysqlblind.conditionalblindsql import *
+from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
 from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
-
+from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
+# from lib.mysqlerrorbased.mysqlxml import My_sql_XML_attack
+# from lib.mysqlerrorbased.mysqlxml import My_sql_XML_attack
+from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -125,7 +128,7 @@ async def main():
                 os.system('cls' if os.name == 'nt' else 'clear')
                 
             case "exit": 
-                exit()
+                raise SystemExit
                 
             case "show options": 
                 print(options)
@@ -201,9 +204,15 @@ async def main():
                 )
             case "--help":
                 pass
+
+            case "name const":
+                await Name_const_inj(url)
             
             case "make set inj":
                 await make_set_blind_sql_inj(url)
+
+            case "XML":
+                await My_sql_XML_attack(url)
             
             case "backend --lang":
                 """This is not always indicating the precise backend language of the big websites. """
