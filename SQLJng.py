@@ -41,6 +41,7 @@ from lib.OracleSQLinjection.Databasels import Database_LISTING
 from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
 from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
 from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
+from lib.privillageessscalation.PrecudureATT import Procedure_Attack
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -70,7 +71,7 @@ Pre-release 1.0
 
 """
 
-logging.basicConfig("SQLJ.log",level=logging.ERROR)
+logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
 
 # url = None
 
@@ -241,6 +242,9 @@ async def main():
             
             case "make set inj":
                 await make_set_blind_sql_inj(url)
+            
+            case "prec attack":
+                await Procedure_Attack(url)
 
             case "XML":
                 await My_sql_XML_attack(url)
