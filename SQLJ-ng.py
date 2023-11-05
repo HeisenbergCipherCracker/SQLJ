@@ -37,6 +37,7 @@ from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
 from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
 from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
 from lib.OracleSQLinjection.DBname import DB_name_ATTACK
+from lib.OracleSQLinjection.Databasels import Database_LISTING
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -242,7 +243,8 @@ async def main():
                 await asyncio.gather(
                     ORACLE_SQL_injection(url),
                     HOSTNAME_ORACLE(url),
-                    DB_name_ATTACK(url)
+                    DB_name_ATTACK(url),
+                    Database_LISTING(url)
                     )
             
 
