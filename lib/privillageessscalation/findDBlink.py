@@ -64,7 +64,7 @@ headers = {
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
-async def DB_name_ATTACK(urls):
+async def Find_data_base_link(urls):
     try:
         """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern  
