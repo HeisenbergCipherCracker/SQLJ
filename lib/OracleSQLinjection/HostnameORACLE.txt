@@ -1,0 +1,4 @@
+SELECT host_name FROM v$instance; (Privileged)
+SELECT UTL_INADDR.get_host_name FROM dual;
+SELECT UTL_INADDR.get_host_name('10.0.0.1') FROM dual;
+SELECT UTL_INADDR.get_host_address FROM dual;
