@@ -40,6 +40,7 @@ from lib.OracleSQLinjection.DBname import DB_name_ATTACK
 from lib.OracleSQLinjection.Databasels import Database_LISTING
 from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
 from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
+from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -219,6 +220,9 @@ async def main():
             
             case "http":
                 await INVALID_HTTP_REQ(url)
+            
+            case "--dump":
+                await DUMP_USERNAME_IN_DATABASE(url)
 
             case "name const":
                 await Name_const_inj(url)

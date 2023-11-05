@@ -1,0 +1,1 @@
+SELECT username FROM user_role_privs WHERE granted_role='DBA';
