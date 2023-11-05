@@ -42,6 +42,7 @@ from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
 from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
 from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
 from lib.privillageessscalation.PrecudureATT import Procedure_Attack
+from lib.privillageessscalation.findDBlink import Find_data_base_link
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -68,6 +69,7 @@ Pre-release 1.0
 3.GenericSQL
 4.TimebasedSQL
 5.UNIONselect
+6.privilege escalation
 
 """
 
@@ -121,6 +123,21 @@ async def main():
                 
             case "5":
                 await union_based_SQL_inj(url) 
+            
+            case "6":
+                try:
+                    await asyncio.gather(
+                        Find_data_base_link(url),
+                        DUMP_USERNAME_IN_DATABASE(url)
+                    )
+                
+                except (asyncio.TimeoutError,asyncio.InvalidStateError,asyncio.IncompleteReadError):
+                    logging.error("Error occurred in the main program due to the asyncio errors while performing a full attack.")
+                    raise
+                except asyncio.CancelledError:
+                    print("Operation canceled")
+                    logging.error(f"asyncio operation canceled.")
+                    raise81386
                 
             case "Full":
                 try:
