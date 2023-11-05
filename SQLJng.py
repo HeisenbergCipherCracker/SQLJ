@@ -70,6 +70,8 @@ Pre-release 1.0
 
 """
 
+logging.basicConfig("SQLJ.log",level=logging.ERROR)
+
 # url = None
 
 async def main():
@@ -120,13 +122,18 @@ async def main():
                 await union_based_SQL_inj(url) 
                 
             case "Full":
-                await asyncio.gather(
-                auth_main(url),
-                Error_based_inj(url),
-                generic_sql_attack(url),
-                Time_based_sql_injection(url),
-                Time_based_sql_injection(url),
-                union_based_SQL_inj(url))
+                try:
+                    await asyncio.gather(
+                    auth_main(url),
+                    Error_based_inj(url),
+                    generic_sql_attack(url),
+                    Time_based_sql_injection(url),
+                    Time_based_sql_injection(url),
+                    union_based_SQL_inj(url))
+                
+                except (asyncio.TimeoutError,asyncio.CancelledError):
+                    logging.error("Error occurred in the main program due to the asyncio errors while performing a full attack.")
+                    raise
                 
             case "cls": 
                 print(logo)
