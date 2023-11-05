@@ -38,6 +38,7 @@ from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
 from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
 from lib.OracleSQLinjection.DBname import DB_name_ATTACK
 from lib.OracleSQLinjection.Databasels import Database_LISTING
+from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -199,11 +200,19 @@ async def main():
             case "Full --header":
                 await asyncio.gather(
                 auth_SQL_inj_HEADER(url),
+                await asyncio.sleep(5),
                 Error_based_inj_HEADER(url),
+                await asyncio.sleep(5),
                 generic_sql_attack_HEADER(url),
+                await asyncio.sleep(5),
                 Time_based_sql_injection_HEADER(url),
-                union_based_SQL_inj_HEADER(url)
+                await asyncio.sleep(5),
+                union_based_SQL_inj_HEADER(url),
+                await asyncio.sleep(5),
+                LIST_COLUMNS_ORACLE(url),
+                await asyncio.sleep(5)
                 )
+                
             case "--help":
                 pass
 
