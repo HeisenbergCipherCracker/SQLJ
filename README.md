@@ -1,5 +1,4 @@
 # SQLJ
-**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 WARNING: SQLjng - SQL Injection Project
 
 This project, SQLjng, is intended for educational and research purposes only. The primary goal of SQLjng is to promote awareness and understanding of SQL injection vulnerabilities and their impact on web applications. It is crucial to emphasize that the use of SQLjng for illegal or malicious activities is strictly prohibited and unethical.
@@ -16,6 +15,8 @@ We strongly urge all users and contributors to SQLjng to adhere to the following
 By downloading, using, or contributing to SQLjng, you acknowledge and agree to follow these guidelines. The project's maintainers and contributors will not be held responsible for any misuse or illegal activities associated with SQLjng.
 
 Remember that responsible and ethical behavior in the field of cybersecurity is crucial to maintaining a secure and trusted online environment. Always act with integrity and within the boundaries of the law.
+
+**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 
 Thank you for your cooperation and commitment to ethical hacking practices.
 
