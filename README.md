@@ -21,6 +21,8 @@ Thank you for your cooperation and commitment to ethical hacking practices.
 **How to install**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
+
+```markdown
 pip install colorama
 
 
