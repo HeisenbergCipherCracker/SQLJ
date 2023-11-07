@@ -18,15 +18,25 @@ Remember that responsible and ethical behavior in the field of cybersecurity is 
 
 Thank you for your cooperation and commitment to ethical hacking practices.
 
-**How to install**
+Ali mirmohammad,
+7 nov 2023
+**How to install(Ubuntu)**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
 
 ```markdown
+sudo apt update
+sudo apt install python3.10
+sudo apt install python3-pip
 pip install colorama
+pip install requests
+pip install openai
+pip install bs4
+pip install psutil
 
 
-Ali mirmohammad,
-7 nov 2023
+
+
+
 
 
