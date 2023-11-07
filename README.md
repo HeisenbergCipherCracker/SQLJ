@@ -1,4 +1,5 @@
 # SQLJ
+**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 WARNING: SQLjng - SQL Injection Project
 
 This project, SQLjng, is intended for educational and research purposes only. The primary goal of SQLjng is to promote awareness and understanding of SQL injection vulnerabilities and their impact on web applications. It is crucial to emphasize that the use of SQLjng for illegal or malicious activities is strictly prohibited and unethical.
@@ -23,7 +24,7 @@ Ali mirmohammad,
 **How to install(Ubuntu)**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
-\nnote: you have to download rockyou.txt file and place it in dictionary attack folder
+note: you have to download rockyou.txt file and place it in dictionary attack folder
 
 ```markdown
 sudo apt update
