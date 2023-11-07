@@ -31,11 +31,7 @@ To install SQLjng, use the following command to install the necessary dependenci
 sudo apt update
 sudo apt install python3.10
 sudo apt install python3-pip
-pip install colorama
-pip install requests
-pip install openai
-pip install bs4
-pip install psutil
+python3.10 -m pip install colorama requests openai bs4 psutil
 
 
 
