@@ -16,7 +16,6 @@ By downloading, using, or contributing to SQLjng, you acknowledge and agree to f
 
 Remember that responsible and ethical behavior in the field of cybersecurity is crucial to maintaining a secure and trusted online environment. Always act with integrity and within the boundaries of the law.
 
-**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 
 Thank you for your cooperation and commitment to ethical hacking practices.
 
@@ -25,7 +24,8 @@ Ali mirmohammad,
 **How to install(Ubuntu)**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
-note: you have to download rockyou.txt file and place it in dictionary attack folder
+**note: you have to download rockyou.txt file and place it in dictionary attack folder**
+
 
 ```markdown
 sudo apt update
