@@ -21,10 +21,10 @@ Thank you for your cooperation and commitment to ethical hacking practices.
 
 Ali mirmohammad,
 7 nov 2023
+**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 **How to install(Ubuntu)**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
-**note: you have to download rockyou.txt file and place it in dictionary attack folder**
 
 
 ```markdown
