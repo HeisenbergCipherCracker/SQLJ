@@ -23,6 +23,7 @@ Ali mirmohammad,
 **How to install(Ubuntu)**
 
 To install SQLjng, use the following command to install the necessary dependencies, including Colorama:
+note: you have to download rockyou.txt file and place it in dictionary attack folder
 
 ```markdown
 sudo apt update
