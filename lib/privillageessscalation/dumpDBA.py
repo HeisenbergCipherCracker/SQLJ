@@ -28,17 +28,43 @@ import logging
 attack_type = "authentication bypass SQL injection"
 #############################################################################
 
-""" 
-              Reference : https://github.com/payloadbox/sql-injection-payload-list 
-              for The payloads
-              """
+"""
+Function: mysql_database_dump
+Description: Performs a MySQL database dump on a target website.
 
-"""Reference for the header inspiration:
-https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url """
+Dependencies:
+- os
+- sys
+- asyncio
+- re
+- requests
+- colorama (Fore, init, Style)
+- datetime
+- sqlite3
+- headers (from headers import *)
+- logging
 
-"""This is When we want to attack with decoy and use spoofing """
+Note:
+- The 'mysqldump' command-line utility is used for dumping MySQL databases.
+- The headers for HTTP requests are inspired by https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url.
+- The 'headers' module is required for user-agent settings (imported from headers import *).
+- Logging is configured to store information in the 'SQLJ.log' file.
 
-"""Tested against: http://testfire.net/login.jsp """
+Usage:
+1. Import the necessary libraries and dependencies.
+2. Use the 'mysql_database_dump(urls, db_name)' function to perform a MySQL database dump on the specified URLs.
+
+Example:
+```python
+from sql_injection_exploit import mysql_database_dump
+
+urls_to_dump = ["http://example.com/admin", "http://testsite.net/dashboard"]
+database_name = "target_db"
+
+for url in urls_to_dump:
+    asyncio.run(mysql_database_dump(url, database_name))
+"""
+
 
 
 
