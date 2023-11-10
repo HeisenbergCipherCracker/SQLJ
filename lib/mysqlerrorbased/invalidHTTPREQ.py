@@ -28,17 +28,41 @@ import logging
 attack_type = "authentication bypass SQL injection"
 #############################################################################
 
-""" 
-              Reference : https://github.com/payloadbox/sql-injection-payload-list 
-              for The payloads
-              """
+"""
+Function: INVALID_HTTP_REQ
+Description: Performs invalid HTTP request injection attacks on a target website.
 
-"""Reference for the header inspiration:
-https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url """
+Dependencies:
+- os
+- sys
+- asyncio
+- re
+- requests
+- colorama (Fore, init, Style)
+- datetime
+- sqlite3
+- headers (from headers import *)
+- logging
 
-"""This is When we want to attack with decoy and use spoofing """
+Note:
+- The payloads for invalid HTTP requests are sourced from the 'errorHTTPreq.txt' file.
+- The headers for HTTP requests are inspired by https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url.
+- The 'headers' module is required for user-agent settings (imported from headers import *).
+- Logging is configured to store information in the 'SQLJ.log' file.
 
-"""Tested against: http://testfire.net/login.jsp """
+Usage:
+1. Import the necessary libraries and dependencies.
+2. Use the 'INVALID_HTTP_REQ(urls)' function to perform invalid HTTP request injection attacks on the specified URLs.
+
+Example:
+```python
+from sql_injection_exploit import INVALID_HTTP_REQ
+
+urls_to_attack = ["http://example.com/login", "http://testsite.net/login"]
+for url in urls_to_attack:
+    asyncio.run(INVALID_HTTP_REQ(url))
+"""
+
 
 
 
