@@ -56,7 +56,7 @@ Note:
 - Obtain explicit permission to test the security of the target system.
 - Be aware of legal and ethical considerations when using this script.
 
-Author: [Your Name]
+Author: Alimirmohammad
 """
 
 
