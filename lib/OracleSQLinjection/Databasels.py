@@ -28,17 +28,35 @@ import logging
 attack_type = "authentication bypass SQL injection"
 #############################################################################
 
-""" 
-              Reference : https://github.com/payloadbox/sql-injection-payload-list 
-              for The payloads
-              """
+"""
+Database List Enumeration Script
 
-"""Reference for the header inspiration:
-https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url """
+This script is designed for testing and enumerating databases using predefined payloads. It focuses on the database list attack against a specified target URL. The script utilizes payloads from the PayloadBox SQL injection payload list.
 
-"""This is When we want to attack with decoy and use spoofing """
+Reference:
+- Payloads: https://github.com/payloadbox/sql-injection-payload-list
+- Header inspiration: https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url
 
-"""Tested against: http://testfire.net/login.jsp """
+Tested against: http://testfire.net/login.jsp
+
+Dependencies:
+- colorama
+- requests
+- headers (custom module, assumed to be in the 'scripts' directory)
+- SQLite3 (for logging captures, if used)
+
+Usage:
+1. Ensure all dependencies are installed using 'pip install colorama requests'.
+2. Set the 'urls' variable with the target URL.
+3. Run the script and follow the prompts to send payloads to the target.
+
+Note:
+- Obtain explicit permission to test the security of the target system.
+- Be aware of legal and ethical considerations when using this script.
+
+Author: Alimirmohammad
+"""
+
 
 
 
