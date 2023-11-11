@@ -1,16 +1,25 @@
-import os
-import sys
-import logging
-from datetime import datetime
 
-lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'constructor'))
-sys.path.append(lib_path)
-from constructor.construct import constructor as _constructor
+try:
 
-logging.basicConfig(filename="SQLJ.log",level=logging.INFO)
+    import os
+    import sys
+    import logging
+    from datetime import datetime
+    from colorama import Fore,init,Style
+
+    lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'constructor'))
+    sys.path.append(lib_path)
+    from constructor.construct import constructor as _constructor
+
+    logging.basicConfig(filename="SQLJ.log",level=logging.INFO)
+
+except ImportError:
+    print("[!]wrong installation.please check the downloaded files.")
+    logging.error("Wrong installation")
 
 attack_type = ""
 
+init()
 
 class SingletonMeta(type):
     _instance = None
