@@ -85,3 +85,4 @@ handler = Key_Handler()
 # Create a listener and assign the handler's methods as callbacks
 with keyboard.Listener(on_press=handler.on_press, on_release=handler.on_release) as listener:
     listener.join()
+    
