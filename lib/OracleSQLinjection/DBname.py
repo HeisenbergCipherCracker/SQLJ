@@ -30,19 +30,38 @@ import logging
 attack_type = "authentication bypass SQL injection"
 #############################################################################
 
-""" 
-              Reference : https://github.com/payloadbox/sql-injection-payload-list 
-              for The payloads
-              """
+"""
+Oracle Database Name Enumeration Script
 
-"""Reference for the header inspiration:
-https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url """
+This script tests and enumerates Oracle database names using predefined payloads for the DBname attack against a specified target URL. The script utilizes payloads from the PayloadBox SQL injection payload list, specifically crafted for Oracle databases.
 
-"""This is When we want to attack with decoy and use spoofing """
+Reference:
+- Payloads: https://github.com/payloadbox/sql-injection-payload-list
+- Header inspiration: https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the-url
 
-"""Tested against: http://testfire.net/login.jsp """
+Tested against: http://testfire.net/login.jsp
 
-"""Reference:https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/OracleSQL%20Injection.md """
+Dependencies:
+- colorama
+- requests
+- headers (custom module, assumed to be in the 'scripts' directory)
+- SQLite3 (for logging captures, if used)
+
+Usage:
+1. Ensure all dependencies are installed using 'pip install colorama requests'.
+2. Set the 'urls' variable with the target URL.
+3. Run the script and follow the prompts to send payloads to the target.
+
+Note:
+- Obtain explicit permission to test the security of the target system.
+- Be aware of legal and ethical considerations when using this script.
+
+Author: Alimirmohammad
+
+"""
+
+# Import statements and global variable definitions...
+# (Include any additional details about the script and its purpose)
 
 
 

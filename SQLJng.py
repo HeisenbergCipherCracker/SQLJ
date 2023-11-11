@@ -137,7 +137,7 @@ async def main():
                 except asyncio.CancelledError:
                     print("Operation canceled")
                     logging.error(f"asyncio operation canceled.")
-                    raise81386
+                    raise
                 
             case "Full":
                 try:
