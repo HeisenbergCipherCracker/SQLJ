@@ -12,16 +12,19 @@ from headers import *
 import logging
 add_directory = os.path.abspath(os.path.dirname(__file__))
 
-# Get the absolute path of the 'priority' directory
 priority_path = os.path.join(add_directory, '..', 'priority')
 
-# Add the 'priority' directory to sys.path if not already there
 sys.path.append(priority_path)
 
-# Print sys.path for debugging
 
-# Now you can import modules from the 'priority' directory
 from Priority import PRIORITY, HARMFULL
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+logger = logging.getLogger('my_logger')
+
+console_handler = logging.StreamHandler()
+logger.addHandler(console_handler)
 
 attack_type = "authentication bypass SQL injection"
 
@@ -59,14 +62,7 @@ headers = {
 
 
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Create a logger (optional, you can skip this if you only use basicConfig)
-logger = logging.getLogger('my_logger')
-
-# Add a stream handler to log to the console
-console_handler = logging.StreamHandler()
-logger.addHandler(console_handler)
 
 
 async def auth_SQL_inj_HEADER(urls):
@@ -158,5 +154,5 @@ async def auth_SQL_inj_HEADER(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
+# print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
 # print(capturesAUTHBYPASS)
