@@ -8,10 +8,20 @@ from datetime import datetime
 import sqlite3
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(parent_dir)
-
-
 from headers import *
 import logging
+add_directory = os.path.abspath(os.path.dirname(__file__))
+
+# Get the absolute path of the 'priority' directory
+priority_path = os.path.join(add_directory, '..', 'priority')
+
+# Add the 'priority' directory to sys.path if not already there
+sys.path.append(priority_path)
+
+# Print sys.path for debugging
+
+# Now you can import modules from the 'priority' directory
+from Priority import PRIORITY, HARMFULL
 
 attack_type = "authentication bypass SQL injection"
 
@@ -26,6 +36,16 @@ https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the
 """This is When we want to attack with decoy and use spoofing """
 
 """Tested against: http://testfire.net/login.jsp """
+
+
+
+
+
+__harmfull__ = HARMFULL.MEDIUM
+__priority__ = PRIORITY.HIGH
+
+
+
 
 
 

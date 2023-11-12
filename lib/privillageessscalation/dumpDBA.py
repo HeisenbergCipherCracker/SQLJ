@@ -5,9 +5,7 @@ import re
 import requests
 from colorama import Fore,init,Style
 from datetime import datetime
-# import sock
 import sqlite3
-# from database import create_database_for_Captures
 import os
 import sys
 
