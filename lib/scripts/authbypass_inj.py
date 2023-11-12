@@ -38,7 +38,8 @@ htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
 
 
-#
+__priority__ = PRIORITY.MEDIUM
+__harmfull__ = HARMFULL.HIGH
 
 
 

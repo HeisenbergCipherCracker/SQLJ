@@ -9,8 +9,21 @@ from colorama import Fore, init
 from wordlist import rockyou
 from random import choice, randint
 import re
+import logging
+add_directory = os.path.abspath(os.path.dirname(__file__))
+
+priority_path = os.path.join(add_directory, '..', 'priority')
+
+sys.path.append(priority_path)
 
 
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+logger = logging.getLogger('my_logger')
+
+console_handler = logging.StreamHandler()
+logger.addHandler(console_handler)
 
 # The file will be automatically closed when the 'with' block is exited
   
@@ -42,13 +55,12 @@ class Brute:
             assert req.status_code == 200
 
         except ValueError:
-            print(Fore.RED + "[ERROR] Please enter the target URL")
-            logging.error('invalid url(None url)')
+            logger.error(f"target:{self.target} is not valid")
             return False
 
         except AssertionError:
-            print(Fore.RED + "Your URL is not valid")
-            logging.error(f"target:{self.target} is not valid, time:{datetime.now()}")
+            logger.error(f"target:{self.target} is not valid")
+            return False
 
         return self.target
 
@@ -65,9 +77,8 @@ class Brute:
                     
                     # Use regular expression to check if the response code is 302
                     if re.match(r'^3\d{2}$', str(req.status_code)):
-                        print(f"Found username:{payload['username']}")
-                        print(f"Found password: {payload['password']}")
-                        logging.info(f"Found password: {payload['password']}")
+                        logger.info(f"Found username: {payload['username']}")
+                        logger.info(f"Found password: {payload['password']}")
                         break
 
                     # Use string formatting to insert variable values
@@ -77,7 +88,7 @@ class Brute:
                     os.system('cls' if os.name == 'nt' else 'clear')
 
                     # Print the updated line
-                    print(line)
+                    logger.info(line)
                     row_line = " ".join(str(randint(0, 1)) for _ in range(4))
                     print(f"""
                                         {row_line}   {row_line}  {row_line}  
@@ -119,4 +130,4 @@ def run_brute_force(url,sl,cnt):
             file.write(string)        
                 
 
-# run_brute_force("http://testfire.net/login.jsp",0,cnt=0)
+run_brute_force("http://testfire.net/login.jsp",0,cnt=0)
