@@ -5,9 +5,7 @@ import re
 import requests
 from colorama import Fore,init,Style
 from datetime import datetime
-# import sock
 import sqlite3
-# from database import create_database_for_Captures
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(parent_dir)
 
@@ -15,9 +13,7 @@ sys.path.append(parent_dir)
 from headers import *
 import logging
 
-############################################################################
 attack_type = "authentication bypass SQL injection"
-#############################################################################
 
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
@@ -34,12 +30,9 @@ https://stackoverflow.com/questions/70017732/how-to-change-the-ip-address-in-the
 
 
 
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
-########################################
-#* Setting a couple of user agents
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
@@ -48,7 +41,10 @@ headers = {
 
 
 #
-logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
+logging.basicConfig(filename="SQLJ.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Create a logger (optional, you can skip this if you only use basicConfig)
+logger = logging.getLogger('my_logger')
 
 
 async def auth_SQL_inj_HEADER(urls):
@@ -67,8 +63,7 @@ async def auth_SQL_inj_HEADER(urls):
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
             print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
-            requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
-            # url = "https://redtiger.labs.overthewire.org/level1.php"
+            requests.packages.urllib3.disable_warnings()  
             req = requests.get(url=urls,verify=False) 
             # assert req.status_code == 200
             if req.status_code == 200: 
