@@ -88,37 +88,31 @@ async def auth_SQL_inj_HEADER(urls):
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | **Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3) 
                             
                             if htmlVULN:
-                                print(f"[{datetime.now()}] {Fore.RESET}{Fore.LIGHTMAGENTA_EX} |**Vulnerability found:|{Fore.RESET}{Fore.LIGHTBLUE_EX}{ack.text}|with the count of|:{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{len(htmlVULN)}\n|Headers:**|{Fore.RESET}{Fore.LIGHTYELLOW_EX}{header}")
-                                logging.info(f"[INFO]Could find a vulnerability in the website html form:{urls} time:{datetime.now()} note:the vulnerability might not be that much significant.")
+                                logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url(id parameters):{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info(f"Could find parameter id, keyword:{line}")
                                 await asyncio.sleep(3)
                             
                             if errword:
-                                print(f"[{datetime.now()}]",Fore.RED + "|**Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",header)
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info(f"Could find parameter error, keyword:{line}")
                                 await asyncio.sleep(3)
                                 
                             
                                 
                         if req.status_code == 302:                                             
-                            print(f"[{datetime.now()}]",Fore.GREEN+"**[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:**|",header)
-                            logging.info(f"Could bypass the authentication in the target:{urls} in the time:{datetime.now()}")
+                            logger.info(f"Could inject parameter,keyword:{line},target:{urls}")
                             done = True
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]**Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",headers)
-                            logging.info(f"Could not find any injectable significant area in the target:{urls} in the time:{datetime.now()}")
+                            logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
                             
                 else:
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
