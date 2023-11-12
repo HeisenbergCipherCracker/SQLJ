@@ -11,6 +11,12 @@ from random import choice, randint
 import re
 
 
+
+# The file will be automatically closed when the 'with' block is exited
+  
+
+
+
 init()
 
 # TODO: correct the headers name error
@@ -92,14 +98,25 @@ class Brute:
         
         except ConnectionRefusedError:
             print("Connection Refused")
-            
+        
+        except FileNotFoundError:
+            with open('rockyou.txt', 'w') as file:
+                string = ""    
+                file.write(string)        
+
 
 def run_brute_force(url,sl,cnt):
-
-    obj = Brute(count=cnt, target=url, sliced=sl)
-    sliced_generator = obj.word
-    sliced_list = list(sliced_generator)
-    obj.count = len(sliced_list)
-    obj.bruteforce_sqlj()
+    try:
+        obj = Brute(count=cnt, target=url, sliced=sl)
+        sliced_generator = obj.word
+        sliced_list = list(sliced_generator)
+        obj.count = len(sliced_list)
+        obj.bruteforce_sqlj()
+    
+    except FileNotFoundError:
+        with open('rockyou.txt', 'w') as file:
+            string = ""    
+            file.write(string)        
+                
 
 # run_brute_force("http://testfire.net/login.jsp",0,cnt=0)

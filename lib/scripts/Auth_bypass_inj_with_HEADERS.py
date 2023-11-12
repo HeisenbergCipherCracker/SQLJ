@@ -41,7 +41,8 @@ headers = {
 
 
 #
-logging.basicConfig(filename="SQLJ.log", level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(filename="SQLJ.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 
 # Create a logger (optional, you can skip this if you only use basicConfig)
@@ -118,77 +119,24 @@ async def auth_SQL_inj_HEADER(urls):
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
                     logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
             
-        # await create_database_for_Captures()
-        conn = sqlite3.connect("SQLJresult.db")
-        cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
-        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
-        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
-
-        cur.executemany(sql, values)
-
-        conn.commit()
-        conn.close()
-        #############################################################################################################
     except Exception as e:
-        print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
-        
+        logger.error(f"Error: {e}")        
     except KeyboardInterrupt:
         pass
+
+    except SystemExit as e:
+        raise e
         
     except ConnectionAbortedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection aborted error:",e,"|Attack:|",attack_type)
+        logger.error(f"Error: {e}")        
         
-    except ConnectionError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionRefusedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection refused error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionResetError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection reset error:",e,"|Attack:|",attack_type)
-        
-    except UnicodeEncodeError:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] UnicodeEncodeError:",e,"|Attack:|",attack_type)
-    
-    except AssertionError:
-        pass
-        
-    except MemoryError:
-        """We handle the memory and RAM error in here to catch this exception """
-        import psutil
-        # Get the system memory information
-        memory = psutil.virtual_memory()
-
-        # Calculate the threshold for 80% memory usage
-        threshold = memory.total * 0.9
-
-        # Check if the used memory is greater than the threshold
-        Err =  memory.used <= threshold
-        while not Err:
-            memory = psutil.virtual_memory()
-            Err = memory.used <= threshold
-            print(Fore.RED+"[INFO]Please Release you RAM space to continue the application"+"|Attack:|",attack_type)
-            await asyncio.sleep(5)
-# asyncio.run(Memory_handling())
         
     finally:
-        pass
-        # print(f"[{datetime.now()}]",Fore.BLUE+f"""[INFO] The final result of html response:
-        #             \n{ack.text}\n     """)
-        # capturesAUTHBYPASS.append(ack.text)
-        
-        
-# asyncio.run(auth_SQL_inj(["http://testfire.net/login.jsp"]))
-# asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/"))
-# url = "https://redtiger.labs.overthewire.org/"
-# asyncio.run(auth_SQL_inj(url))
-# if __name__ != "main":
-#     pass      
+        pass     
 
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-# asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp"))
+print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
 # print(capturesAUTHBYPASS)
