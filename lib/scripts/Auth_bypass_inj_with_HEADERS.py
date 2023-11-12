@@ -60,13 +60,14 @@ headers = {
 ###############################################
 
 
-#
-logging.basicConfig(filename="SQLJ.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Create a logger (optional, you can skip this if you only use basicConfig)
 logger = logging.getLogger('my_logger')
+
+# Add a stream handler to log to the console
+console_handler = logging.StreamHandler()
+logger.addHandler(console_handler)
 
 
 async def auth_SQL_inj_HEADER(urls):
