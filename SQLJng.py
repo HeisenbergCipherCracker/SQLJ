@@ -43,6 +43,7 @@ from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
 from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
 from lib.privillageessscalation.PrecudureATT import Procedure_Attack
 from lib.privillageessscalation.findDBlink import Find_data_base_link
+from lib.banner.Banner import main_banner
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -52,15 +53,9 @@ init()
 Style.BRIGHT
 
 
-logo = """
-   _____ ____    __        __
-  / ___// __ \  / /       / /
-  \__ \/ / / / / /   __  / / 
- ___/ / /_/ / / /___/ /_/ /  
-/____/\___\_\/_____/\____/   
-                             
+logo = """"""
 
-"""
+logo += main_banner
 
 options = """
 Pre-release 1.0
@@ -98,25 +93,19 @@ async def main():
                 sys.exit()
         except:
             pass
-        # if url == "cls"
-        # await auth_SQL_inj(url)
         print(options)
         ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") 
         match ch:
             case "1":
-                # url = input("enter the target url:")
                 await auth_SQL_inj(url) 
-                # asyncio.run(auth_SQL_inj(url))
 
                 
             case "2":
                 await Error_based_inj(url)
-                # asyncio.run(Error_based_inj(url))
                 
                 
             case "3":
                 await generic_sql_attack(url) 
-                # asyncio.run(generic_sql_attack(url))
                 
             case "4":
                 await Time_based_sql_injection(url) 
@@ -200,8 +189,6 @@ async def main():
                       
                       
                       """)
-                # await create_table()
-                # await Display_info_of_the_Datas()
                 while True:
                     i = input("**[INFO]Press any key to display the info:**")
                     db = Database()
@@ -212,7 +199,6 @@ async def main():
                         tr.join()
                     
                     if i == "q":
-                        # raise SystemExit
                         break
                     elif i == "esc":
                         raise SystemExit
@@ -221,7 +207,6 @@ async def main():
                         
                     
                     
-                # await display_table_Attacktype()
                 
             
             case "Full --header":
@@ -268,12 +253,10 @@ async def main():
             
             case "backend --lang":
                 """This is not always indicating the precise backend language of the big websites. """
-                # while True:
                 await find_backend_language(url)
                 i = input("")
                 if i == "y":
                     pass
-                    # break
                 elif i == "q":
                     raise SystemExit
             
@@ -336,7 +319,6 @@ async def main():
                         tr.start()
                         tr.join()
                     
-                # elif "n":
                 elif a == "q":
                     raise SystemExit
                 
@@ -359,31 +341,7 @@ async def main():
         print(Fore.RED+"[!]Installation error,please ensure that the file is downloaded correctly." )
     
     except MemoryError:
-            import psutil
-            # Get the system memory information
-            memory = psutil.virtual_memory()
-
-            # Calculate the threshold for 80% memory usage
-            threshold = memory.total * 0.9
-
-            # Check if the used memory is greater than the threshold
-            Err =  memory.used <= threshold
-            while not Err:
-                memory = psutil.virtual_memory()
-                Err = memory.used <= threshold
-                print("Please Release you RAM space to continue the application")
-                await asyncio.sleep(5)
-        
-# if __name__ =
-            
-
-            
-    #         def parse_arguments():
-    # parser = argparse.ArgumentParser(description='Description of your program')
-    # parser.add_argument('-u', '--url', help='Target URL')
-    # args = parser.parse_args()
-    # return args.url
-            
+        pass
             
             
        
@@ -396,27 +354,11 @@ if __name__ == "main":
 
 else:
     
-    #TODO: i can remove while True maybe
     while True:
         try:
             asyncio.run(main())
             
         except KeyboardInterrupt:
             continue
-        # except MemoryError:
-            # p
-            # import psutil
-            # # Get the system memory information
-            # memory = psutil.virtual_memory()
 
-            # # Calculate the threshold for 80% memory usage
-            # threshold = memory.total * 0.9
-
-            # # Check if the used memory is greater than the threshold
-            # Err =  memory.used <= threshold
-            # while not Err:
-            #     memory = psutil.virtual_memory()
-            #     Err = memory.used <= threshold
-            #     print("Please Release you RAM space to continue the application")
-            #     await asyncio.sleep(5)
     
