@@ -337,16 +337,13 @@ async def main():
                         tr.join()
                     
                 # elif "n":
-                #     break
                 elif a == "q":
                     raise SystemExit
                 
                 elif a == "n":
-                    # break
                     sys.exit(0)
                 
                 else:
-                    # continue
                     pass
             
             
