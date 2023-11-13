@@ -16,12 +16,14 @@ sys.path.append(priority_path)
 
 from Priority import PRIORITY, HARMFULL
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+current_directory = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 
-logger = logging.getLogger('my_logger')
+# Add the project root directory to the Python path
+sys.path.append(project_root)
 
-console_handler = logging.StreamHandler()
-logger.addHandler(console_handler)
+# Now you should be able to import logs
+from logger.logs import logger
 
 
 attack_type = "authentication bypass SQL injection"
