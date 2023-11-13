@@ -135,20 +135,9 @@ async def auth_SQL_inj_json(urls):
                     pass
                 
             else:
-                print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection")
-                logging.error(f"Host is down,attack:{attack_type},Time:{datetime.now()}")
+                logger.info(f"Host is down:{urls}")
                 
-        conn = sqlite3.connect("SQLJresult.db")
-        cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
-        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
-        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
-
-        cur.executemany(sql, values)
-
-        conn.commit()
-        conn.close()
         
                         
                     
