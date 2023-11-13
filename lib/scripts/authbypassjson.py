@@ -142,11 +142,9 @@ async def auth_SQL_inj_json(urls):
                         
                     
     except Exception as e:
-        print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
         logging.error(f"An error occurred:{e},Time: {datetime.now()}")
         
     except KeyboardInterrupt:
-        # print(f"[{datetime.now()}]","Exiting...")
         pass
         
     except SystemExit:
