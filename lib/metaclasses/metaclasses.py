@@ -1,35 +1,44 @@
 from threading import Thread
 from bs4 import BeautifulSoup
 
-class BeatifulThread(type):
-    def __new__(cls, name, bases, dct):
-        # Ensure that the class inherits from threading.Thread
-        if Thread not in bases:
-            bases = (Thread,) + bases
+class ThreadMeta(type(Thread)):
+    pass
 
-        # Ensure that the class has a 'soup' attribute
-        if 'soup' not in dct:
-            dct['soup'] = None
+class BeautifulSoupMeta(type(BeautifulSoup)):
+    pass
 
-        return super().__new__(cls, name, bases, dct)
+class MyMeta(ThreadMeta, BeautifulSoupMeta):
+    pass
 
-class MyThreadedClass(metaclass=BeatifulThread):
-    def __init__(self, url):
-        self.url = url
-        super().__init__()
+class MyThreadWithBeautifulSoup(metaclass=MyMeta):
+    def __init__(self, target, args=(), kwargs=None, soup_html=''):
+        if kwargs is None:
+            kwargs = {}
 
-    def run(self):
-        # Your threading logic here
-        print(f"Fetching and parsing data from {self.url}")
-        # Create BeautifulSoup object and store it in 'soup'
-        self.soup = BeautifulSoup("<html><body><p>Example HTML</p></body></html>", "html.parser")
-        print("Data fetched and parsed.")
+        self.thread = Thread(target=target, args=args, kwargs=kwargs)
+        self.soup = BeautifulSoup(soup_html, 'html.parser')
 
-# Example usage:
-if __name__ == "__main__":
-    instance = MyThreadedClass("https://example.com")
-    instance.start()
-    instance.join()
+    def start(self):
+        self.thread.start()
 
-    # Accessing the BeautifulSoup object
-    print("Soup object:", instance.soup)
+    def join(self):
+        self.thread.join()
+
+    def prettify(self):
+        return self.soup.prettify()
+
+# Example usage
+    # Create an instance of MyThreadWithBeautifulSoup
+my_instance = MyThreadWithBeautifulSoup(
+    target=lambda: print("Hello, I am a thread!"),
+    args=(),
+    kwargs={},
+    soup_html='<html><body><p>Hello, I am BeautifulSoup!</p></body></html>'
+)
+
+# Start the thread
+my_instance.start()
+my_instance.join()
+
+# Access attributes from Thread and BeautifulSoup
+print(my_instance.prettify())
