@@ -92,6 +92,7 @@ headers = {
 #
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
+response = ""
 
 async def Find_data_base_link(urls):
     try:
@@ -133,32 +134,94 @@ async def Find_data_base_link(urls):
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
                                 logger.info(f"Error parameter may exists in the response code.keyword:{line}")
+                                response = ""
+                                if len(ack.text) > 100:
+                                    try:
+                                        response += ack.text[0:100]
+                                        logger.info(response)
+                                        response -= ack.text[-100:]
+                                    
+                                    except IndexError:
+                                        pass
+                                    except NameError:
+                                        pass
+                                    except ValueError:
+                                        pass
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
                                 logger.info(f"Could find vulnerability id parameter(might exists) in the response code, keyword:{line}")
                                 await asyncio.sleep(3) 
+                                if len(ack.text) > 100:
+                                    try:
+                                        response += ack.text[0:100]
+                                        logger.info(response)
+                                        response -= ack.text[-100:]
+                                    
+                                    except IndexError:
+                                        pass
+                                    except NameError:
+                                        pass
+                                    except ValueError:
+                                        pass
                             
                             if htmlVULN:
                                 logger.info(f"Could find parameter error(may exists), keyword:{line}")
                                 await asyncio.sleep(3)
+                                if len(ack.text) > 100:
+                                    try:
+                                        response += ack.text[0:100]
+                                        logger.info(response)
+                                        response -= ack.text[-100:]
+                                    
+                                    except IndexError:
+                                        pass
+                                    except NameError:
+                                        pass
+                                    except ValueError:
+                                        pass
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
                                 logger.info(f"id parameter may exists in the response code, keyword:{line}")
                                 await asyncio.sleep(3)
+                                if len(ack.text) > 100:
+                                    try:
+                                        response += ack.text[0:100]
+                                        logger.info(response)
+                                        response -= ack.text[-100:]
+                                    
+                                    except IndexError:
+                                        pass
+                                    except NameError:
+                                        pass
+                                    except ValueError:
+                                        pass
                             
                             if errword:
                                 logger.info(f"error parameter may exists in the response code, keyword:{line}")
                                 await asyncio.sleep(3)
+                                if len(ack.text) > 100:
+                                    try:
+                                        response += ack.text[0:100]
+                                        logger.info(response)
+                                        response -= ack.text[-100:]
+                                    
+                                    except IndexError:
+                                        pass
+                                    except NameError:
+                                        pass
+                                    except ValueError:
+                                        pass
                                 
                             
                                 
                         if req.status_code == 302:                                             
                             logger.info("Could break into the target:{urls},keyword:{line}")
                             done = True
+                            
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info(f"Could find admin parameter, keyword:{line}")
