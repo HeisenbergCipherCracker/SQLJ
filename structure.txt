@@ -1,0 +1,237 @@
+.
+├── CheckDependencies
+│   ├── Check_python3.bat
+│   ├── Dependencies.bat
+│   ├── Install_libraries.bat
+│   ├── Linux.sh
+│   └── installPIP.bat
+├── Core
+│   ├── Socketapi
+│   │   ├── __pycache__
+│   │   │   └── findports.cpython-310.pyc
+│   │   ├── customcls.py
+│   │   ├── findports.py
+│   │   ├── payloadsetup.py
+│   │   └── socketapi.py
+│   └── extractdata.py
+├── Database
+│   ├── __pycache__
+│   │   └── database.cpython-311.pyc
+│   ├── database.py
+│   └── newdatabase.py
+├── Dictionaryattack
+│   ├── PR.py
+│   ├── __pycache__
+│   │   ├── payloads.cpython-310.pyc
+│   │   └── wordlist.cpython-310.pyc
+│   ├── content.py
+│   ├── payloads.py
+│   ├── rockyou.txt
+│   ├── sortbynonumbers.py
+│   ├── sortpayloads4nocar.py
+│   └── wordlist.py
+├── Exceptions
+│   └── exceptions.py
+├── LICENSE
+├── README.md
+├── References ,resources,Thanks
+│   ├── References .md
+│   ├── Thanks.md
+│   ├── Warning.md
+│   ├── about.html
+│   └── style.css
+├── SQLJ.exe
+├── SQLJ.log
+├── SQLJng.py
+├── __init__.py
+├── constructor
+│   └── construct.py
+├── dataExf
+│   └── DataExf.py
+├── graphics
+│   ├── Graph
+│   │   └── Graphics.c
+│   ├── __pycache__
+│   │   ├── Graphics_input_handler.py
+│   │   └── generic_sql_attack_graphical.py
+│   ├── graphic.c
+│   └── wordlists.py
+├── javascripts
+│   ├── check.js
+│   └── t.py
+├── lib
+│   ├── OracleSQLinjection
+│   │   ├── DBname.py
+│   │   ├── DBname.txt
+│   │   ├── Database_clmn_ls.py
+│   │   ├── Databasels.py
+│   │   ├── HostnameORACLE.txt
+│   │   ├── HostnameORC.py
+│   │   ├── OracleDatabase LIST.txt
+│   │   ├── OracleINJ.py
+│   │   ├── Oracleinj.txt
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── DBname.cpython-310.pyc
+│   │   │   ├── Database_clmn_ls.cpython-310.pyc
+│   │   │   ├── Databasels.cpython-310.pyc
+│   │   │   ├── HostnameORC.cpython-310.pyc
+│   │   │   ├── OracleINJ.cpython-310.pyc
+│   │   │   └── __init__.cpython-310.pyc
+│   │   └── listclmn.txt
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-310.pyc
+│   ├── banner
+│   │   ├── Banner.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       ├── Banner.cpython-310.pyc
+│   │       └── __init__.cpython-310.pyc
+│   ├── build
+│   │   └── mainexploit
+│   │       └── warn-mainexploit.txt
+│   ├── mysqlblind
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-310.pyc
+│   │   │   └── conditionalblindsql.cpython-310.pyc
+│   │   ├── binsql.txt
+│   │   ├── binsqlinj.py
+│   │   ├── conditionalblindsql.py
+│   │   ├── conditionalblindsql.txt
+│   │   ├── makeset.txt
+│   │   ├── makesetinj.py
+│   │   ├── mysqlblindsubstring.txt
+│   │   └── mysqlsybstring.py
+│   ├── mysqlerrorbased
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-310.pyc
+│   │   │   ├── invalidHTTPREQ.cpython-310.pyc
+│   │   │   ├── mysqlerrorbaseBASIC.cpython-310.pyc
+│   │   │   ├── mysqlexractvalue.cpython-310.pyc
+│   │   │   └── mysqlnameconst.cpython-310.pyc
+│   │   ├── errorHTTPreq.txt
+│   │   ├── invalidHTTPREQ.py
+│   │   ├── mysqlerrorbaseBASIC.py
+│   │   ├── mysqlerrorbased.txt
+│   │   ├── mysqlexractvalue.py
+│   │   ├── mysqlextractvalue.txt
+│   │   ├── mysqlnameconst.py
+│   │   ├── mysqlnameconst.txt
+│   │   ├── mysqlxml.py
+│   │   └── mysqlxml.txt
+│   ├── nosql
+│   │   └── nosql.py
+│   ├── priority
+│   │   ├── Priority.py
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── Priority.cpython-310.pyc
+│   ├── privillageessscalation
+│   │   ├── DBAusername.txt
+│   │   ├── Precudure.txt
+│   │   ├── PrecudureATT.py
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── PrecudureATT.cpython-310.pyc
+│   │   │   ├── __init__.cpython-310.pyc
+│   │   │   ├── dumpDBA.cpython-310.pyc
+│   │   │   └── findDBlink.cpython-310.pyc
+│   │   ├── dumpDBA.py
+│   │   ├── findDBlink.py
+│   │   └── finddatabaselink.txt
+│   ├── screen
+│   │   ├── __init__.py
+│   │   └── screenkey.py
+│   └── scripts
+│       ├── AccessDatabase.py
+│       ├── Auth_bypass_inj_with_HEADERS.py
+│       ├── Auth_bypass_injection_bin.py
+│       ├── Backend_language.py
+│       ├── Database_attack.py
+│       ├── Error_based.txt
+│       ├── Error_based_inj_with_headers.py
+│       ├── Error_based_injection.py
+│       ├── Find_data_base_info.py
+│       ├── Generic_SQL_with_header.py
+│       ├── Get_host_name.py
+│       ├── Hackgpt.py
+│       ├── Headers_added_in_used_UNION_SELECT_ATTACK.py
+│       ├── MemmoryErrorHandling.py
+│       ├── Memmoryerr.py
+│       ├── Portfinder.py
+│       ├── Time_based_Header_inj.py
+│       ├── Time_based_sql.txt
+│       ├── Timebasedinj.py
+│       ├── Unionselect.py
+│       ├── UnionselectInj.txt
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── AccessDatabase.cpython-310.pyc
+│       │   ├── Auth_bypass_inj_with_HEADERS.cpython-310.pyc
+│       │   ├── Backend_language.cpython-310.pyc
+│       │   ├── Error_based_inj_with_headers.cpython-310.pyc
+│       │   ├── Error_based_injection.cpython-310.pyc
+│       │   ├── Generic_SQL_with_header.cpython-310.pyc
+│       │   ├── Get_host_name.cpython-310.pyc
+│       │   ├── Hackgpt.cpython-310.pyc
+│       │   ├── Headers_added_in_used_UNION_SELECT_ATTACK.cpython-310.pyc
+│       │   ├── Memmoryerr.cpython-310.pyc
+│       │   ├── Time_based_Header_inj.cpython-310.pyc
+│       │   ├── Timebasedinj.cpython-310.pyc
+│       │   ├── Unionselect.cpython-310.pyc
+│       │   ├── __init__.cpython-310.pyc
+│       │   ├── authbypass_inj.cpython-310.pyc
+│       │   ├── database.cpython-310.pyc
+│       │   ├── genericSQL.cpython-310.pyc
+│       │   └── headers.cpython-310.pyc
+│       ├── auth_bypass.txt
+│       ├── authbypass_inj.py
+│       ├── authbypassjson.py
+│       ├── captures.txt
+│       ├── database.py
+│       ├── errorbasedjson.py
+│       ├── genericSQL.py
+│       ├── genericSQLjson.py
+│       ├── genericsql.txt
+│       ├── headers.py
+│       ├── key.py
+│       ├── logs.py
+│       ├── main.spec
+│       ├── mainexploit.py
+│       ├── payload4authpypass.py
+│       ├── payload4errorbased.py
+│       ├── payload4generic.py
+│       ├── payload4unionselect.py
+│       ├── result.txt
+│       ├── t.py
+│       ├── time4timebased.py
+│       └── wordlistattack.py
+├── logger
+│   └── logs.py
+├── main
+│   ├── Error_based_captures.txt
+│   ├── __init__.py
+│   ├── captures.txt
+│   ├── dist
+│   │   └── main
+│   └── main.py
+├── payloads
+│   ├── Generic_union_sqlinj.txt
+│   ├── authBypass.txt
+│   ├── generic_error_based.txt
+│   ├── generic_sql_ijc.txt
+│   ├── payloads.py
+│   └── time_based_sql.txt
+├── requirements
+│   ├── Dockerfile
+│   └── requirements.md
+├── socketapi
+│   └── __init__.py
+├── structure.txt
+└── test
+    └── test.py
+
+43 directories, 191 files
