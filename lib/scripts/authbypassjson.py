@@ -149,37 +149,8 @@ async def auth_SQL_inj_json(urls):
         # print(f"[{datetime.now()}]","Exiting...")
         pass
         
-    except ConnectionAbortedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection aborted error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionRefusedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection refused error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionResetError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection reset error:",e,"|Attack:|",attack_type)
-        
-    except UnicodeEncodeError:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] UnicodeEncodeError:",e,"|Attack:|",attack_type)
-        
-    except MemoryError:
-        import psutil
-        # Get the system memory information
-        memory = psutil.virtual_memory()
-
-        # Calculate the threshold for 80% memory usage
-        threshold = memory.total * 0.9
-
-        # Check if the used memory is greater than the threshold
-        Err =  memory.used <= threshold
-        while not Err:
-            memory = psutil.virtual_memory()
-            Err = memory.used <= threshold
-            print(Fore.RED+"[INFO]Please Release you RAM space to continue the application"+"|Attack:|",attack_type)
-            await asyncio.sleep(5)
-# asyncio.run(Memory_handling())
+    except SystemExit:
+        raise
         
     finally:
         pass
