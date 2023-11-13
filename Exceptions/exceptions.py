@@ -11,3 +11,12 @@ class SQLJNGOptionError(SQLJNGBasicException):
 
 class SQLJNGConnectionError(SQLJNGBasicException):
     pass
+
+class SQLJNGUserExit(SQLJNGBasicException):
+    pass
+
+class SQLJNGNotOptionSelected(SQLJNGBasicException):
+    pass
+
+class SQLJNGInstallationError(SQLJNGBasicException):
+    pass
