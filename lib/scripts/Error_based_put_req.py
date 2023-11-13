@@ -51,6 +51,9 @@ ack = None
 capturesERRBASED = []
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
+
+__priority__ = PRIORITY.HIGH
+__hramfull__ = HARMFULL.HIGH
   
 async def Error_based_inj_HEADER(urls):
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
@@ -80,7 +83,7 @@ async def Error_based_inj_HEADER(urls):
                             "password": line
                         }
                         
-                        ack = requests.post(url=urls, data=params,verify=False)
+                        ack = requests.put(url=urls, data=params,verify=False)
                         await asyncio.sleep(5)
                         if "error" in ack.text:
                             logger.info(f"Could find parameter Error,keyword:{line}")
