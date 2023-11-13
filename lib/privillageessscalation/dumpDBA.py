@@ -25,10 +25,8 @@ import logging
 current_directory = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 
-# Add the project root directory to the Python path
 sys.path.append(project_root)
 
-# Now you should be able to import logs
 from logger.logs import logger
 
 ############################################################################
