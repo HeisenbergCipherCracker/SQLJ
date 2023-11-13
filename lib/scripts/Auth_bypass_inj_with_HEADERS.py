@@ -23,11 +23,14 @@ from Priority import PRIORITY, HARMFULL
 current_directory = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 
-# Add the project root directory to the Python path
 sys.path.append(project_root)
 
-# Now you should be able to import logs
 from logger.logs import logger
+current_directory = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_directory, '..'))
+sys.path.append(project_root)
+
+from regelexpression.patterns import Detect
 
 attack_type = "authentication bypass SQL injection"
 
@@ -104,26 +107,31 @@ async def auth_SQL_inj_HEADER(urls):
                             logger.info(f"Testing payload:{line} including headers:{headerR}") 
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
-                                logger.info(f"Could find parameter Error,keyword:{line}")                               
+                                logger.info(f"Could find parameter Error,keyword:{line}")    
+                                Detect(ack.text)                           
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
                                 logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3) 
+                                Detect(ack.text)                            
                             
                             if htmlVULN:
                                 logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3)
+                                Detect(ack.text)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
                                 logger.info(f"Could find parameter id, keyword:{line}")
                                 await asyncio.sleep(3)
+                                Detect(ack.text)
                             
                             if errword:
                                 logger.info(f"Could find parameter error, keyword:{line}")
                                 await asyncio.sleep(3)
+                                Detect(ack.text)
                                 
                             
                                 
@@ -133,6 +141,7 @@ async def auth_SQL_inj_HEADER(urls):
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
+                            Detect(ack.text)
                             
                 else:
                     print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)

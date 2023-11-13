@@ -58,10 +58,4 @@ def Detect(text):
             logger.info(occurrence.strip())
 
 
-s = """
-    This is a sample text with some keywords like ID, Error, host, Admin. 
-    It also contains some occurrences of these keywords within sentences.
-    ID: 123, Error occurred in the system. The host is localhost. Admin rights required.
-    Another sentence with an error. ID is mentioned again.
-    """
-Detect(s)
+
