@@ -47,15 +47,17 @@ headers = {
               for The payloads"""
 
 ack = None
-
 capturesERRBASED = []
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
+
+threshold_for_error_parameter = 0
+threshold_for_id_parameter = 0
   
 async def Error_based_inj_HEADER(urls):
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
     try: 
-        global pattern,htmlpattern 
+        global pattern,htmlpattern,threshold_for_error_parameter
         done = False 
         filename = "Error_based.txt" 
         current_directory = os.path.dirname(os.path.abspath((__file__)))
@@ -85,6 +87,7 @@ async def Error_based_inj_HEADER(urls):
                         if "error" in ack.text:
                             logger.info(f"Could find parameter Error,keyword:{line}")
                             Detect(ack.text)
+                            threshold_for_error_parameter += 1
                             
                         vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE)
@@ -97,6 +100,7 @@ async def Error_based_inj_HEADER(urls):
                             logger.info(f"Could find error parameter, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            threshold_for_error_parameter += 1
                         
                         word = "id" in req.text
                         errword = "error" in req.text
@@ -109,6 +113,7 @@ async def Error_based_inj_HEADER(urls):
                             logger.info(f"Could find parameter error, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            threshold_for_error_parameter += 1
                             
                         
                             
@@ -144,6 +149,9 @@ async def Error_based_inj_HEADER(urls):
         
 
     finally:
-        pass
+        if threshold_for_error_parameter > 3:
+            logger.info(f"error parameter appears to be injectable")
+        
+        
      
 asyncio.run(Error_based_inj_HEADER("http://testfire.net/login.jsp"))
