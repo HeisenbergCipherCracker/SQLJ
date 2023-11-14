@@ -1,49 +1,62 @@
-import sys
-import sys
-import sys
-import os
-from colorama import Style
-import threading
-import requests
-import asyncio
-import sys
-import os
-from lib.scripts.authbypass_inj import htmlpattern
-from lib.scripts.Error_based_injection import *
-from lib.scripts.genericSQL import *
-from lib.scripts.Time_based_Header_inj import *
-from lib.scripts.Auth_bypass_inj_with_HEADERS import *
-from lib.scripts.Unionselect import *
-from lib.scripts.Memmoryerr import *
-from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
-from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
-from lib.scripts.Generic_SQL_with_header import *
-from lib.scripts.Get_host_name import *
-from lib.scripts.AccessDatabase import *
-from lib.scripts.Backend_language import *
-from lib.scripts.Time_based_Header_inj import *
-from lib.scripts.database import *
-from lib.scripts.Hackgpt import *
-from lib.scripts.Backend_language import *
-from lib.scripts.authbypass_inj import *
-from lib.scripts.Error_based_inj_with_headers import *
-from lib.scripts.Timebasedinj import *
-from Core.Socketapi.findports import Find_open_ports_of_the_target
-from Dictionaryattack.payloads import run_brute_force
-from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
-from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
-from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
-from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
-from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
-from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
-from lib.OracleSQLinjection.DBname import DB_name_ATTACK
-from lib.OracleSQLinjection.Databasels import Database_LISTING
-from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
-from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
-from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
-from lib.privillageessscalation.PrecudureATT import Procedure_Attack
-from lib.privillageessscalation.findDBlink import Find_data_base_link
-from lib.banner.Banner import main_banner
+try:
+
+    import sys
+    import sys
+    import sys
+    import os
+    from colorama import Style
+    import threading
+    import requests
+    import asyncio
+    import sys
+    import os
+    from lib.scripts.authbypass_inj import htmlpattern
+    from lib.scripts.Error_based_injection import *
+    from lib.scripts.genericSQL import *
+    from lib.scripts.Time_based_Header_inj import *
+    from lib.scripts.Auth_bypass_inj_with_HEADERS import *
+    from lib.scripts.Unionselect import *
+    from lib.scripts.Memmoryerr import *
+    from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+    from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+    from lib.scripts.Generic_SQL_with_header import *
+    from lib.scripts.Get_host_name import *
+    from lib.scripts.AccessDatabase import *
+    from lib.scripts.Backend_language import *
+    from lib.scripts.Time_based_Header_inj import *
+    from lib.scripts.database import *
+    from lib.scripts.Hackgpt import *
+    from lib.scripts.Backend_language import *
+    from lib.scripts.authbypass_inj import *
+    from lib.scripts.Error_based_inj_with_headers import *
+    from lib.scripts.Timebasedinj import *
+    from Core.Socketapi.findports import Find_open_ports_of_the_target
+    from Dictionaryattack.payloads import run_brute_force
+    from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
+    from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
+    from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
+    from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
+    from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
+    from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
+    from lib.OracleSQLinjection.DBname import DB_name_ATTACK
+    from lib.OracleSQLinjection.Databasels import Database_LISTING
+    from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
+    from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
+    from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
+    from lib.privillageessscalation.PrecudureATT import Procedure_Attack
+    from lib.privillageessscalation.findDBlink import Find_data_base_link
+    from lib.banner.Banner import main_banner
+    from lib.priority.Priority import PRIORITY
+    from lib.priority.HARMFULL import HARMFULL
+
+except ImportError:
+    print("[!] wrong installation please check the installation instructions")
+
+except KeyboardInterrupt:
+    print("Aborted")
+
+__priority__ = PRIORITY.HIGH
+__hramfull__ = HARMFULL.HIGH
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """

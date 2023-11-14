@@ -9,6 +9,8 @@ import traceback
 from bs4 import BeautifulSoup
 import sqlite3
 import logging
+import sys
+
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(parent_dir)
 current_directory = os.path.dirname(os.path.abspath(__file__))
