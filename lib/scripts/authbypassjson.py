@@ -33,6 +33,7 @@ sys.path.append(project_root)
 from logger.logs import logger
 from regelexpression.patterns import Detect
 from priority.Priority import PRIORITY,HARMFULL
+from Attacktype.Attacks import AttackTypes
 
 attack_type = "authentication bypass SQL injection"
 
@@ -42,6 +43,7 @@ attack_type = "authentication bypass SQL injection"
 
 __priority__ = PRIORITY.HIGH
 __harmfull__ = HARMFULL.HIGH
+__Category__ = AttackTypes.AUTH_BYPASS_SQL_INJECTION+"json"
 
 
 pattern = r"\berror\b"
