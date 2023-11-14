@@ -29,7 +29,7 @@ class MyThreadWithBeautifulSoup(metaclass=MyMeta):
 
 # Example usage
     # Create an instance of MyThreadWithBeautifulSoup
-my_instance = MyThreadWithBeautifulSoup(
+ThreadsoupINS = MyThreadWithBeautifulSoup(
     target=lambda: print("Hello, I am a thread!"),
     args=(),
     kwargs={},
@@ -37,8 +37,8 @@ my_instance = MyThreadWithBeautifulSoup(
 )
 
 # Start the thread
-my_instance.start()
-my_instance.join()
+ThreadsoupINS.start()
+ThreadsoupINS.join()
 
 # Access attributes from Thread and BeautifulSoup
-print(my_instance.prettify())
+# print(ThreadsoupINS.prettify())
