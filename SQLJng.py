@@ -48,6 +48,7 @@ try:
     from lib.banner.Banner import main_banner
     from lib.priority.Priority import PRIORITY
     from lib.priority.HARMFULL import HARMFULL
+    from SQLJngUI import Argument_parser
 
 except ImportError:
     print("[!] wrong installation please check the installation instructions")
@@ -373,5 +374,7 @@ else:
             
         except KeyboardInterrupt:
             continue
+
+
 
     
