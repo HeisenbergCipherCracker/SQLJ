@@ -94,6 +94,7 @@ async def Error_based_inj_HEADER(urls):
                         if vuln:
                             logger.info(f"Could find id parameter, keyword:{line}")
                             Detect(ack.text)
+                            threshold_for_id_parameter += 1
                             await asyncio.sleep(3)
                         
                         if htmlVULN:
@@ -107,6 +108,7 @@ async def Error_based_inj_HEADER(urls):
                         if word:
                             logger.info(f"Could find parameter id, keyword:{line}")
                             Detect(ack.text)
+                            threshold_for_id_parameter += 1
                             await asyncio.sleep(3)
                         
                         if errword:
@@ -149,8 +151,22 @@ async def Error_based_inj_HEADER(urls):
         
 
     finally:
-        if threshold_for_error_parameter > 3:
-            logger.info(f"error parameter appears to be injectable")
+        try:
+            if threshold_for_error_parameter > 3:
+                logger.info(f"error parameter appears to be injectable")
+            
+            else:
+                pass
+
+            if threshold_for_id_parameter > 3:
+                logger.info(f"id parameter appears to be injectable")
+            
+            else:
+                pass
+        except UnboundLocalError:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
         
         
      
