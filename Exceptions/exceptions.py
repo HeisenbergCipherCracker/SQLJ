@@ -20,3 +20,6 @@ class SQLJNGNotOptionSelected(SQLJNGBasicException):
 
 class SQLJNGInstallationError(SQLJNGBasicException):
     pass
+
+class SQLJNGUserExit(SystemExit):
+    pass

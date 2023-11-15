@@ -36,6 +36,7 @@ project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 sys.path.append(project_root)
 
 from logger.logs import logger
+from Exceptions.exceptions import SQLJNGUserExit
 
 attack_type = "Error Based SQL Injection"
 headers = {
@@ -57,7 +58,7 @@ threshold_for_id_parameter = 0
 async def Error_based_inj_HEADER(urls):
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
     try: 
-        global pattern,htmlpattern,threshold_for_error_parameter
+        global pattern,htmlpattern,threshold_for_error_parameter,threshold_for_id_parameter
         done = False 
         filename = "Error_based.txt" 
         current_directory = os.path.dirname(os.path.abspath((__file__)))
@@ -128,7 +129,12 @@ async def Error_based_inj_HEADER(urls):
                         logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
                         Detect(ack.text)
                         await asyncio.sleep(3)
-                        
+                
+                elif ask.lower() == "n":
+                    raise SQLJNGUserExit
+                
+                else:
+                    pass
                         
             else:
                 logger.info(f"Could not connect to the target:{urls} ")
@@ -142,7 +148,7 @@ async def Error_based_inj_HEADER(urls):
  
         
     except KeyboardInterrupt:
-        pass
+        logger.info("^C User Interrupted the program.")
         
         raise SystemExit
     except UnboundLocalError:
@@ -153,13 +159,13 @@ async def Error_based_inj_HEADER(urls):
     finally:
         try:
             if threshold_for_error_parameter > 3:
-                logger.info(f"error parameter appears to be injectable")
+                logger.info(f"error parameter appears to be unsafe and exposed in the html document and the response test")
             
             else:
                 pass
 
             if threshold_for_id_parameter > 3:
-                logger.info(f"id parameter appears to be injectable")
+                logger.info(f"id parameter appears to be unsafe and exposed in the html document and the response test")
             
             else:
                 pass
