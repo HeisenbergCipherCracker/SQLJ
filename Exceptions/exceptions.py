@@ -23,3 +23,4 @@ class SQLJNGInstallationError(SQLJNGBasicException):
 
 class SQLJNGUserExit(SystemExit):
     pass
+
