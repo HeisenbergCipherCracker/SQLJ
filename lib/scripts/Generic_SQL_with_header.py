@@ -77,6 +77,10 @@ except ImportError as e:
             except PermissionError as experm:
                 logger.error(experm)
                 sys.exit(1)
+        
+        case "n":
+            raise SystemExit
+        
 
 
 
