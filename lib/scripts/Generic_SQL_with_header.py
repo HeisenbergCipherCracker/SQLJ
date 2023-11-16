@@ -98,10 +98,11 @@ generic_capture = []
 
 
 
-
+from priority.Priority import PRIORITY, HARMFULL
 
             
-
+__priority__ = PRIORITY.HIGH
+__harmsfull__ = HARMFULL.HIGH
 
 async def generic_sql_attack_HEADER(urls):
     """This attack is when we are able to alter the database tables and gather information out of it"""
