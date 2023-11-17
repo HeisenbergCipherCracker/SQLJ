@@ -26,7 +26,7 @@ sys.path.append(project_root)
 
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGUserExit
-from Exceptions.handler import extract_package_name_from_import_error
+from Exceptions.handler import extract_package_name_from_import_error,Install_missing_packages
 
 try:
     import asyncio
@@ -43,43 +43,10 @@ try:
     import sys
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     sys.path.append(parent_dir)
-    logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 except ImportError as e:
-    msg = str(e)
-    logger.error(e)
-    ins = extract_package_name_from_import_error(msg)
-    match input(f"Do you want to install the dependencies that has been missing? (y/n): "):
-        case "y":
-            from subprocess import check_call
-            import subprocess
-            try:
-                check_call(["pip","install",str(ins)])
-            
-            except subprocess.CalledProcessError as expro:
-                try:
-                    check_call(["pip","install",str(ins), "--upgrade"])
-                
-                except subprocess.CalledProcessError as expro:
-                    try:
-                        check_call(["python3", "-m", "pip", "install", str(ins)])
-                    
-                    except subprocess.CalledProcessError as expro:
-                        try:
-                            check_call(["python3", "-m", "pip", "install", str(ins)])
-                        
-                        except subprocess.CalledProcessError as expro:
-                            logger.error(expro)
-                            raise SystemExit
+    Install_missing_packages(str(e))
 
-
-            
-            except PermissionError as experm:
-                logger.error(experm)
-                sys.exit(1)
-        
-        case "n":
-            raise SystemExit
         
 
 

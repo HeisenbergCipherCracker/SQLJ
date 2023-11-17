@@ -51,7 +51,8 @@ def extract_package_name_from_import_error(error_message):
         package_name = match.group(1)
         return package_name
     else:
-        return None  
+        pass
+    
 
 
 def Install_missing_packages(e):
@@ -91,9 +92,3 @@ def Install_missing_packages(e):
             raise SystemExit
         
 
-try:
-    import exaple
-
-except ImportError as e:
-    print(extract_package_name_from_import_error(e))
-    Install_missing_packages(str(e))
