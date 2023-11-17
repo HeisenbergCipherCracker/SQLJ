@@ -8,7 +8,7 @@ sys.path.append(project_root)
 
 from regelexpression.patterns import Detect
 
-()
+
 add_directory = os.path.abspath(os.path.dirname(__file__))
 
 priority_path = os.path.join(add_directory, '..', 'priority')
