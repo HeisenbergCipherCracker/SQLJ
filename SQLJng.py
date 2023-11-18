@@ -370,7 +370,11 @@ if __name__ == "main":
         except KeyboardInterrupt:
             continue
 
+elif __name__ == "SQLJngUI":
+    pass
+
 else:
+
     while True: 
         try:
             asyncio.run(main())

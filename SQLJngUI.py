@@ -3,10 +3,46 @@ import warnings
 import logging
 import aiohttp
 from asyncio import run
-from SQLJng import *
+from lib.scripts.authbypass_inj import htmlpattern
+from lib.scripts.Error_based_injection import *
+from lib.scripts.genericSQL import *
+from lib.scripts.Time_based_Header_inj import *
+from lib.scripts.Auth_bypass_inj_with_HEADERS import *
+from lib.scripts.Unionselect import *
+from lib.scripts.Memmoryerr import *
+from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+from lib.scripts.Headers_added_in_used_UNION_SELECT_ATTACK import *
+from lib.scripts.Generic_SQL_with_header import *
+from lib.scripts.Get_host_name import *
+from lib.scripts.AccessDatabase import *
+from lib.scripts.Backend_language import *
+from lib.scripts.Time_based_Header_inj import *
+from lib.scripts.database import *
+from lib.scripts.Hackgpt import *
+from lib.scripts.Backend_language import *
+from lib.scripts.authbypass_inj import *
+from lib.scripts.Error_based_inj_with_headers import *
+from lib.scripts.Timebasedinj import *
+from Core.Socketapi.findports import Find_open_ports_of_the_target
+from Dictionaryattack.payloads import run_brute_force
+from lib.mysqlblind.conditionalblindsql import conditional_blind_sql_inj
+from lib.mysqlerrorbased.mysqlerrorbaseBASIC import SQL_inj_BASIC
+from lib.mysqlerrorbased.mysqlexractvalue import Extract_value_injection
+from lib.mysqlerrorbased.mysqlnameconst import Name_const_inj
+from lib.OracleSQLinjection.OracleINJ import ORACLE_SQL_injection
+from lib.OracleSQLinjection.HostnameORC import HOSTNAME_ORACLE
+from lib.OracleSQLinjection.DBname import DB_name_ATTACK
+from lib.OracleSQLinjection.Databasels import Database_LISTING
+from lib.OracleSQLinjection.Database_clmn_ls import LIST_COLUMNS_ORACLE
+from lib.mysqlerrorbased.invalidHTTPREQ import INVALID_HTTP_REQ
+from lib.privillageessscalation.dumpDBA import DUMP_USERNAME_IN_DATABASE
+from lib.privillageessscalation.PrecudureATT import Procedure_Attack
+from lib.privillageessscalation.findDBlink import Find_data_base_link
+from lib.banner.Banner import main_banner
+from lib.priority.Priority import PRIORITY,HARMFULL
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-#python SQLJngUI.py --types Basic -u https://example.com --headers "User-Agent: Mozilla/5.0" 
+#python SQLJngUI.py -A Basic -u https://example.com --headers "User-Agent: Mozilla/5.0" 
 
 async def Argument_parser():
     parser = argparse.ArgumentParser(description="SQLJng")
@@ -18,7 +54,7 @@ async def Argument_parser():
     # Additional arguments can be added as needed
     parser.add_argument("-p", "--port", type=int, help="Specify a port number", required=False)
     parser.add_argument("--enable-feature", action="store_true", help="Enable a specific feature", required=False)
-    parser.add_argument("--types", type=str, help="Specify the type of the attack", required=True)
+    parser.add_argument("-A", type=str, help="Specify the type of the attack", required=True)
     parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.0")
     parser.add_argument("-vv","-verbose", action="store_true", help="Enable verbose mode", required=False)
     parser.add_argument("-other", help="Enable other features", required=False)
@@ -31,7 +67,7 @@ async def Argument_parser():
     headers = args.headers
     port = args.port
     enable_feature = args.enable_feature
-    attack_type = args.types
+    attack_type = args.A 
     verbose = args.vv
 
 
