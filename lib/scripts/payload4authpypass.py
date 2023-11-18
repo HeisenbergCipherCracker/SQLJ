@@ -19,4 +19,5 @@ def payload4auth_bypass():
     except Exception as e:
         print(e)
 
-print(len(payload4auth_bypass()))
+# print(len(payload4auth_bypass()))
+# print(payload4auth_bypass())
