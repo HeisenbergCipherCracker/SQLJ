@@ -25,8 +25,22 @@ priority_path = os.path.join(add_directory, '..', 'priority')
 
 sys.path.append(priority_path)
 
+try:
+    from Priority import PRIORITY, HARMFULL
+except ImportError:
+    try:
+        PRIORITES = __import__("Priority")
+        PRIORITY = PRIORITIES.PRIORITY
+        HARMFUL = PRIORITIES.HARMFUL
+    except ImportError:
+        try:
+                
+            del PRIORITES,PRIORITY,HARMFUL
+            raise
+        finally:
+            print("[*] wrong installation, you can continue with the installation for now.")
 
-from Priority import PRIORITY, HARMFULL
+
 
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
