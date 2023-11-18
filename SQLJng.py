@@ -46,12 +46,18 @@ try:
     from lib.privillageessscalation.PrecudureATT import Procedure_Attack
     from lib.privillageessscalation.findDBlink import Find_data_base_link
     from lib.banner.Banner import main_banner
-    from lib.priority.Priority import PRIORITY
-    from lib.priority.HARMFULL import HARMFULL
-    from SQLJngUI import Argument_parser
+    from lib.priority.Priority import PRIORITY,HARMFULL
 
 except ImportError:
-    print("[!] wrong installation please check the installation instructions")
+    print("[!] wrong installation. please check the installation instructions")
+    match input("Do you want to install it now? (y/n): "):
+        case "y":
+            import subprocess
+            try:
+                subprocess.check_call(["pip","install","requests"])
+            
+            except (subprocess.SubprocessError, subprocess.CalledProcessError,subprocess.TimeoutExpired):
+                print("[*] Error installing")
 
 except KeyboardInterrupt:
     print("Aborted")
@@ -67,9 +73,9 @@ init()
 Style.BRIGHT
 
 
-logo = """"""
+logo = ""
 
-logo += main_banner
+logo = main_banner
 
 options = """
 Pre-release 1.0
@@ -81,6 +87,7 @@ Pre-release 1.0
 6.privilege escalation
 
 """
+print(logo)
 
 logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
 
@@ -92,7 +99,6 @@ async def main():
     try:
         # while Tr
         global logo,options 
-        print(logo)
         await asyncio.sleep(1)
         url = input(Fore.GREEN+"[INFO] enter the url of the target:") 
         try:
@@ -100,7 +106,6 @@ async def main():
                 await Get_host_name(Host=input("enter the host:"))
                 
             elif url == "cls":
-                print(logo)
                 os.system('cls' if os.name == 'nt' else 'clear')
             
             elif url == "exit":
@@ -157,7 +162,6 @@ async def main():
                     raise
                 
             case "cls": 
-                print(logo)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 
             case "exit": 
@@ -367,13 +371,12 @@ if __name__ == "main":
             continue
 
 else:
-    
-    while True:
+    while True: 
         try:
             asyncio.run(main())
-            
         except KeyboardInterrupt:
             continue
+
 
 
 

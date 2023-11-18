@@ -31,7 +31,7 @@ from Exceptions.handler import extract_package_name_from_import_error,Install_mi
 
 try:
     import asyncio
-    import requests
+    import requests 
     from colorama import Fore,init
     import re
     import glob
@@ -154,8 +154,6 @@ async def generic_sql_attack(urls):
 
 # asyncio.run(generic_sql_attack("https://redtiger.labs.overthewire.org/"))
     
-
-
 
 
 

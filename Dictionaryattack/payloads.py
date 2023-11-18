@@ -130,4 +130,4 @@ def run_brute_force(url,sl,cnt):
             file.write(string)        
                 
 
-run_brute_force("http://testfire.net/login.jsp",0,cnt=0)
+# run_brute_force("http://testfire.net/login.jsp",0,cnt=0)

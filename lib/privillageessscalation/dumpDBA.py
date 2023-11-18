@@ -181,4 +181,4 @@ async def auth_main(urL):
     await auth_SQL_inj(urL)
 
 # asyncio.run(conditional_SQL_inj("http://testfire.net/login.jsp"))
-asyncio.run(DUMP_USERNAME_IN_DATABASE("http://testfire.net/login.jsp"))
+# asyncio.run(DUMP_USERNAME_IN_DATABASE("http://testfire.net/login.jsp"))

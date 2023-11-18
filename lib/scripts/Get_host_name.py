@@ -29,4 +29,4 @@ async def Get_host_name(Host):
         print(Fore.RED+f"[ERROR] An Error occurred with the program:"+"connection Error,please check your connection")
         
     
-asyncio.run(Get_host_name("www.google.com"))
+# asyncio.run(Get_host_name("www.google.com"))

@@ -252,4 +252,4 @@ async def Find_data_base_link(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-asyncio.run(Find_data_base_link("http://testfire.net/login.jsp"))
+# asyncio.run(Find_data_base_link("http://testfire.net/login.jsp"))

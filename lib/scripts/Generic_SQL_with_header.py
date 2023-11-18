@@ -184,7 +184,7 @@ async def generic_sql_attack_HEADER(urls):
         
         
 
-asyncio.run(generic_sql_attack_HEADER("https://redtiger.labs.overthewire.org/"))
+# asyncio.run(generic_sql_attack_HEADER("https://redtiger.labs.overthewire.org/"))
 
 
 

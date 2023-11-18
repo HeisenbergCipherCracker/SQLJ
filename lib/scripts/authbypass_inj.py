@@ -132,4 +132,4 @@ async def auth_SQL_inj(urls):
 async def auth_main(urL):
     await auth_SQL_inj(urL)
 
-asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))

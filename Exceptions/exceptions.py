@@ -1,3 +1,5 @@
+from warnings import warn
+
 class SQLJNG_Option_Error(Exception):
     def __init__(self, message='Invalid option.'):
         self.message = message
@@ -23,4 +25,6 @@ class SQLJNGInstallationError(SQLJNGBasicException):
 
 class SQLJNGUserExit(SystemExit):
     pass
+
+
 
