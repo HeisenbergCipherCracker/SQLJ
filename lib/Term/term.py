@@ -30,9 +30,10 @@ By using SQLJ, you acknowledge that you have read and understood this disclaimer
 """
 
 def Agree():
+    print(term)
+
     while True:
         try:
-            print(term)
             agree = input("Do you agree to the above terms? (y/n): ")
             if agree == "y":
                 break

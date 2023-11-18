@@ -128,4 +128,4 @@ async def Time_based_sql_injection(urls):
         logger.info("Done")
 
         
-asyncio.run(Time_based_sql_injection("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(Time_based_sql_injection("https://redtiger.labs.overthewire.org/level1.php"))
