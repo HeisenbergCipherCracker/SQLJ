@@ -40,6 +40,7 @@ from lib.privillageessscalation.PrecudureATT import Procedure_Attack
 from lib.privillageessscalation.findDBlink import Find_data_base_link
 from lib.banner.Banner import main_banner
 from lib.priority.Priority import PRIORITY,HARMFULL
+from lib.Term.term import term
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 #python SQLJngUI.py -A Basic -u https://example.com --headers "User-Agent: Mozilla/5.0" 

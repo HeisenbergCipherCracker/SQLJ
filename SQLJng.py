@@ -47,6 +47,8 @@ try:
     from lib.privillageessscalation.findDBlink import Find_data_base_link
     from lib.banner.Banner import main_banner
     from lib.priority.Priority import PRIORITY,HARMFULL
+    from lib.Term.term import term
+
 
 except ImportError:
     print("[!] wrong installation. please check the installation instructions")
