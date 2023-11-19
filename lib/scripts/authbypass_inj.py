@@ -24,6 +24,7 @@ sys.path.append(project_root)
 
 # Now you should be able to import logs
 from logger.logs import logger
+from packages import *
 
 
 attack_type = "authentication bypass SQL injection"
@@ -83,20 +84,24 @@ async def auth_SQL_inj(urls):
                         if vuln: 
                             logger.info(f"Could find ERROR parameter, keyword:{line}")
                             await asyncio.sleep(3) 
+                            Detect(ack.text)
                         
                         if htmlVULN:
                             logger.info(f"Could find id parameter, keyword:{line}")
                             await asyncio.sleep(3)
+                            Detect(ack.text)
                         
                         word = "id" in req.text 
                         errword = "error" in req.text
                         if word:
                             logger.info(f"Could find parameter id, keyword:{line}")
                             await asyncio.sleep(3)
+                            Detect(ack.text)
                         
                         if errword:
                             logger.info(f"Could find parameter error, keyword:{line}")
                             await asyncio.sleep(3)
+                            Detect(ack.text)
                             
                         
                             
@@ -106,10 +111,10 @@ async def auth_SQL_inj(urls):
                     
                     if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                         logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
+                        Detect(ack.text)
                         
             else:
-                print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",req.headers)
-                logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
+                logger.info(f"Host is down with the url: {urls}\n\n")
                 
         
                         
