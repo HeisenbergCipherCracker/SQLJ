@@ -180,4 +180,4 @@ async def err_based_json(urls):
 async def auth_main(urL):
     await err_based_json(urL)
 
-asyncio.run(err_based_json("https://redtiger.labs.overthewire.org/"))
+# asyncio.run(err_based_json("https://redtiger.labs.overthewire.org/"))

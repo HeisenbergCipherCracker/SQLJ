@@ -4,15 +4,20 @@ import asyncio
 import sys
 import os
 
-# Assuming Backend_language.py is in lib/scripts/backendlanguage directory
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
+try:
 
-# Add the project root directory to the Python path
-sys.path.append(project_root)
+    # Assuming Backend_language.py is in lib/scripts/backendlanguage directory
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
 
-# Now you should be able to import logs
-from logger.logs import logger
+    # Add the project root directory to the Python path
+    sys.path.append(project_root)
+
+    # Now you should be able to import logs
+    from logger.logs import logger
+
+except ImportError:
+    print("[!]Wrong installation,please download the Tool again from the github page")
 
 # Rest of your code...
 

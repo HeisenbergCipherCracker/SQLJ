@@ -178,7 +178,7 @@ async def generic_sql_attack_HEADER(urls):
         
         
     finally:
-        pass
+        logger.info("Connection closed\n finished the injection test.")
        
         
         
