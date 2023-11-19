@@ -64,8 +64,6 @@ except ImportError:
 except KeyboardInterrupt:
     print("Aborted")
 
-__priority__ = PRIORITY.HIGH
-__hramfull__ = HARMFULL.HIGH
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """

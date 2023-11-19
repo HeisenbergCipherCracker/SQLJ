@@ -24,7 +24,12 @@ sys.path.append(project_root)
 
 # Now you should be able to import logs
 from logger.logs import logger
-from packages import *
+
+try:
+    from packages import *
+
+except:
+    pass
 
 
 attack_type = "authentication bypass SQL injection"
