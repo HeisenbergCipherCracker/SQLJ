@@ -38,6 +38,14 @@ class SQLJNGTimeExpiredError(SQLJNGBasicException):
 class SQLJNGUnknowProxyError(SQLJNGBasicException):
     pass
 
+class SQLJNGOSError(SQLJNGBasicException):
+    pass
+
+class SQLJNGFatalError(SQLJNGBasicException):
+    pass
+
+class SQLJNGModuleError(SQLJNGBasicException):
+    pass
 
 
 

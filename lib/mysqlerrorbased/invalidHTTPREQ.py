@@ -187,4 +187,4 @@ async def INVALID_HTTP_REQ(urls):
 
 
 
-asyncio.run(INVALID_HTTP_REQ("http://testfire.net/login.jsp"))
+# asyncio.run(INVALID_HTTP_REQ("http://testfire.net/login.jsp"))
