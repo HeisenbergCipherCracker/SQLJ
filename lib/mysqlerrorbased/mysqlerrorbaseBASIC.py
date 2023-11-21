@@ -14,7 +14,6 @@ current_directory = os.getcwd()
 
 sys.path.append(current_directory)
 
-from lib.scripts.authbypass_inj import add_directory
 
 attack_type = "authentication bypass SQL injection"
 from lib.scripts.headers import Prepare_the_headers

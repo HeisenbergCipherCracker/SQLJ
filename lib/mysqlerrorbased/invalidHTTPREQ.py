@@ -13,7 +13,6 @@ current_directory = os.getcwd()
 
 sys.path.append(current_directory)
 
-from lib.scripts.authbypass_inj import add_directory
 
 attack_type = "authentication bypass SQL injection"
 from lib.scripts.headers import Prepare_the_headers
@@ -23,6 +22,9 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from Exceptions.exceptions import SQLJNGInstallationError
+from Exceptions.exceptions import SQLJNGOptionError
+from Exceptions.exceptions import SQLJNGUserExit
 
 
 """
