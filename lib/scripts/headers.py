@@ -35,4 +35,4 @@ url = "https://www.google.com"
 payload = {"key1": "value1", "key2": "value2"}
 
 for header in headers:
-    print(header)
+    pass

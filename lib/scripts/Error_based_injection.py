@@ -7,34 +7,22 @@ from datetime import datetime
 import inspect
 import traceback
 from bs4 import BeautifulSoup
-import sqlite3
-import logging
 import sys
+import os
+import logging
 
-parent_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(parent_dir)
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..'))
-sys.path.append(project_root)
+current_directory = os.getcwd()
 
-from regelexpression.patterns import Detect
-
-init()
-add_directory = os.path.abspath(os.path.dirname(__file__))
-
-priority_path = os.path.join(add_directory, '..', 'priority')
-
-sys.path.append(priority_path)
+sys.path.append(current_directory)
 
 
-from Priority import PRIORITY, HARMFULL
-
-
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
-
-sys.path.append(project_root)
-
+attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
 from logger.logs import logger
 
 init()

@@ -8,32 +8,23 @@ import sqlite3
 import logging
 import json
 import sys
-add_directory = os.path.abspath(os.path.dirname(__file__))
+import sys
+import os
+import logging
 
-priority_path = os.path.join(add_directory, '..', 'priority')
+current_directory = os.getcwd()
 
-sys.path.append(priority_path)
-
-
-from Priority import PRIORITY, HARMFULL
+sys.path.append(current_directory)
 
 
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
-
-# Add the project root directory to the Python path
-sys.path.append(project_root)
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..'))
-
-# Add the project root directory to the Python path
-sys.path.append(project_root)
-
-# Now you should be able to import logs
+attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
 from logger.logs import logger
-from regelexpression.patterns import Detect
-from priority.Priority import PRIORITY,HARMFULL
-from Attacktype.Attacks import AttackTypes
 
 attack_type = "authentication bypass SQL injection"
 

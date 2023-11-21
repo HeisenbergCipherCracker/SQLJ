@@ -5,29 +5,25 @@ import re
 import requests
 from colorama import Fore,init,Style
 from datetime import datetime
-# import sock
-import sqlite3
-# from database import create_database_for_Captures
-import os
-import sys
-
-lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
-sys.path.append(lib_path)
 import sys
 import os
-
-from headers import *
-
-
-
-from headers import *
-
 import logging
 
+current_directory = os.getcwd()
 
-from packages import *
+sys.path.append(current_directory)
+
+from lib.scripts.authbypass_inj import add_directory
 
 attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from logger.logs import logger
+
 
 """
 Function: INVALID_HTTP_REQ
@@ -65,10 +61,10 @@ for url in urls_to_attack:
 """
 
 
+__pririority__ = PRIORITY.HIGH
+__harmfull__ = HARMFULL.HIGH
 
 
-
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
@@ -79,7 +75,6 @@ headers = {
 """Reference:https://sqlwiki.netspi.com/injectionTypes/errorBased/#oracle """
 
 #
-logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
 async def INVALID_HTTP_REQ(urls):

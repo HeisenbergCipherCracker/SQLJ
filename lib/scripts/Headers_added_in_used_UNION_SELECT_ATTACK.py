@@ -11,6 +11,23 @@ import logging
 import sys
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(parent_dir)
+import sys
+import os
+import logging
+
+current_directory = os.getcwd()
+
+sys.path.append(current_directory)
+
+
+attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from logger.logs import logger
 
 #################################################################
 attack_type = "Header_union_sselect_sql_injection"

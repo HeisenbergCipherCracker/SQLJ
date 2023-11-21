@@ -10,12 +10,23 @@ import sqlite3
 import logging
 import json
 import sys
+import sys
+import os
+import logging
 
-try:
-    from packages import *
+current_directory = os.getcwd()
 
-except ImportError:
-    print("[!] Wrong installation,pleas install the Tool from github page.")
+sys.path.append(current_directory)
+
+
+attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from logger.logs import logger
 
 
 attack_type = "authentication bypass SQL injection"

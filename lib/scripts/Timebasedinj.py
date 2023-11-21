@@ -9,6 +9,23 @@ import sqlite3
 import time
 import logging
 from packages import *
+import sys
+import os
+import logging
+
+current_directory = os.getcwd()
+
+sys.path.append(current_directory)
+
+
+attack_type = "authentication bypass SQL injection"
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from logger.logs import logger
 
 
 attack_type = "Time based SQL injection"
