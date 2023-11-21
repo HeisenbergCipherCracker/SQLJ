@@ -25,6 +25,10 @@ from logger.logs import logger
 from Exceptions.exceptions import SQLJNGInstallationError
 from Exceptions.exceptions import SQLJNGOptionError
 from Exceptions.exceptions import SQLJNGUserExit
+from Exceptions.exceptions import SQLJNGApiError
+from Exceptions.exceptions import SQLJNGTimeExpiredError
+from lib.Attacktype.Attacks import AttackTypes
+
 
 
 """
@@ -65,6 +69,7 @@ for url in urls_to_attack:
 
 __pririority__ = PRIORITY.HIGH
 __harmfull__ = HARMFULL.HIGH
+__Attack__ = AttackTypes.INVALIDHTTP_REQ
 
 
 pattern = r"\berror\b"
@@ -97,13 +102,14 @@ async def INVALID_HTTP_REQ(urls):
             print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
-            req = requests.get(url=urls,verify=False) 
+            req = requests.get(url=urls,verify=False)
+
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
                 msg = "Host is Up%s"%urls
                 msg += "Sending payloads above to the website"
                 logger.info(msg)
-
+            
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"): 
                         params = { 
@@ -158,8 +164,17 @@ async def INVALID_HTTP_REQ(urls):
                 else:
                     logger.info(f"Host is down")
             
-    except Exception as e:
-        logger.error(f"Error: {e}")
+
+    
+    except requests.exceptions.ConnectionError:
+        raise SQLJNGApiError
+    
+    except requests.exceptions.Timeout:
+        raise SQLJNGTimeExpiredError
+    
+    except KeyboardInterrupt:
+        print("Aborted")
+    
         
 
         
@@ -170,7 +185,6 @@ async def INVALID_HTTP_REQ(urls):
         
      
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
+
 
 asyncio.run(INVALID_HTTP_REQ("http://testfire.net/login.jsp"))

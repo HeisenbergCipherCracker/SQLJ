@@ -7,6 +7,7 @@ class AttackTypes:
     NO_SQL = "NO_SQL"
     MY_SQL = "MYSQL"
     ORACLE = "ORACLE"
+    INVALIDHTTP_REQ = "INVALID_HTTP_REQ"
 
 
 

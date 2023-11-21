@@ -26,5 +26,18 @@ class SQLJNGInstallationError(SQLJNGBasicException):
 class SQLJNGUserExit(SystemExit):
     pass
 
+class SQLJNGApiError(SQLJNGBasicException):
+    pass
+
+class SQLJNGProxyFiltringError(SQLJNGBasicException):
+    pass
+
+class SQLJNGTimeExpiredError(SQLJNGBasicException):
+    pass
+
+class SQLJNGUnknowProxyError(SQLJNGBasicException):
+    pass
+
+
 
 
