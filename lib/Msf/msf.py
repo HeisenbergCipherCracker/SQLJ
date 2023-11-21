@@ -31,7 +31,7 @@ class Metasploit(object):
                 for command in commands:
                     process.stdin.write(command + '\n')
                     process.stdin.flush()
-
+    
                 # Close the Metasploit console
                 process.stdin.write('exit\n')
                 process.stdin.flush()
@@ -47,8 +47,8 @@ class Metasploit(object):
                 print("Error:")
                 print(error)
 
-            except Exception as e:
-                print(f"An error occurred: {e}")
+            except KeyboardInterrupt:
+                print("Aborted by user.")
 
 
 
