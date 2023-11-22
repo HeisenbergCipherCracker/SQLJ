@@ -47,5 +47,9 @@ class SQLJNGFatalError(SQLJNGBasicException):
 class SQLJNGModuleError(SQLJNGBasicException):
     pass
 
+class SQLJNGInputModuleError(SQLJNGBasicException):
+    pass
+
+
 
 
