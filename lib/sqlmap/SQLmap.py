@@ -17,13 +17,14 @@ import subprocess
 
 
 class SQLmap(Thread):
-    def __init__(self,url,username=False,password=False,dump=False,columns=False,tables=False):
+    def __init__(self,url,username=False,password=False,dump=False,columns=False,tables=False,auto=True):
         self.url = url
         self.username = username
         self.password = password
         self.dump = dump
         self.columns = columns
         self.tables = tables
+        self.auto = auto
         self.os = Operatingsystem()
         self.platform = Platforms()
         Thread.__init__(self)
@@ -62,6 +63,17 @@ class SQLmap(Thread):
                 cmd = subprocess.Popen(["sqlmap","-u",str(self.url)])
                 cmd.wait()
                 print(cmd)
+                if self.tables:
+                    cmd = subprocess.Popen(["sqlmap","-u",str(self.url),"-T"])
+                    cmd.wait()
+                    print(cmd)
+                
+                elif self.auto:
+                    cmd = subprocess.Popen(["sqlmap","-u",str(self.url),"--dump"])
+                    cmd.wait()
+                    print(cmd)
+
+                    
             
             except (subprocess.CalledProcessError,subprocess.SubprocessError) as err:
                 logger.error(err)
@@ -85,5 +97,3 @@ class SQLmap(Thread):
 
 
 
-obj = SQLmap('http://testfire.net/')
-obj.exploit()

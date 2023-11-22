@@ -50,6 +50,9 @@ class SQLJNGModuleError(SQLJNGBasicException):
 class SQLJNGInputModuleError(SQLJNGBasicException):
     pass
 
+class SQLJNGDependenciesError(SQLJNGBasicException):
+    pass
+
 
 
 
