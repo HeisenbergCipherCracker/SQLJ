@@ -51,20 +51,8 @@ try:
     from lib.Cookies.cookies import extract_cookies
 
 
-except ImportError:
-    print("[!] wrong installation. please check the installation instructions")
-    match input("Do you want to install it now? (y/n): "):
-        case "y":
-            import subprocess
-            try:
-                subprocess.check_call(["pip","install","requests"])
-            
-            except (subprocess.SubprocessError, subprocess.CalledProcessError,subprocess.TimeoutExpired):
-                print("[*] Error installing")
-
-except KeyboardInterrupt:
-    print("Aborted")
-
+except ImportError as e:
+    sys.exit(f"[!]Wrong installation:{e}")
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
