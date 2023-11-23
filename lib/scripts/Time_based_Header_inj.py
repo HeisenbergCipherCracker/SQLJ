@@ -28,6 +28,7 @@ from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGInstallationError
+from lib.Cookies.cookies import extract_cookies
 
 
 ####################################################
@@ -56,6 +57,7 @@ __harmfull = HARMFULL.MEDIUM
 async def Time_based_sql_injection_HEADER(urls):
     """This injection if when the attacker can manipulate the timing of SQL queries and extract the data out of database. """
     try:
+        extract_cookies(host=urls)
         global pattern,htmlpattern
         done = False
         filename = "Time_based_sql.txt"
@@ -138,5 +140,5 @@ async def Time_based_sql_injection_HEADER(urls):
 
         
 
-
-# asyncio.run(Time_based_sql_injection_HEADER("https://example.com"))
+# extract_cookies("https://example.com")
+asyncio.run(Time_based_sql_injection_HEADER("https://example.com"))

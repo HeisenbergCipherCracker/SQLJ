@@ -53,6 +53,9 @@ class SQLJNGInputModuleError(SQLJNGBasicException):
 class SQLJNGDependenciesError(SQLJNGBasicException):
     pass
 
+class SQLJNGUserAborted(SQLJNGBasicException):
+    pass
+
 
 
 

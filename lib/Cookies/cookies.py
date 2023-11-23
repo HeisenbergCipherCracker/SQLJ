@@ -5,7 +5,7 @@ from http.cookiejar import CookieJar
 
 current_directory = os.getcwd()
 sys.path.append(current_directory)
-from Exceptions.exceptions import SQLJNGConnectionError
+from Exceptions.exceptions import SQLJNGOptionError
 from logger.logs import logger
 
 try:
@@ -13,7 +13,7 @@ try:
 except ImportError:
     sys.exit("requests library is not installed. Exiting...")
 
-def extract_cookies(host):
+async def extract_cookies(host):
     try:
         # Create a session and cookie jar
         session = requests.Session()
@@ -36,10 +36,21 @@ def extract_cookies(host):
             msg += f"\nExpires: {cookie.expires}"
             msg += f"\nSecure: {cookie.secure}"
             logger.info(msg)
-    except Exception as e:
-        # Handle exceptions, log or raise as needed
-        logger.error(f"An error occurred: {e}")
+            con = input("do you want to continue with this cookies?(y/q)")
+            if con == "y":
+                pass
+            elif con == "q":
+                raise SystemExit
+            else:
+                raise SQLJNGOptionError
+            
+        return
+    
+    except SystemExit:
         raise
+    except SQLJNGOptionError:
+        logger.error("Invalid prompt given.please use y to continue or q to exit.")
+        
 
 # Example usage
-extract_cookies("https://www.google.com")
+# extract_cookies("https://www.google.com")
