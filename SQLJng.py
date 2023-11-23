@@ -48,6 +48,7 @@ try:
     from lib.banner.Banner import main_banner
     from lib.priority.Priority import PRIORITY,HARMFULL
     from lib.Term.term import term
+    from lib.Cookies.cookies import extract_cookies
 
 
 except ImportError:
@@ -116,25 +117,40 @@ async def main():
         ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") 
         match ch:
             case "1":
-                await auth_SQL_inj(url) 
+                await asyncio.gather(
+                extract_cookies(url),
+                auth_SQL_inj(url) )
 
                 
             case "2":
-                await Error_based_inj(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    Error_based_inj(url)
+                )
                 
                 
             case "3":
-                await generic_sql_attack(url) 
+                await asyncio.gather(
+                    extract_cookies(url),
+                    generic_sql_attack(url)
+                )
                 
             case "4":
-                await Time_based_sql_injection(url) 
+                await asyncio.gather(
+                    extract_cookies(url),
+                    Time_based_sql_injection(url)
+                )
                 
             case "5":
-                await union_based_SQL_inj(url) 
+                await asyncio.gather(
+                    extract_cookies(url),
+                    union_based_SQL_inj(url)
+                )
             
             case "6":
                 try:
                     await asyncio.gather(
+                        extract_cookies(url),
                         Find_data_base_link(url),
                         DUMP_USERNAME_IN_DATABASE(url)
                     )
@@ -150,6 +166,7 @@ async def main():
             case "Full":
                 try:
                     await asyncio.gather(
+                    extract_cookies(url),
                     auth_main(url),
                     Error_based_inj(url),
                     generic_sql_attack(url),
@@ -171,21 +188,36 @@ async def main():
                 print(options)
                 
             case "1 --header":
-                await auth_SQL_inj_HEADER(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    auth_SQL_inj_HEADER(url)
+                )
             
             case "2 --header":
-                await Error_based_inj_HEADER(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    Error_based_inj_HEADER(url)
+                )
                 
                 
             case "3 --header":
-                await generic_sql_attack_HEADER(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    generic_sql_attack_HEADER(url)
+                )
             
             case "4 --header":
-                await Time_based_sql_injection_HEADER(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    Time_based_sql_injection_HEADER(url)
+                )
         
             
             case "5 --header":
-                await union_based_SQL_inj_HEADER(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    union_based_SQL_inj_HEADER(url) 
+                )
             
             
             case "dbs --access":
@@ -230,18 +262,13 @@ async def main():
             case "Full --header":
                 try:
                     await asyncio.gather(
+                    extract_cookies(url),
                     auth_SQL_inj_HEADER(url),
-                    await asyncio.sleep(5),
                     Error_based_inj_HEADER(url),
-                    await asyncio.sleep(5),
                     generic_sql_attack_HEADER(url),
-                    await asyncio.sleep(5),
                     Time_based_sql_injection_HEADER(url),
-                    await asyncio.sleep(5),
                     union_based_SQL_inj_HEADER(url),
-                    await asyncio.sleep(5),
                     LIST_COLUMNS_ORACLE(url),
-                    await asyncio.sleep(5)
                     )
                 
                 except (asyncio.CancelledError,asyncio.IncompleteReadError,asyncio.LimitOverrunError,asyncio.SendfileNotAvailableError):
@@ -252,13 +279,22 @@ async def main():
                 pass
             
             case "http":
-                await INVALID_HTTP_REQ(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    INVALID_HTTP_REQ(url)
+                )
             
             case "--dump":
-                await DUMP_USERNAME_IN_DATABASE(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    DUMP_USERNAME_IN_DATABASE(url)
+                )
 
             case "name const":
-                await Name_const_inj(url)
+                await asyncio.gather(
+                    extract_cookies(url),
+                    Name_const_inj(url)
+                )
             
             case "make set inj":
                 await make_set_blind_sql_inj(url)
@@ -292,6 +328,7 @@ async def main():
                     elif e == "q":
                         raise SystemExit
                 await asyncio.gather(
+                    extract_cookies(url),
                     ORACLE_SQL_injection(url),
                     HOSTNAME_ORACLE(url),
                     DB_name_ATTACK(url),
@@ -368,7 +405,8 @@ if __name__ == "main":
         try:
             asyncio.run(main())
         except KeyboardInterrupt:
-            continue
+            logger.info("Aborted")
+            raise SystemExit
 
 elif __name__ == "SQLJngUI":
     pass
@@ -379,7 +417,9 @@ else:
         try:
             asyncio.run(main())
         except KeyboardInterrupt:
-            continue
+            logger.info("Aborted")
+            raise SystemExit
+
 
 
 

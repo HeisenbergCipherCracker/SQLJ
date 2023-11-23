@@ -141,4 +141,4 @@ async def Time_based_sql_injection_HEADER(urls):
         
 
 # extract_cookies("https://example.com")
-asyncio.run(Time_based_sql_injection_HEADER("https://example.com"))
+# asyncio.run(Time_based_sql_injection_HEADER("https://example.com"))
