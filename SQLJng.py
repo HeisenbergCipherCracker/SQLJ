@@ -49,6 +49,7 @@ try:
     from lib.priority.Priority import PRIORITY,HARMFULL
     from lib.Term.term import term
     from lib.Cookies.cookies import extract_cookies
+    from lib.extra.options import OPTIONS
 
 
 except ImportError as e:
@@ -66,16 +67,10 @@ logo = ""
 
 logo = main_banner
 
-options = """
-Pre-release 1.0
-1.authbypassSQL
-2.ErrorbasedINJection
-3.GenericSQL
-4.TimebasedSQL
-5.UNIONselect
-6.privilege escalation
+options = ""
+options += OPTIONS
 
-"""
+
 print(logo)
 
 logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
@@ -89,7 +84,7 @@ async def main():
         # while Tr
         global logo,options 
         await asyncio.sleep(1)
-        url = input(Fore.GREEN+"[INFO] enter the url of the target:") 
+        url = input(Fore.GREEN+">>>URL TARGET:") 
         try:
             if url == "host":
                 await Get_host_name(Host=input("enter the host:"))
@@ -102,40 +97,40 @@ async def main():
         except:
             pass
         print(options)
-        ch = input(Fore.BLUE+"[INFO]enter the exploit attack:") 
+        ch = input(Fore.BLUE+">>>") 
         match ch:
-            case "1":
+            case "01":
                 await asyncio.gather(
                 extract_cookies(url),
                 auth_SQL_inj(url) )
 
                 
-            case "2":
+            case "02":
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj(url)
                 )
                 
                 
-            case "3":
+            case "03":
                 await asyncio.gather(
                     extract_cookies(url),
                     generic_sql_attack(url)
                 )
                 
-            case "4":
+            case "04":
                 await asyncio.gather(
                     extract_cookies(url),
                     Time_based_sql_injection(url)
                 )
                 
-            case "5":
+            case "05":
                 await asyncio.gather(
                     extract_cookies(url),
                     union_based_SQL_inj(url)
                 )
             
-            case "6":
+            case "06":
                 try:
                     await asyncio.gather(
                         extract_cookies(url),
@@ -151,7 +146,7 @@ async def main():
                     logging.error(f"asyncio operation canceled.")
                     raise
                 
-            case "Full":
+            case "07":
                 try:
                     await asyncio.gather(
                     extract_cookies(url),
@@ -175,79 +170,38 @@ async def main():
             case "show options": 
                 print(options)
                 
-            case "1 --header":
+            case "08":
                 await asyncio.gather(
                     extract_cookies(url),
                     auth_SQL_inj_HEADER(url)
                 )
             
-            case "2 --header":
+            case "09":
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj_HEADER(url)
                 )
                 
                 
-            case "3 --header":
+            case "10":
                 await asyncio.gather(
                     extract_cookies(url),
                     generic_sql_attack_HEADER(url)
                 )
             
-            case "4 --header":
+            case "11":
                 await asyncio.gather(
                     extract_cookies(url),
                     Time_based_sql_injection_HEADER(url)
                 )
         
             
-            case "5 --header":
-                await asyncio.gather(
-                    extract_cookies(url),
-                    union_based_SQL_inj_HEADER(url) 
-                )
-            
-            
-            case "dbs --access":
-                # await Access_the_data_base()
-                # import os
-                if os.name == 'nt':  #* For Windows
-                    os.system('cls')
-                else:  # *For Mac and Linux
-                    os.system('clear')
-                    print(""" 
-                      
-                      
-                      
-                       ____  ____                              _      
-|  _ \| __ )    ___ ___  _ __  ___  ___ | | ___ 
-| | | |  _ \   / __/ _ \| '_ \/ __|/ _ \| |/ _ \
-| |_| | |_) | | (_| (_) | | | \__ \ (_) | |  __/
-|____/|____/   \___\___/|_| |_|___/\___/|_|\___|
-                      
-                      
-                      """)
-                while True:
-                    i = input("**[INFO]Press any key to display the info:**")
-                    db = Database()
-                    threads = [db.create_table(),db.display_the_info()]
-                    for thread in threads:
-                        tr = threading.Thread(target=thread)
-                        tr.start()
-                        tr.join()
-                    
-                    if i == "q":
-                        break
-                    elif i == "esc":
-                        raise SystemExit
-                    else:
-                        continue
                         
                     
                     
                 
             
-            case "Full --header":
+            case "x":
                 try:
                     await asyncio.gather(
                     extract_cookies(url),
@@ -266,34 +220,29 @@ async def main():
             case "--help":
                 pass
             
-            case "http":
+            case "12":
                 await asyncio.gather(
                     extract_cookies(url),
                     INVALID_HTTP_REQ(url)
                 )
             
-            case "--dump":
+            case "13":
                 await asyncio.gather(
                     extract_cookies(url),
                     DUMP_USERNAME_IN_DATABASE(url)
                 )
 
-            case "name const":
+            case "14":
                 await asyncio.gather(
                     extract_cookies(url),
                     Name_const_inj(url)
                 )
             
-            case "make set inj":
-                await make_set_blind_sql_inj(url)
             
-            case "prec attack":
+            case "15":
                 await Procedure_Attack(url)
-
-            case "XML":
-                await My_sql_XML_attack(url)
             
-            case "backend --lang":
+            case "16":
                 """This is not always indicating the precise backend language of the big websites. """
                 await find_backend_language(url)
                 i = input("")
@@ -302,10 +251,10 @@ async def main():
                 elif i == "q":
                     raise SystemExit
             
-            case "brute force":
+            case "17":
                 run_brute_force(url,0,0)
             
-            case "Oracle":
+            case "18":
                 while True:
                     await find_backend_language(url)
                     
@@ -323,23 +272,16 @@ async def main():
                     Database_LISTING(url)
                     )
             
-
-            case "substring":
-                await substring_sql_inj(url)
-                
-            case "cond":
-                await conditional_SQL_inj(url)                
-                
-            case "o":
-                pass
             
-            case "basic inj":
+                
+            
+            case "19":
                 await SQL_inj_BASIC(url)
             
-            case "esc":
+            case "Q":
                 raise SystemExit
             
-            case "port -f":
+            case "20":
                 await Find_open_ports_of_the_target(ipV4=input("Enter the ipV4 of the target:"))
             
             case "auto":
