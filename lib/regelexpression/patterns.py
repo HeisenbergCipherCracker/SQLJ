@@ -41,7 +41,7 @@ def Detect(text):
 
     # Keywords to search for
     global keywords
-    keywords = ['id', 'error', 'host', 'admin']
+    keywords = ['id', 'error', 'host', 'admin','mysql','sql','oracle']
 
     # Count occurrences of keywords
     keyword_counts = count_keywords(sample_text, keywords)
