@@ -112,6 +112,7 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("Error parameter might exists in the code.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(str(ack.text),"error parameter found")
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -119,12 +120,13 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("id parameter found.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text))
+                                html_response.push(str(ack.text),"id parameter found")
                             
                             if htmlVULN:
                                 logger.info("error parameter founded in the code.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(str(ack.text),"error parameter found")
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -132,20 +134,26 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("Id parameter found in the code.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(str(ack.text),"id parameter found")
+
                             
                             if errword:
                                 logger.info("error parameter might exists")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(str(ack.text),"Error parameter found")
+
                             
                                 
                         if req.status_code == 302:                                             
                             logger.info("Could inject the keyword:",line)
+                            Significant_captures.push(f"Could find injectable area in {url}","keyword:",str(line))
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info("Admin parameter might exists")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(str(ack.text),"admin parameter found")
                             
             else:
                 logger.error("Host is down")
@@ -161,6 +169,11 @@ async def ORACLE_SQL_injection(urls):
         
     finally:
         logger.info("Injection done!")
+        msg = str(html_response.display_all())
+        for cap in msg:
+            cap = cap.split("\n")
+            cap = sorted(cap)
+            print("\n    \n".join(cap))
      
         
         

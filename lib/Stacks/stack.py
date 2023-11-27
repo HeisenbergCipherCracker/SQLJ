@@ -1,19 +1,20 @@
 from collections import deque
-import sys,os
-current_directory = os.getcwd()
+import sys
+import os
 
+current_directory = os.getcwd()
 sys.path.append(current_directory)
 from Exceptions.exceptions import SQLJNGStackOverflow
-
-
 
 
 class Stack:
     def __init__(self):
         self.stack = deque()
 
-    def push(self, item):
+    def push(self, item, *args, **kwargs):
         self.stack.append(item)
+        self.stack.extend(args)
+        self.stack.extend(kwargs)
 
     def pop(self):
         if not self.is_empty():
@@ -33,5 +34,15 @@ class Stack:
     def size(self):
         return len(self.stack)
 
+    def display_all(self):
+        print("Captures:", list(self.stack))
+
+# Example usage
 html_response = Stack()
 Significant_captures = Stack()
+
+# s = Stack()
+# s.push("t", "y")
+
+# # Display all elements in the stack
+# s.display_all()
