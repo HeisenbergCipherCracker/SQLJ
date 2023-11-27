@@ -56,6 +56,10 @@ class SQLJNGDependenciesError(SQLJNGBasicException):
 class SQLJNGUserAborted(SQLJNGBasicException):
     pass
 
+class SQLJNGStackOverflow(SQLJNGBasicException):
+    pass
+
+
 
 
 

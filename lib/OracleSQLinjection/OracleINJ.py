@@ -21,6 +21,7 @@ from logger.logs import logger
 from lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
+from lib.Stacks.stack import html_response,Significant_captures
 
 import logging
 
@@ -118,6 +119,7 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("id parameter found.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(str(ack.text))
                             
                             if htmlVULN:
                                 logger.info("error parameter founded in the code.(might exists)")
