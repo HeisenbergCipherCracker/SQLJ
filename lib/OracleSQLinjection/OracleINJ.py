@@ -168,12 +168,18 @@ async def ORACLE_SQL_injection(urls):
 
         
     finally:
-        logger.info("Injection done!")
-        msg = str(html_response.display_all())
-        for cap in msg:
-            cap = cap.split("\n")
-            cap = sorted(cap)
-            print("\n    \n".join(cap))
+        try:
+            logger.info("Injection done!")
+            msg = str(html_response.display_all())
+            for cap in msg:
+                cap = cap.split("\n")
+                cap = sorted(cap)
+                print(msg[str(cap)])
+        
+        except TypeError:
+            msg = msg.split("\n")
+            msg = sorted(msg)
+            print("\n".join(msg))
      
         
         
