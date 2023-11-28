@@ -48,23 +48,23 @@ class Stack:
     def sort_stack(self):
         self.stack = deque(sorted(self.stack))
 
-    def binary_search_recursive(self, target, low, high):
+    def _binary_search_recursive(self, target, low, high):
         if low <= high:
             mid = (low + high) // 2
             if self.stack[mid] == target:
                 return mid  # Return the index where the target was found
             elif self.stack[mid] < target:
                 # Recursively search the right half
-                return self.binary_search_recursive(target, mid + 1, high)
+                return self._binary_search_recursive(target, mid + 1, high)
             else:
                 # Recursively search the left half
-                return self.binary_search_recursive(target, low, mid - 1)
+                return self._binary_search_recursive(target, low, mid - 1)
         else:
             return None  # Return None if the target was not found
 
     def binary_search(self, target):
         self.sort_stack()  # Sort the stack before performing binary search
-        return self.binary_search_recursive(target, 0, len(self.stack) - 1)
+        return self._binary_search_recursive(target, 0, len(self.stack) - 1)
 
 # Example usage
 Significant_captures = Stack()
