@@ -22,6 +22,9 @@ from logger.logs import logger
 from lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
+from result.Results import SQLJNG_result_report
+from lib.Stacks.stack import Significant_captures
+from lib.Stacks.stack import html_response
 
 import logging
 

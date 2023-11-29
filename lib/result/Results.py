@@ -6,8 +6,9 @@ current_directory = os.getcwd()
 sys.path.append(current_directory)
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import Stack
 
-async def SQLJNG_result_report(arr):
+async def SQLJNG_result_report(arr:Stack):
     try:
         for _ in arr:
             error_cap = arr[0]
@@ -41,7 +42,19 @@ async def SQLJNG_result_report(arr):
         raise SQLJNGStackRangeError
     except KeyboardInterrupt:
         raise SystemExit
+    
 
-from asyncio import run
+def safe_SQLJNG_result(array:Stack):
+    if array.size() >= 6:
+        return array[6],array[5],array[4],array[3],array[2],array[1],array[0]
+    else:
+        logger.critical("Could not capture enough data.")
+    
 
-# run(SQLJNG_result_report([34,5,6,7,8,6,7,7,8,5,4,3,3]))
+# from asyncio import run
+# e = Stack()
+# e.push(3,5)
+
+# run(SQLJNG_result_report(e)
+
+# print(safe_SQLJNG_result(e))

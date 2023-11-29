@@ -45,6 +45,8 @@ class Stack:
     def __getitem__(self, index):
         return self.stack[index]
     
+
+    
     def Insert_to_stack(self,indx,value):
         self.stack.insert(indx,value)
 

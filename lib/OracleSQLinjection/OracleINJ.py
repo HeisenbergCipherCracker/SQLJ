@@ -23,7 +23,8 @@ from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from lib.Stacks.stack import html_response,Significant_captures
 from lib.result.Results import SQLJNG_result_report
-
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.result.Results import safe_SQLJNG_result
 import logging
 
 attack_type = "authentication bypass SQL injection"
@@ -80,7 +81,7 @@ async def ORACLE_SQL_injection(urls):
         """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern  
         done = False 
-        filename = "Oracleinj.txt" 
+        filename = "test.txt" 
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
@@ -171,9 +172,11 @@ async def ORACLE_SQL_injection(urls):
         
     finally:
         try:
-            await SQLJNG_result_report(html_response)
-        except Exception as e:
-            logger.error(e)
+            await SQLJNG_result_report(arr=html_response,indX=4)
+        except SQLJNGStackRangeError:
+            safe_SQLJNG_result(html_response)
+
+
      
         
         
