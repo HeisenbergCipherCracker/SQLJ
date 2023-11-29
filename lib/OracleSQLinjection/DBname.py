@@ -32,8 +32,13 @@ try:
     __harmful__ = HARMFULL.MEDIUM
 
 except:
-    del __priority__
-    del __harmful__
+    try:
+        del __priority__
+        del __harmful__
+    
+    except:
+        pass
+    
 
 
 
