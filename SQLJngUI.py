@@ -76,31 +76,31 @@ async def Argument_parser():
 
 async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     if "www.google.com" in url or "https://www.google.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on google.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on google.com")
         raise SystemExit
     elif "www.youtube.com" in url or "https://www.youtube.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on youtube.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on youtube.com")
         raise SystemExit
     elif "www.facebook.com" in url or "https://www.facebook.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on facebook.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on facebook.com")
         raise SystemExit
     elif "www.instagram.com" in url or "https://www.instagram.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
         raise SystemExit
     elif "www.twitter.com" in url or "https://www.twitter.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on twitter.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on twitter.com")
         raise SystemExit
     elif "www.reddit.com" in url or "https://www.reddit.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on reddit.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on reddit.com")
         raise SystemExit
     elif "www.linkedin.com" in url or "https://www.linkedin.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on linkedin.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on linkedin.com")
         raise SystemExit
     elif "www.instagram.com" in url or "https://www.instagram.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
+        logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
         raise SystemExit
     elif "www.amazon.com" in url or "https://www.amazon.com" in url:
-        logger.critical("This attack may encounter you with legal issues. Please check")
+        logger.warn("This attack may encounter you with legal issues. Please check")
         raise SystemExit
     
     

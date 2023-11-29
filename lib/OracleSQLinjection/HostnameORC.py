@@ -25,6 +25,8 @@ from lib.priority.Priority import HARMFULL
 from result.Results import SQLJNG_result_report
 from lib.Stacks.stack import Significant_captures
 from lib.Stacks.stack import html_response
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.result.Results import safe_SQLJNG_result
 
 import logging
 
@@ -150,14 +152,18 @@ async def HOSTNAME_ORACLE(urls):
             else:
                 logger.error("Host is down")
         
-    except Exception as e:
-        logger.error(e)
+    except KeyboardInterrupt:
+        logger.info("Aborted")
     
         
   
         
     finally:
-        logger.info("Done with the injection.")
+        try:
+            SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            safe_SQLJNG_result(html_response)
      
         
         

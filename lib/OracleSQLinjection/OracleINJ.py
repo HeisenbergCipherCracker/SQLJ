@@ -184,4 +184,4 @@ async def ORACLE_SQL_injection(urls):
 
 
 
-asyncio.run(ORACLE_SQL_injection("http://testfire.net/login.jsp"))
+# asyncio.run(ORACLE_SQL_injection("http://testfire.net/login.jsp"))
