@@ -22,6 +22,7 @@ from lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from lib.Stacks.stack import html_response,Significant_captures
+from lib.result.Results import SQLJNG_result_report
 
 import logging
 
@@ -79,7 +80,7 @@ async def ORACLE_SQL_injection(urls):
         """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern  
         done = False 
-        filename = "test.txt" 
+        filename = "Oracleinj.txt" 
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
@@ -170,23 +171,9 @@ async def ORACLE_SQL_injection(urls):
         
     finally:
         try:
-            for cap in html_response:
-                error_cap = cap[0]
-                id_cap = cap[1]
-                err_cap_html = cap[2]
-                id_html = cap[3]
-                err_cap_html_2 = cap[4]
-                sig_cap = Significant_captures[0]
-                admin_cap = cap[6]
-                logger.info(error_cap)
-                logger.info(id_cap)
-                logger.info(err_cap_html)
-                logger.info(id_html)
-                logger.info(err_cap_html_2)
-                logger.info(sig_cap)
-                logger.info(admin_cap)
-        except Exception:
-            raise
+            await SQLJNG_result_report(html_response)
+        except Exception as e:
+            logger.error(e)
      
         
         

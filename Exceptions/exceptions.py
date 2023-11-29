@@ -59,6 +59,9 @@ class SQLJNGUserAborted(SQLJNGBasicException):
 class SQLJNGStackOverflow(SQLJNGBasicException):
     pass
 
+class SQLJNGStackRangeError(SQLJNGBasicException):
+    pass
+
 
 
 
