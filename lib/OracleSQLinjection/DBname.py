@@ -170,4 +170,4 @@ async def DB_name_ATTACK(urls):
 
 
 
-# asyncio.run(DB_name_ATTACK("http://testfire.net/login.jsp"))
+asyncio.run(DB_name_ATTACK("http://testfire.net/login.jsp"))

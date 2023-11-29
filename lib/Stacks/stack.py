@@ -41,6 +41,9 @@ class Stack:
             return result
         else:
             raise StopIteration
+        
+    def __getitem__(self, index):
+        return self.stack[index]
     
     def Insert_to_stack(self,indx,value):
         self.stack.insert(indx,value)
@@ -68,16 +71,4 @@ class Stack:
 
 # Example usage
 Significant_captures = Stack()
-Significant_captures.push(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-Significant_captures.display_all()
-
-# Binary search for the target 7
-target_index = Significant_captures.binary_search(7)
-
-Significant_captures.Insert_to_stack(3, 99)
-Significant_captures.display_all()
-
-if target_index is not None:
-    print(f"Target found at index {target_index}")
-else:
-    print("Target not found")
+html_response = Stack()

@@ -12,6 +12,7 @@
 *.pyz
 *.spec
 *.ico
+*test.txt
 *.sql
 *.props
 *.asm
