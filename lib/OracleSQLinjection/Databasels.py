@@ -20,10 +20,22 @@ from logger.logs import logger
 from lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
+try:
 
-__priority__ = PRIORITY.MEDIUM
-__harmfull__ = HARMFULL.HIGH
+    __priority__ = PRIORITY.MEDIUM
+    __harmfull__ = HARMFULL.HIGH
+
+except:
+    try:
+        del __priority__,__harmfull__
+    except:
+        pass
+
 
 import logging
 
@@ -94,7 +106,6 @@ async def Database_LISTING(urls):
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
-            # assert req.status_code == 200
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
                 logger.info("payload is ready to send.")
@@ -114,6 +125,8 @@ async def Database_LISTING(urls):
                                 logger.info("error parameter might exists.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+                                
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -121,22 +134,26 @@ async def Database_LISTING(urls):
                                 logger.info("Id parameter might exists")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             if htmlVULN:
                                 logger.info("error parameter might exists in the code")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
                                 logger.info("id parameter might exists in the code")
                                 Detect(ack.text)
+                                html_response.push(ack.text)
                             
                             if errword:
                                 logger.info("error parameter might exists in the code")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                                 
                             
                                 
@@ -147,6 +164,7 @@ async def Database_LISTING(urls):
                             logger.info("Admin parameter might exists")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
             else:
                 logger.error("Host is down.")
@@ -158,7 +176,12 @@ async def Database_LISTING(urls):
  
         
     finally:
-        logger.info("Injection done.")     
+        logger.info("Injection done.")  
+        try:
+            SQLJNG_result_report(html_response)
+
+        except SQLJNGStackRangeError:
+            safe_SQLJNG_result(html_response)   
         
         
      
