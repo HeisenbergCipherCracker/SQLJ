@@ -133,6 +133,7 @@ async def DB_name_ATTACK(urls):
                                 logger.info("error parameter might exists.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -140,11 +141,13 @@ async def DB_name_ATTACK(urls):
                                 logger.info("id parameter might exists in the response code.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             if htmlVULN:
                                 logger.info("Error parameter might exists.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -152,12 +155,14 @@ async def DB_name_ATTACK(urls):
                                 logger.info("id parameter might exists in the code")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
 
                             
                             if errword:
                                 logger.info("Error parameter might exists in the code")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                                 
                         if req.status_code == 302:                                             
@@ -167,6 +172,7 @@ async def DB_name_ATTACK(urls):
                             logger.info("Admin parameter might exists")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
             else:
                 logger.error("Host is down")
