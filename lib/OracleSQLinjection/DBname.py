@@ -26,6 +26,8 @@ from lib.Stacks.stack import html_response
 from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Prints.prints import print_function_yellow as printy
+
 
 try:
     __priority__ = PRIORITY.HIGH
@@ -187,10 +189,12 @@ async def DB_name_ATTACK(urls):
         
     finally:
         try:
-            SQLJNG_result_report(html_response)
+            await SQLJNG_result_report(html_response)
         
         except SQLJNGStackRangeError:
-            safe_SQLJNG_result(html_response)
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                printy(result)
      
         
         

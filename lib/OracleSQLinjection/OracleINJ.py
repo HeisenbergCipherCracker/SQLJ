@@ -6,9 +6,7 @@ import re
 import requests
 from colorama import Fore,init,Style
 from datetime import datetime
-# import sock
 import sqlite3
-# from database import create_database_for_Captures
 import os
 import sys
 
@@ -26,6 +24,7 @@ from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.result.Results import safe_SQLJNG_result
 import logging
+from lib.Prints.prints import print_function_yellow as printy
 
 attack_type = "authentication bypass SQL injection"
 
@@ -174,7 +173,9 @@ async def ORACLE_SQL_injection(urls):
         try:
             await SQLJNG_result_report(arr=html_response,indX=4)
         except SQLJNGStackRangeError:
-            safe_SQLJNG_result(html_response)
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                printy(res)
 
 
      

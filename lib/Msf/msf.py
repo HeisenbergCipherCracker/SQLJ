@@ -52,4 +52,4 @@ class Metasploit(object):
 
 
 
-Metasploit.Metasploit_installation()
+# Metasploit.Metasploit_installation()

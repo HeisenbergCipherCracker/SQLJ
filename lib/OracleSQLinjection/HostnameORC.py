@@ -6,9 +6,7 @@ import re
 import requests
 from colorama import Fore,init,Style
 from datetime import datetime
-# import sock
 import sqlite3
-# from database import create_database_for_Captures
 import os
 import sys
 
@@ -27,6 +25,7 @@ from lib.Stacks.stack import Significant_captures
 from lib.Stacks.stack import html_response
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.result.Results import safe_SQLJNG_result
+from lib.Prints.prints import print_function_yellow as printy
 
 import logging
 
@@ -160,10 +159,12 @@ async def HOSTNAME_ORACLE(urls):
         
     finally:
         try:
-            SQLJNG_result_report(html_response)
+            await SQLJNG_result_report(html_response)
         
         except SQLJNGStackRangeError:
-            safe_SQLJNG_result(html_response)
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                printy(res)
      
         
         

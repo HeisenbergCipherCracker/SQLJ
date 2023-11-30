@@ -8,7 +8,7 @@ from logger.logs import logger
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import Stack
 
-async def SQLJNG_result_report(arr:Stack):
+async def SQLJNG_result_report(arr:Stack) -> None:
     try:
         for _ in arr:
             error_cap = arr[0]
@@ -44,17 +44,21 @@ async def SQLJNG_result_report(arr:Stack):
         raise SystemExit
     
 
-def safe_SQLJNG_result(array:Stack):
-    if array.size() >= 6:
-        return array[6],array[5],array[4],array[3],array[2],array[1],array[0]
-    else:
-        logger.critical("Could not capture enough data.")
-    
+def safe_SQLJNG_result(array:Stack) -> Stack:
+    size = array.size()
+    for i in range(size-1,-1,-1):
+        yield array[i]
+
 
 # from asyncio import run
 # e = Stack()
-# e.push(3,5)
+# e.push(3,5,5,3,4,5)
 
-# run(SQLJNG_result_report(e)
+# run(SQLJNG_result_report(e))
 
 # print(safe_SQLJNG_result(e))
+# gen = safe_SQLJNG_result(e)
+
+# for num in gen:
+
+

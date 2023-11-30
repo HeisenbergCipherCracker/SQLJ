@@ -25,6 +25,13 @@ from logger.logs import logger
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from lib.regelexpression.patterns import Detect
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
+from lib.Prints.prints import print_function_yellow as printy
+
+
 
 
 __priority__ = PRIORITY.MEDIUM
@@ -65,17 +72,13 @@ Author: Alimirmohammad
 
 
 
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
-########################################
-#* Setting a couple of user agents
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-###############################################
 
 
 #
@@ -99,7 +102,6 @@ async def LIST_COLUMNS_ORACLE(urls):
             sorted_payload = "\n".join(sorted_rows) #* 
             print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
-            # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
@@ -120,6 +122,8 @@ async def LIST_COLUMNS_ORACLE(urls):
                                 logger.info("Error parameter might exists.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -127,11 +131,13 @@ async def LIST_COLUMNS_ORACLE(urls):
                                 logger.info("id parameter might exists")          
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
 
                             if htmlVULN:
                                 logger.info("error parameter might exists")          
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -139,13 +145,13 @@ async def LIST_COLUMNS_ORACLE(urls):
                                 logger.info("Id parameter might exists.")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
                             
                             if errword:
                                 logger.info("Error parameter may exists")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
-                                
-                            
+                                html_response.push(ack.text)
                                 
                         if req.status_code == 302:                                             
                             logger.info("Could inject a code:",line)
@@ -165,7 +171,13 @@ async def LIST_COLUMNS_ORACLE(urls):
         
     finally:
         logger.info("Injection done.")
-     
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            res = safe_SQLJNG_result(html_response)
+            for result in res:
+                printy(result)
         
         
      
@@ -173,4 +185,4 @@ async def LIST_COLUMNS_ORACLE(urls):
 
 
 # asyncio.run(conditional_SQL_inj("http://testfire.net/login.jsp"))
-asyncio.run(LIST_COLUMNS_ORACLE("http://testfire.net/login.jsp"))
+# asyncio.run(LIST_COLUMNS_ORACLE("http://testfire.net/login.jsp"))
