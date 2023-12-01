@@ -22,6 +22,10 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import SQLJNG_result_report
+from lib.result.Results import safe_SQLJNG_result
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 attack_type = "authentication bypass SQL injection"
 
@@ -154,8 +158,6 @@ async def auth_SQL_inj_HEADER(urls):
     finally:
         pass     
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
 
 # print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
 # print(capturesAUTHBYPASS)
