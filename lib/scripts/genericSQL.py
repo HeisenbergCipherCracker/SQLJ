@@ -1,53 +1,61 @@
-import sys
-import os
-parent_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(parent_dir)
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..'))
-sys.path.append(project_root)
-
-from regelexpression.patterns import Detect
-
-
-add_directory = os.path.abspath(os.path.dirname(__file__))
-
-priority_path = os.path.join(add_directory, '..', 'priority')
-
-sys.path.append(priority_path)
-
-
-from Priority import PRIORITY, HARMFULL
-
-
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
-
-sys.path.append(project_root)
-
-from logger.logs import logger
-from Exceptions.exceptions import SQLJNGUserExit
-from Exceptions.handler import extract_package_name_from_import_error,Install_missing_packages
-
-
 try:
-    import asyncio
-    import requests 
-    from colorama import Fore,init
-    import re
-    import glob
+    import sys
     import os
-    import socket
-    import time
-    from datetime import datetime
-    import sqlite3
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.append(parent_dir)
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(current_directory, '..'))
+    sys.path.append(project_root)
+
+    from regelexpression.patterns import Detect
+
+
+    add_directory = os.path.abspath(os.path.dirname(__file__))
+
+    priority_path = os.path.join(add_directory, '..', 'priority')
+
+    sys.path.append(priority_path)
+
+
+    from priority.Priority import PRIORITY, HARMFULL
+
+
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
+
+    sys.path.append(project_root)
+
+    from logger.logs import logger
+    from Exceptions.exceptions import SQLJNGUserExit
+    from Exceptions.handler import extract_package_name_from_import_error,Install_missing_packages
+
+
+    try:
+        import asyncio
+        import requests 
+        from colorama import Fore,init
+        import re
+        import glob
+        import os
+        import socket
+        import time
+        from datetime import datetime
+        import sqlite3
+        import logging
+
+    except ImportError as e:
+        try:
+            sys.exit("[!]Missing packages:",e)
+        
+        except:
+            pass
+
+    import sys
+    import os
     import logging
 
-except ImportError as e:
-    Install_missing_packages(str(e))
-
-import sys
-import os
-import logging
+except:
+    pass
 
 current_directory = os.getcwd()
 
@@ -62,12 +70,14 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 init()
 
-################################################################
 attack_type = "generic SQL injection"
-###################################################################
 
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
@@ -119,6 +129,7 @@ async def generic_sql_attack(urls):
                             logger.info(f"Could find parameter Error, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
                         vuln = re.findall(pattern=pattern,string=str(ack.text),flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=str(ack.text),flags=re.IGNORECASE)
@@ -126,11 +137,15 @@ async def generic_sql_attack(urls):
                             logger.info(f"Could find id parameter, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                         
                         if htmlVULN:
                             logger.info(f"Could find error parameter, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                             
                     
                         word = "id" in req.text
@@ -140,18 +155,25 @@ async def generic_sql_attack(urls):
                             Detect(req.text)
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                         
                         if errword:
                             logger.info(f"Could find injectable parameter(error), keyword:{line}")
                             Detect(req.text)
                             Detect(ack.text)
-                            await asyncio.sleep(3)            
+                            await asyncio.sleep(3)    
+                            html_response.push(ack.text)
+
                             
                     if req.status_code == 302:
                         logger.info(f"Could inject parameter,keyword:{line},target:{urls}")            
                         
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
-                        logger.info(f"Could find parameter admin, keyword:{line},target:{urls}")                                   
+                        logger.info(f"Could find parameter admin, keyword:{line},target:{urls}") 
+                        Detect(ack.text)
+                        html_response.push(ack.text)
+
     
 
     except Exception as e:
@@ -168,6 +190,13 @@ async def generic_sql_attack(urls):
         
     finally:
         logger.info("Done.")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
 
 # asyncio.run(generic_sql_attack("https://redtiger.labs.overthewire.org/"))

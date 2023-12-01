@@ -27,6 +27,10 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 
 attack_type = "authentication bypass SQL injection"
@@ -85,6 +89,8 @@ async def generic_sql_json(urls):
                                 logger.info(f"Could find parameter Error, keyword:{line}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -92,11 +98,15 @@ async def generic_sql_json(urls):
                                 logger.info(f"Could find id parameter, keyword:{line}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             if htmlVULN:
                                 logger.info(f"Could find error parameter, keyword:{line}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             word = "id" in req.text 
                             errword = "error" in req.text
@@ -105,12 +115,16 @@ async def generic_sql_json(urls):
                                 Detect(req.text)
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             if errword:
                                 logger.info(f"Could find injectable parameter(error), keyword:{line}")
                                 Detect(req.text)
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                         
                         elif inp == "esc":
                             raise SystemExit
@@ -132,6 +146,8 @@ async def generic_sql_json(urls):
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info(f"Could find parameter admin, keyword:{line},target:{urls}")
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                             
                 elif ask.lower() == "n":
                     sys.exit(0)
@@ -156,12 +172,18 @@ async def generic_sql_json(urls):
         
     finally:
         logger.info("Done.")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
         
 
 
-async def auth_main(urL):
-    await err_based_json(urL)
+
 
 
 

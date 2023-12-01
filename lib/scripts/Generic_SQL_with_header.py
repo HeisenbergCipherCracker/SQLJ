@@ -6,6 +6,10 @@ import logging
 import requests
 import asyncio
 from datetime import datetime
+import re
+from colorama import *
+
+init()
 
 current_directory = os.getcwd()
 
