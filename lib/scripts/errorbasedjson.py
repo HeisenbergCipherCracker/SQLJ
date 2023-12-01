@@ -25,6 +25,13 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
+from Exceptions.exceptions import SQLJNGUserExit
+from Exceptions.exceptions import SQLJNGNotOptionSelected
+from Exceptions.exceptions import SQLJNGOptionError
 
 
 attack_type = "authentication bypass SQL injection"
@@ -81,6 +88,7 @@ async def err_based_json(urls):
                             if "error" in ack.text: 
                                 logger.info(f"Could find parameter Error,keyword:{json.dumps(line)}")
                                 Detect(ack.text)
+                                html_response.push(ack.text)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
@@ -88,11 +96,14 @@ async def err_based_json(urls):
                                 logger.info(f"Could find id parameter, keyword:{json.dumps(line)}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3) 
+                                html_response.push(ack.text)
                             
                             if htmlVULN:
                                 logger.info(f"Could find error parameter, keyword:{json.dumps(line)}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             word = "id" in req.text 
                             errword = "error" in req.text
@@ -100,11 +111,15 @@ async def err_based_json(urls):
                                 logger.info(f"Could find parameter id, keyword:{json.dumps(line)}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             if errword:
                                 logger.info(f"Could find parameter error, keyword:{json.dumps(line)}")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                         
                         elif inp == "esc":
                             raise SystemExit
@@ -133,6 +148,8 @@ async def err_based_json(urls):
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info(f"Could find admin parameter, keyword:{line}")
+                            html_response.push(ack.text)
+
                             
                 elif ask.lower() == "n":
                     try:
