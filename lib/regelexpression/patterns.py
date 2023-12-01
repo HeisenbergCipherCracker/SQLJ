@@ -1,16 +1,16 @@
 import re
 import os
 import sys
-current_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(current_directory, '..', '..'))
-direc = os.path.dirname(os.path.abspath(__file__))
-root = os.path.abspath(os.path.join(direc, '..'))
+import os
+import sys
+current_directory = os.getcwd()
 
-sys.path.append(project_root)
-sys.path.append(root)
+sys.path.append(current_directory)
+
+
 
 from logger.logs import logger
-from priority.Priority import PRIORITY, HARMFULL
+from lib.priority.Priority import PRIORITY, HARMFULL
 
 __proirity__ = PRIORITY.MEDIUM
 ___harmfull__ = HARMFULL.LOW
@@ -41,7 +41,7 @@ def Detect(text):
 
     # Keywords to search for
     global keywords
-    keywords = ['id', 'error', 'host', 'admin','mysql','sql','oracle']
+    keywords = ['id', 'error', 'host', 'admin','mysql','sql','oracle','connector','connection','Error','Connector','Connect']
 
     # Count occurrences of keywords
     keyword_counts = count_keywords(sample_text, keywords)
@@ -56,6 +56,20 @@ def Detect(text):
         occurrences = extract_context(sample_text, keyword)
         for occurrence in occurrences:
             logger.info(occurrence.strip())
+
+
+def Remove_https_for_ipv4(url:str) -> str:
+    if "https://" in url:
+
+        cleaned_url = re.sub(r'https?://|/', '', url)
+        return cleaned_url
+    elif "http://" in url:
+        cleaned_urL = re.sub(r'http?://|/', '', url)
+        return cleaned_urL
+
+    
+
+
 
 
 

@@ -62,6 +62,9 @@ class SQLJNGStackOverflow(SQLJNGBasicException):
 class SQLJNGStackRangeError(SQLJNGBasicException):
     pass
 
+class SQLJNGGetHostNameError(SQLJNGBasicException):
+    pass
+
 
 
 
