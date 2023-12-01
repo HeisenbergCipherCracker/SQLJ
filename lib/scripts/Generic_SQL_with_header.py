@@ -20,7 +20,10 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
-
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
         
 
 
@@ -88,6 +91,7 @@ async def generic_sql_attack_HEADER(urls):
                             logger.info(f"Could find parameter Error, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
                         vuln = re.findall(pattern=pattern,string=str(ack.text),flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=str(ack.text),flags=re.IGNORECASE)
@@ -95,6 +99,8 @@ async def generic_sql_attack_HEADER(urls):
                             logger.info(f"Could find id parameter, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                             
                         
                         if htmlVULN:
@@ -102,9 +108,10 @@ async def generic_sql_attack_HEADER(urls):
                             Detect(ack.text)
                             await asyncio.sleep(3)
                             htmlVulnerbale = True
+                            html_response.push(ack.text)
+
                             
                     
-                        # htmlVulner
                         word = "id" in req.text
                         errword = "error" in req.text
                         if word:
@@ -112,12 +119,15 @@ async def generic_sql_attack_HEADER(urls):
                             Detect(req.text)
                             Detect(ack.text)
                             await asyncio.sleep(3)
-                            # databaseVuln = True
+                            html_response.push(ack.text)
+
                         
                         if errword:
                             logger.info(f"Could find injectable parameter(error), keyword:{line}")
                             Detect(req.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                             
                         
                             
@@ -127,7 +137,8 @@ async def generic_sql_attack_HEADER(urls):
                         done = True  
                         
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
-                        logger.info(f"Could find parameter admin, keyword:{line},target:{urls}")            
+                        logger.info(f"Could find parameter admin, keyword:{line},target:{urls}")    
+                        Detect(ack.text)        
 
     except Exception as e:
         print(f"[{datetime.now()}]  Error: {str(e)}")
@@ -153,6 +164,13 @@ async def generic_sql_attack_HEADER(urls):
         
     finally:
         logger.info("Connection closed\n finished the injection test.")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
        
         
         
