@@ -177,4 +177,4 @@ async def auth_main(urL):
     await auth_SQL_inj_json(urL)
 
 # asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
-asyncio.run(auth_SQL_inj_json("https://redtiger.labs.overthewire.org/"))
+# asyncio.run(auth_SQL_inj_json("https://redtiger.labs.overthewire.org/"))
