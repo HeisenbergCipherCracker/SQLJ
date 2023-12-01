@@ -24,6 +24,10 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 
 attack_type = "Union Select injection"
@@ -79,6 +83,7 @@ async def union_based_SQL_inj(urls):
                             logger.info(f"Could find parameter Error,keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
                         vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE)
@@ -86,12 +91,16 @@ async def union_based_SQL_inj(urls):
                             logger.info(f"Could find id parameter, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                             
                         
                         if htmlVULN:
                             logger.info(f"Could find Error parameter, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                         
                         word = "id" in req.text
                         errword = "error" in req.text
@@ -99,11 +108,15 @@ async def union_based_SQL_inj(urls):
                             logger.info(f"Could find parameter id, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                         
                         if errword:
                             logger.info(f"Could find parameter error, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                             
                         
                             
@@ -116,6 +129,8 @@ async def union_based_SQL_inj(urls):
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
                         logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
                         Detect(ack.text)
+                        html_response.push(ack.text)
+
                         
                 elif ack.status_code == 200:
                     logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
@@ -145,6 +160,13 @@ async def union_based_SQL_inj(urls):
         
     finally:
         logger.info("Done")
+        try:
+            await SQLJNG_result_report(html_response)
+
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
         
                 
