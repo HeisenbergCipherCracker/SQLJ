@@ -25,6 +25,10 @@ from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGUserExit
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 attack_type = "Error Based SQL Injection"
 headers = {
@@ -77,6 +81,7 @@ async def Error_based_inj_HEADER(urls):
                             logger.info(f"Could find parameter Error,keyword:{line}")
                             Detect(ack.text)
                             threshold_for_error_parameter += 1
+                            html_response.push(ack.text)
                             
                         vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE)
                         htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE)
@@ -85,12 +90,14 @@ async def Error_based_inj_HEADER(urls):
                             Detect(ack.text)
                             threshold_for_id_parameter += 1
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                         
                         if htmlVULN:
                             logger.info(f"Could find error parameter, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
                             threshold_for_error_parameter += 1
+                            html_response.push(ack.text)
                         
                         word = "id" in req.text
                         errword = "error" in req.text
@@ -99,12 +106,14 @@ async def Error_based_inj_HEADER(urls):
                             Detect(ack.text)
                             threshold_for_id_parameter += 1
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                         
                         if errword:
                             logger.info(f"Could find parameter error, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
                             threshold_for_error_parameter += 1
+                            html_response.push(ack.text)
                             
                         
                             
@@ -117,6 +126,7 @@ async def Error_based_inj_HEADER(urls):
                         logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
                         Detect(ack.text)
                         await asyncio.sleep(3)
+                        html_response.push(ack.text)
                 
                 elif ask.lower() == "n":
                     raise SQLJNGUserExit
@@ -146,21 +156,11 @@ async def Error_based_inj_HEADER(urls):
 
     finally:
         try:
-            if threshold_for_error_parameter > 3:
-                logger.info(f"error parameter appears to be unsafe and exposed in the html document and the response test")
-            
-            else:
-                pass
-
-            if threshold_for_id_parameter > 3:
-                logger.info(f"id parameter appears to be unsafe and exposed in the html document and the response test")
-            
-            else:
-                pass
-        except UnboundLocalError:
-            pass
-        except Exception as e:
-            logger.error(f"Error: {e}")
+            await SQLJNG_result_report(html_response)
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in html_response:
+                logger.info(res)
         
         
      
