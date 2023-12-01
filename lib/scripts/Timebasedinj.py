@@ -26,6 +26,10 @@ from  lib.regelexpression.patterns import Detect
 from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 
 attack_type = "Time based SQL injection"
@@ -81,6 +85,7 @@ async def Time_based_sql_injection(urls):
                             logger.info(f"Could find parameter Error, keyword:{line}")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
                             
                         vuln = re.findall(ack.text,pattern,flags=re.IGNORECASE)
@@ -89,11 +94,15 @@ async def Time_based_sql_injection(urls):
                             logger.info(f"Could find id parameter, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                         
                         if htmlVULN:
                             logger.info(f"Could find Error parameter, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                         
                         word = "id" in req.text
                         errword = "error" in req.text
@@ -101,11 +110,15 @@ async def Time_based_sql_injection(urls):
                             logger.info(f"Could find parameter id, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                         
                         if errword:
                             logger.info(f"Could find parameter error, keyword:{line}")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                             
                         
                             
@@ -126,8 +139,7 @@ async def Time_based_sql_injection(urls):
                         
                     
     except Exception as e:
-        print(f"[{datetime.now()}]",e)
-        logging.error(f"Error:{e},time:{datetime.now()},attack:{attack_type}")
+        logger.error(e)
  
         
     except KeyboardInterrupt as e:
@@ -143,6 +155,13 @@ async def Time_based_sql_injection(urls):
  
     finally:
         logger.info("Done")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
         
 # asyncio.run(Time_based_sql_injection("https://redtiger.labs.overthewire.org/level1.php"))
