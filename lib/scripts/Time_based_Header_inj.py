@@ -29,16 +29,17 @@ from lib.priority.Priority import HARMFULL
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGInstallationError
 from lib.Cookies.cookies import extract_cookies
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
 
 
-####################################################
 attack_type = "Time based SQL injection"
 
-#######################################
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 time_based_injection_capture = []
-########################################
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
@@ -90,6 +91,7 @@ async def Time_based_sql_injection_HEADER(urls):
                             logger.info("Error parameter may exists in the target.")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
                             
                         vuln = re.findall(ack.text,pattern,flags=re.IGNORECASE)
                         htmlVULN = re.findall(ack.text,htmlpattern,flags=re.IGNORECASE)
@@ -97,11 +99,15 @@ async def Time_based_sql_injection_HEADER(urls):
                             logger.info("id parameter may exists in the target.")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                         
                         if htmlVULN:
                             logger.info("Error parameter may exists in the target.")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                         
                         word = "id" in req.text
                         errword = "error" in req.text
@@ -109,11 +115,15 @@ async def Time_based_sql_injection_HEADER(urls):
                             logger.info("Id parameter may exists in the target.")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                         
                         if errword:
                             logger.info("Error parameter may exists in the target.")
                             Detect(ack.text)
                             await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                             
                         
                             
@@ -124,6 +134,8 @@ async def Time_based_sql_injection_HEADER(urls):
                     if "Admin" in vuln or "admin" in vuln or "Admin" in ack.text or "admin" in ack.text or "Admin" in htmlVULN or "admin" in htmlVULN:
                         logger.info("Admin paramter may exists.")
                         Detect(ack.text)
+                        html_response.push(ack.text)
+
                         
                 else:
                     pass
@@ -137,6 +149,13 @@ async def Time_based_sql_injection_HEADER(urls):
     
     finally:
         logger.info("Injection done.")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
         
 
