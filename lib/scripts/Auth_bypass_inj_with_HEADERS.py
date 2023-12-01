@@ -164,7 +164,9 @@ async def auth_SQL_inj_HEADER(urls):
             await SQLJNG_result_report(html_response)    
         
         except SQLJNGStackRangeError:
-            safe_SQLJNG_result(html_response)
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
 
 
 # print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
