@@ -103,18 +103,22 @@ async def auth_SQL_inj_HEADER(urls):
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
                                 logger.info(f"Could find parameter Error,keyword:{line}")    
-                                Detect(ack.text)                           
+                                Detect(ack.text) 
+                                html_response.push(ack.text)
+
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
                                 logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3) 
-                                Detect(ack.text)                            
+                                Detect(ack.text)   
+                                html_response.push(ack.text)                         
                             
                             if htmlVULN:
                                 logger.info(f"Could find Error parameter, keyword:{line}")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -122,13 +126,13 @@ async def auth_SQL_inj_HEADER(urls):
                                 logger.info(f"Could find parameter id, keyword:{line}")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
                             
                             if errword:
                                 logger.info(f"Could find parameter error, keyword:{line}")
                                 await asyncio.sleep(3)
-                                Detect(ack.text)
-                                
-                            
+                                Detect(ack.text) 
+                                html_response.push(ack.text)         
                                 
                         if req.status_code == 302:                                             
                             logger.info(f"Could inject parameter,keyword:{line},target:{urls}")
@@ -137,10 +141,10 @@ async def auth_SQL_inj_HEADER(urls):
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
                             logger.info(f"Could find parameter admin,keyword:{line},target:{urls}")
                             Detect(ack.text)
+                            html_response.push(ack.text)
                             
                 else:
-                    print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
-                    logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
+                    logger.info("Host is down.")
             
 
     except Exception as e:
@@ -156,7 +160,11 @@ async def auth_SQL_inj_HEADER(urls):
         
         
     finally:
-        pass     
+        try:
+            await SQLJNG_result_report(html_response)    
+        
+        except SQLJNGStackRangeError:
+            safe_SQLJNG_result(html_response)
 
 
 # print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
