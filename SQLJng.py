@@ -25,7 +25,6 @@ try:
     from lib.scripts.Backend_language import *
     from lib.scripts.Time_based_Header_inj import *
     from lib.scripts.database import *
-    from lib.scripts.Hackgpt import *
     from lib.scripts.Backend_language import *
     from lib.scripts.authbypass_inj import *
     from lib.scripts.Error_based_inj_with_headers import *
