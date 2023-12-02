@@ -1,7 +1,6 @@
 import argparse
 import warnings
 import logging
-import aiohttp
 from asyncio import run
 from lib.scripts.authbypass_inj import htmlpattern
 from lib.scripts.Error_based_injection import *
@@ -136,14 +135,12 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     elif attack_type == "Name":
         await Name_const_inj(url)
 
-    elif attack_type == "Make":
-        await make_set_blind_sql_inj(url)
+
     
     elif attack_type == "Procedure":
         await Procedure_Attack(url)
     
-    elif attack_type == "XML":
-        await My_sql_XML_attack(url)
+
     
     elif attack_type == "Brute":
         run_brute_force(url,0,0)
@@ -165,11 +162,9 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
             Database_LISTING(url)
             )
     
-    elif attack_type == "Substring":
-        await substring_sql_inj(url)
 
-    elif attack_type == "Cond":
-        await conditional_SQL_inj(url)
+
+   
     
     elif attack_type == "O":
         pass
@@ -196,12 +191,7 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
             Time_based_sql_injection(url),
             union_based_SQL_inj(url)
             )
-            threads = [db.create_table(),db.display_the_info()]
-            for thread in threads:
-                print("The final result of the exploitation:\n")
-                tr = threading.Thread(target=thread)
-                tr.start()
-                tr.join()
+  
             
         elif a == "q":
             raise SystemExit
@@ -215,8 +205,7 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     
     elif attack_type == "Other":
         pass
-    elif attack_type == "Basic" and header == "y":
-        await SQL_inj_BASIC_HEADER(url)
+
     elif attack_type == "Generic" and header == "y":
         await generic_sql_attack_HEADER(url)
     elif attack_type == "Time" and header == "y":
@@ -234,14 +223,12 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     elif attack_type == "Name" and header == "y":
         await Name_const_inj(url)
     
-    elif attack_type == "Make" and header == "y":
-        await make_set_blind_sql_inj(url)
+
     
     elif attack_type == "Procedure" and header == "y":
         await Procedure_Attack(url)
     
-    elif attack_type == "XML" and header == "y":
-        await My_sql_XML_attack(url)
+
     
     elif attack_type == "Brute" and header == "y":
         run_brute_force(url,0,0)
