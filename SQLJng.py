@@ -83,7 +83,11 @@ logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
 
 async def main():
     global host
-    """The main function and the user side of the program."""
+    """The main function and the user side of the program
+    See file SQLJ.log for the error has been occurred and program issues.
+    Returns : None
+    Parameters : None
+    """
     try:
         # while Tr
         global logo,options,https_rm

