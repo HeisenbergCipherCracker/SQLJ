@@ -1,5 +1,0 @@
-[!] wrong installation please check the installation instructions
-Traceback (most recent call last):
-  File "/workspaces/SQLJ/SQLJng.py", line 59, in <module>
-    __priority__ = PRIORITY.HIGH
-NameError: name 'PRIORITY' is not defined
