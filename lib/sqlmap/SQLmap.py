@@ -13,6 +13,7 @@ from lib.priority.Priority import HARMFULL
 from Exceptions.exceptions import SQLJNGOSError
 import subprocess
 from dataclasses import dataclass
+import threading
 
 #Reference :https://stackoverflow.com/questions/32382793/inheritance-threading-thread-class-does-not-work
 
@@ -85,8 +86,20 @@ class SQLmap(Thread):
 
     def Dump_the_tables(self):
         if self._Check_SQlmap() and self.dump is True:
-            cmd =subprocess.Popen(["sqlmap","-u",self.url,"--username","--password","--dump"],shell=True)
+            cmd =subprocess.Popen(["sqlmap","-u",str(self.url)])
             cmd.wait()
+
+    
+    def execute_all(self):
+        threads  = [
+            self.Dump_the_tables(),
+            self.exploit()
+        ]
+        for thread in threads:
+            var = Thread(thread)
+            var.start()
+            var.join()
+
 
             
             
@@ -100,6 +113,6 @@ class SQLmap(Thread):
 
 
 
-obj = SQLmap("http://testphp.vulnweb.com/artists.php?id=1",False,False,True,False,False,False)
-obj.exploit()
+# obj = SQLmap("http://testphp.vulnweb.com/artists.php?id=1",False,False,True,False,False,False)
+# obj.execute_all()
 
