@@ -50,10 +50,13 @@ try:
     from lib.Term.term import term
     from lib.Cookies.cookies import extract_cookies
     from lib.extra.options import OPTIONS
+    from lib.ipv6.IPV6 import get_ipv6_address
+    from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
+    from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
 
 
 except ImportError as e:
-    sys.exit(f"[!]Wrong installation:{e}")
+    sys.exit(f"[!]Wrong installation:{e} \n please visit https://github.com/HeisenbergCipherCracker/SQLJ at github.")
 
 
 """Tested against: http://testphp.vulnweb.com/disclaimer.php """
@@ -99,38 +102,42 @@ async def main():
         print(options)
         ch = input(Fore.BLUE+">>>") 
         match ch:
-            case "01":
+            case "01"|"1":
+                ipv4 = IPV4(url)
+                https_rm = remove_ipv4_and_ipv6_https_http(url)
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                 extract_cookies(url),
                 auth_SQL_inj(url) )
 
                 
-            case "02":
+            case "02"|"2":
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj(url)
                 )
                 
                 
-            case "03":
+            case "03"|"3":
                 await asyncio.gather(
                     extract_cookies(url),
                     generic_sql_attack(url)
                 )
                 
-            case "04":
+            case "04"|"4":
                 await asyncio.gather(
                     extract_cookies(url),
                     Time_based_sql_injection(url)
                 )
                 
-            case "05":
+            case "05"|"5":
                 await asyncio.gather(
                     extract_cookies(url),
                     union_based_SQL_inj(url)
                 )
             
-            case "06":
+            case "06"|"6":
                 try:
                     await asyncio.gather(
                         extract_cookies(url),
@@ -146,11 +153,10 @@ async def main():
                     logging.error(f"asyncio operation canceled.")
                     raise
                 
-            case "07":
+            case "07"|"7":
                 try:
                     await asyncio.gather(
                     extract_cookies(url),
-                    auth_main(url),
                     Error_based_inj(url),
                     generic_sql_attack(url),
                     Time_based_sql_injection(url),
@@ -176,7 +182,7 @@ async def main():
                     auth_SQL_inj_HEADER(url)
                 )
             
-            case "09":
+            case "09"|"9":
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj_HEADER(url)
@@ -297,12 +303,6 @@ async def main():
                     Time_based_sql_injection(url),
                     union_based_SQL_inj(url)
                     )
-                    threads = [db.create_table(),db.display_the_info()]
-                    for thread in threads:
-                        print("The final result of the exploitation:\n")
-                        tr = threading.Thread(target=thread)
-                        tr.start()
-                        tr.join()
                     
                 elif a == "q":
                     raise SystemExit
@@ -322,8 +322,7 @@ async def main():
     except Exception as e:
         print(Fore.RED+"[ERROR] An error occurred:",e)
     
-    except ImportError:
-        print(Fore.RED+"[!]Installation error,please ensure that the file is downloaded correctly." )
+
     
     except MemoryError:
         pass

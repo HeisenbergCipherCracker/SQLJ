@@ -1,4 +1,11 @@
 import socket
+import os,sys
+
+current_directory = os.getcwd()
+
+sys.path.append(current_directory)
+
+from logger.logs import logger
 
 def get_ipv6_address(hostname):
     try:
@@ -8,7 +15,8 @@ def get_ipv6_address(hostname):
         # Extract the first IPv6 address from the result
         ipv6_address = result[0][4][0]
         
-        return ipv6_address
+        return logger.info(f"the host:{hostname} has an ipv6 address:{ipv6_address}")
     except socket.gaierror as e:
         print(f"Error: {e}")
         return None
+
