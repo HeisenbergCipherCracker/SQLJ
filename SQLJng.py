@@ -65,6 +65,7 @@ init()
 
 Style.BRIGHT
 
+https_rm = None
 
 logo = ""
 
@@ -85,9 +86,9 @@ async def main():
     """The main function and the user side of the program."""
     try:
         # while Tr
-        global logo,options 
+        global logo,options,https_rm
         await asyncio.sleep(1)
-        url = input(Fore.GREEN+">>>URL TARGET:") 
+        url = input(Fore.GREEN+">>>TARGET URL:") 
         try:
             if url == "host":
                 await Get_host_name(Host=input("enter the host:"))
@@ -103,7 +104,6 @@ async def main():
         ch = input(Fore.BLUE+">>>") 
         match ch:
             case "01"|"1":
-                ipv4 = IPV4(url)
                 https_rm = remove_ipv4_and_ipv6_https_http(url)
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
@@ -113,6 +113,8 @@ async def main():
 
                 
             case "02"|"2":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj(url)
@@ -120,18 +122,24 @@ async def main():
                 
                 
             case "03"|"3":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     generic_sql_attack(url)
                 )
                 
             case "04"|"4":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     Time_based_sql_injection(url)
                 )
                 
             case "05"|"5":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     union_based_SQL_inj(url)
@@ -139,6 +147,8 @@ async def main():
             
             case "06"|"6":
                 try:
+                    get_ipv6_address(https_rm)
+                    IPV4(https_rm)
                     await asyncio.gather(
                         extract_cookies(url),
                         Find_data_base_link(url),
@@ -155,6 +165,8 @@ async def main():
                 
             case "07"|"7":
                 try:
+                    get_ipv6_address(https_rm)
+                    IPV4(https_rm)
                     await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj(url),
@@ -177,12 +189,16 @@ async def main():
                 print(options)
                 
             case "08":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     auth_SQL_inj_HEADER(url)
                 )
             
             case "09"|"9":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     Error_based_inj_HEADER(url)
@@ -190,12 +206,16 @@ async def main():
                 
                 
             case "10":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     generic_sql_attack_HEADER(url)
                 )
             
             case "11":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     Time_based_sql_injection_HEADER(url)
@@ -209,6 +229,8 @@ async def main():
             
             case "x":
                 try:
+                    get_ipv6_address(https_rm)
+                    IPV4(https_rm)
                     await asyncio.gather(
                     extract_cookies(url),
                     auth_SQL_inj_HEADER(url),
@@ -223,22 +245,26 @@ async def main():
                     logging.error("Error occurred in the main program due to the asyncio errors while performing a full attack.")
                     raise
                 
-            case "--help":
-                pass
             
             case "12":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     INVALID_HTTP_REQ(url)
                 )
             
             case "13":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     DUMP_USERNAME_IN_DATABASE(url)
                 )
 
             case "14":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await asyncio.gather(
                     extract_cookies(url),
                     Name_const_inj(url)
@@ -246,6 +272,8 @@ async def main():
             
             
             case "15":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await Procedure_Attack(url)
             
             case "16":
@@ -258,6 +286,8 @@ async def main():
                     raise SystemExit
             
             case "17":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 run_brute_force(url,0,0)
             
             case "18":
@@ -282,13 +312,17 @@ async def main():
                 
             
             case "19":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
                 await SQL_inj_BASIC(url)
             
             case "Q":
                 raise SystemExit
             
             case "20":
-                await Find_open_ports_of_the_target(ipV4=input("Enter the ipV4 of the target:"))
+                get_ipv6_address(https_rm)
+                ipv4 = IPV4(https_rm)
+                await Find_open_ports_of_the_target(ipV4=ipv4)
             
             case "auto":
                 # while True:
@@ -324,8 +358,7 @@ async def main():
     
 
     
-    except MemoryError:
-        pass
+
             
             
        
