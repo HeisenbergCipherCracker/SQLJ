@@ -39,9 +39,13 @@ from lib.privillageessscalation.findDBlink import Find_data_base_link
 from lib.banner.Banner import main_banner
 from lib.priority.Priority import PRIORITY,HARMFULL
 from lib.Term.term import term
+from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
+from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
+from lib.ipv6.IPV6 import get_ipv6_address
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-#python SQLJngUI.py -A Basic -u https://example.com --headers "User-Agent: Mozilla/5.0" 
+#python sqljng.py -A auto -u https://example.com --headers "User-Agent: Mozilla/5.0" 
 
 async def Argument_parser():
     parser = argparse.ArgumentParser(description="SQLJng")
@@ -138,6 +142,25 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     
     elif attack_type == "Procedure":
         await Procedure_Attack(url)
+    
+    elif attack_type == "auto":
+        try:
+            https_rm = remove_ipv4_and_ipv6_https_http(url)
+            get_ipv6_address(https_rm)
+            IPV4(https_rm)
+            await asyncio.gather(
+            extract_cookies(url),
+            auth_SQL_inj_HEADER(url),
+            Error_based_inj_HEADER(url),
+            generic_sql_attack_HEADER(url),
+            Time_based_sql_injection_HEADER(url),
+            union_based_SQL_inj_HEADER(url),
+            LIST_COLUMNS_ORACLE(url),
+            )
+        
+        except (asyncio.CancelledError,asyncio.IncompleteReadError,asyncio.LimitOverrunError,asyncio.SendfileNotAvailableError):
+            logging.error("Error occurred in the main program due to the asyncio errors while performing a full attack.")
+            raise
     
 
     
@@ -244,5 +267,5 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     # Your logic here based on the provided arguments
 
 
-if __name__ == "__main__":
-    run(Argument_parser())
+# if __name__ == "__main__":
+#     run(Argument_parser())
