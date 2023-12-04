@@ -28,6 +28,10 @@ from Exceptions.exceptions import SQLJNGUserExit
 from Exceptions.exceptions import SQLJNGApiError
 from Exceptions.exceptions import SQLJNGTimeExpiredError
 from lib.Attacktype.Attacks import AttackTypes
+from lib.Stacks.stack import html_response
+from lib.result.Results import SQLJNG_result_report
+from lib.result.Results import safe_SQLJNG_result
+from Exceptions.exceptions import SQLJNGStackRangeError
 
 
 
@@ -99,7 +103,7 @@ async def INVALID_HTTP_REQ(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
+            logger.info(f"Payload is ready to be send:{line}")
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False)
@@ -119,12 +123,13 @@ async def INVALID_HTTP_REQ(urls):
                         await Prepare_the_headers()
                         for headerR in headers:
                             ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) 
-                            logging.info(f"Sending payload:{line}")
+                            logger.info(f"sending payload:{line}")
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
                                 logger.info("Could find error parameter in the response")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
 
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
@@ -133,11 +138,14 @@ async def INVALID_HTTP_REQ(urls):
                                 logger.info(f"Could find id parameter in response.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
                             
                             if htmlVULN:
                                 logger.info(f"Could find error parameter in response.")
                                 Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
@@ -145,11 +153,15 @@ async def INVALID_HTTP_REQ(urls):
                                 logger.info(f"Could find id parameter in the response.")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
+
                             
                             if errword:
                                 logger.info(f"Could find error parameter in the response.")
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
+                                html_response.push(ack.text)
+
                                 
                             
                                 
@@ -160,6 +172,8 @@ async def INVALID_HTTP_REQ(urls):
                             logger.info(f"Could find admin parameter in the response.")
                             await asyncio.sleep(3)
                             Detect(ack.text)
+                            html_response.push(ack.text)
+
                             
                 else:
                     logger.info(f"Host is down")
@@ -180,6 +194,13 @@ async def INVALID_HTTP_REQ(urls):
         
     finally:
         logger.info("Done with the injection test.")
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
      
         
         
