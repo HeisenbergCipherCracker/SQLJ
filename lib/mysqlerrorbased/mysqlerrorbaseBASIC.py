@@ -184,7 +184,6 @@ async def SQL_inj_BASIC(urls):
         
      
 
-async def auth_main(urL):
-    await auth_SQL_inj(urL)
+
 
 # asyncio.run(SQL_inj_BASIC("http://testfire.net/login.jsp"))
