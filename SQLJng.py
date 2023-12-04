@@ -192,7 +192,7 @@ async def main():
             case "show options": 
                 print(options)
                 
-            case "08":
+            case "08"|"8":
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
                 await asyncio.gather(
