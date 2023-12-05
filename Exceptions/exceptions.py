@@ -65,6 +65,10 @@ class SQLJNGStackRangeError(SQLJNGBasicException):
 class SQLJNGGetHostNameError(SQLJNGBasicException):
     pass
 
+class SQLJNGInvalidArgumentError(SQLJNGBasicException):
+    pass
+
+
 
 
 
