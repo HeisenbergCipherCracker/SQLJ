@@ -1,3 +1,16 @@
+import sys
+try:
+    __import__("lib")
+    __import__("lib.scripts")
+    __import__("Exceptions")
+    __import__("Exceptions.exceptions")
+    __import__("Core")
+    __import__("colorama")
+
+except (ImportError,ModuleNotFoundError):
+    sys.exit("[!]Wrong installation,please visit github page:https://github.com/HeisenbergCipherCracker/SQLJ\n and make sure you have installed the program properly")
+
+
 try:
 
     import sys
