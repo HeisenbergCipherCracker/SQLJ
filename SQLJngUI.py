@@ -42,6 +42,8 @@ from lib.Term.term import term
 from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
 from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
 from lib.ipv6.IPV6 import get_ipv6_address
+warnings.simplefilter('ignore')
+#Reference: https://note.nkmk.me/en/python-warnings-ignore-warning/
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -75,6 +77,7 @@ async def Argument_parser():
 
 
     await Args_UI(url, headers, port, enable_feature, attack_type, args.vv)
+    return(url,headers,port,enable_feature,attack_type,verbose)
 
 async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     if "www.google.com" in url or "https://www.google.com" in url:
