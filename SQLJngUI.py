@@ -108,15 +108,17 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
         logger.warn("This attack may encounter you with legal issues. Please check")
         raise SystemExit
     
+
+    
     
 
     else:
         pass
 
     if verbose:
-        logger.setLevel(logging.DEBUG)
-    else:
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logger.info)
+
+
     
     if attack_type == "Abypass":
         await auth_SQL_inj_HEADER(url)

