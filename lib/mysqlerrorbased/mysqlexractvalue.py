@@ -11,8 +11,9 @@ import sqlite3
 import os
 import sys
 
-lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
-sys.path.append(lib_path)
+current_directory = os.getcwd()
+
+sys.path.append(current_directory)
 import sys
 import os
 from lib.scripts.headers import Prepare_the_headers
