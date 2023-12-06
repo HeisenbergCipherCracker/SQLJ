@@ -27,7 +27,7 @@ from Exceptions.exceptions import SQLJNGOptionError
 from Exceptions.exceptions import SQLJNGUserExit
 from Exceptions.exceptions import SQLJNGApiError
 from Exceptions.exceptions import SQLJNGTimeExpiredError
-from lib.Attacktype.Attacks import AttackTypes
+from lib.Attacktype.Attacks import AttackType
 from lib.Stacks.stack import html_response
 from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
@@ -73,7 +73,7 @@ for url in urls_to_attack:
 
 __pririority__ = PRIORITY.HIGH
 __harmfull__ = HARMFULL.HIGH
-__Attack__ = AttackTypes.INVALIDHTTP_REQ
+__Attack__ = AttackType.INVALIDHTTP_REQ
 
 
 pattern = r"\berror\b"
