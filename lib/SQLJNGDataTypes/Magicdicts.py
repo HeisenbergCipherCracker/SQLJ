@@ -67,6 +67,9 @@ class MagicDict(MagicDictShape):
         val = self["ATTACKS"] = attack
         return val
     
+    
+    
+    
 
 # d = Stack()
 # d.push(3)
