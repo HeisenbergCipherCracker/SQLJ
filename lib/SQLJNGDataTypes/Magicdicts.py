@@ -36,6 +36,15 @@ class MagicDictShape(dict,ABC):
         pass
 
 class MagicDict(MagicDictShape):
+    """
+    >>> d = Stack(value)
+    >>> magic_dict_instance = MagicDict(d)
+    >>> result = magic_dict_instance.insert_captures_to_dict("ke", d)
+
+    >>> Print keys and values of the dictionary
+    >>> for key, value in magic_dict_instance.items():
+    >>>  print(f"Key: {key}, Value: {value}")
+    """
     def __missing__(self, key):
         raise SQLJNGMagicDictKeyMissing
     
