@@ -32,6 +32,7 @@ from lib.Stacks.stack import html_response
 from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.SQLJNGDataTypes.Magicdicts import magic_dict
 
 
 
@@ -130,6 +131,7 @@ async def INVALID_HTTP_REQ(urls):
                                 await asyncio.sleep(3)
                                 Detect(ack.text)
                                 html_response.push(ack.text)
+                                magic_dict.insert_captures_to_dict("error based capture",html_response)
 
                                 
                             vuln = re.findall(pattern=pattern,string=ack.text,flags=re.IGNORECASE) 

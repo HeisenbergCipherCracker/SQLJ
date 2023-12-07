@@ -16,7 +16,6 @@ from lib.Attacktype.Attacks import AttackType
 @total_ordering
 @dataclass
 class MagicDictShape(dict,ABC):
-    cap : Stack
     @abstractmethod
     def __missing__(self,key):
         pass
@@ -55,9 +54,8 @@ class MagicDict(MagicDictShape):
         val = self[capture] = value
         return val
 
-    def safe_insert_to_dict(self,keyname):
-        val = self[keyname] = self.cap
-        return val
+    def safe_insert_to_dict(self,keyname,value):
+        pass
     
     def Errors(self,err:SQLJException,keyerr:str = f"Kerr{str(random.randint(1,1000))}"):
         val = self[keyerr] = err
@@ -82,6 +80,8 @@ class MagicDict(MagicDictShape):
 # # Print keys and values of the dictionary
 # for key, value in magic_dict_instance.items():
 #     print(f"Key: {key}, Value: {value}")
+
+magic_dict = MagicDict()
         
 
 
