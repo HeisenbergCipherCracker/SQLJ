@@ -68,6 +68,9 @@ class SQLJNGGetHostNameError(SQLJNGBasicException):
 class SQLJNGInvalidArgumentError(SQLJNGBasicException):
     pass
 
+class SQLJNGMagicDictKeyMissing(SQLJNGBasicException):
+    pass
+
 
 
 
