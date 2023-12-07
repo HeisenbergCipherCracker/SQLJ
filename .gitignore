@@ -25,7 +25,7 @@
 *.gch
 test.py
 Atest.py
-test/
+testjng/
 *t.py
 __pycache__/
 *.swp
