@@ -28,6 +28,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from logger.sqljlog import logger as sqljlog
+from lib.Attacktype.Attacks import HeaderAttacks
         
 
 
@@ -79,6 +81,7 @@ async def generic_sql_attack_HEADER(urls):
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the ip url: {urls}\n Do you want to send the payload to the website? ")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.GENERIC_SQL_INJECTION_HEADER.value}")
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,

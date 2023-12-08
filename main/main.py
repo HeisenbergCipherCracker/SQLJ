@@ -11,6 +11,9 @@ host = (f"host {int}")
 import asyncio
 import sys
 import os
+import warnings
+
+warnings.warn("This version of SQLJng is outdated.")
 
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
