@@ -68,7 +68,7 @@ try:
     from SQLJngUI import Argument_parser
 
 
-except ImportError as e:
+except (ImportError,ModuleNotFoundError) as e:
     sys.exit(f"[!]Wrong installation:{e} \n please visit https://github.com/HeisenbergCipherCracker/SQLJ at github.")
 
 

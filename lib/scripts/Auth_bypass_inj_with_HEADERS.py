@@ -26,6 +26,8 @@ from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.SQLJNGDataTypes.Magicdicts import magic_dict
+from lib.Attacktype.Attacks import HeaderAttacks
 
 attack_type = "authentication bypass SQL injection"
 
@@ -160,6 +162,7 @@ async def auth_SQL_inj_HEADER(urls):
         
         
     finally:
+        magic_dict.insert_captures_to_dict(f"HTML:{HeaderAttacks.AUTH_BYPASS_SQL_INJECTION_HEADER.value}",html_response)
         try:
             await SQLJNG_result_report(html_response)    
         
