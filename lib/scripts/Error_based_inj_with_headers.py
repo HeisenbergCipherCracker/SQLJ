@@ -31,7 +31,7 @@ from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
 from lib.Attacktype.Attacks import HeaderAttacks
 from lib.SQLJNGDataTypes.Magicdicts import magic_dict
-from 
+from logger.sqljlog import logger as sqljlog
 
 
 attack_type = "Error Based SQL Injection"
@@ -52,6 +52,7 @@ threshold_for_error_parameter = 0
 threshold_for_id_parameter = 0
   
 async def Error_based_inj_HEADER(urls):
+    sqljlog.info(f"Testing:{HeaderAttacks.ERROR_BASED_SQL_INJECTION_HEADER.value}")
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
     try: 
         global pattern,htmlpattern,threshold_for_error_parameter,threshold_for_id_parameter
@@ -169,4 +170,4 @@ async def Error_based_inj_HEADER(urls):
         
         
      
-asyncio.run(Error_based_inj_HEADER("http://testfire.net/login.jsp"))
+# asyncio.run(Error_based_inj_HEADER("http://testfire.net/login.jsp"))
