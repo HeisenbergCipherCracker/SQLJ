@@ -60,7 +60,7 @@ async def Argument_parser():
     parser.add_argument("-p", "--port", type=int, help="Specify a port number", required=False)
     parser.add_argument("--enable-feature", action="store_true", help="Enable a specific feature", required=False)
     parser.add_argument("-A", type=str, help="Specify the type of the attack", required=True)
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.3.0")
+    parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.4.1")
     parser.add_argument("-vv","-verbose", action="store_true", help="Enable verbose mode", required=False)
     parser.add_argument("-other", help="Enable other features", required=False)
 
