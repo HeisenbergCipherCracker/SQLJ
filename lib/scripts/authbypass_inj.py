@@ -8,9 +8,13 @@ import sys
 import os
 import logging
 
+
+
+
 current_directory = os.getcwd()
 
 sys.path.append(current_directory)
+
 
 
 attack_type = "authentication bypass SQL injection"
@@ -150,4 +154,4 @@ async def auth_SQL_inj(urls):
 
 
 
-# asyncio.run(auth_main("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/level1.php"))

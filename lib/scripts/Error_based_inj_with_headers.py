@@ -29,6 +29,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.Attacktype.Attacks import HeaderAttacks
+from lib.SQLJNGDataTypes.Magicdicts import magic_dict
 
 attack_type = "Error Based SQL Injection"
 headers = {
@@ -155,6 +157,7 @@ async def Error_based_inj_HEADER(urls):
         
 
     finally:
+        magic_dict.insert_captures_to_dict(f"HTML:{HeaderAttacks.ERROR_BASED_SQL_INJECTION_HEADER.value}",html_response)
         try:
             await SQLJNG_result_report(html_response)
         except SQLJNGStackRangeError:
@@ -164,4 +167,4 @@ async def Error_based_inj_HEADER(urls):
         
         
      
-# asyncio.run(Error_based_inj_HEADER("http://testfire.net/login.jsp"))
+asyncio.run(Error_based_inj_HEADER("http://testfire.net/login.jsp"))
