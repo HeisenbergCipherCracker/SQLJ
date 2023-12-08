@@ -154,8 +154,9 @@ async def auth_SQL_inj_HEADER(urls):
     except KeyboardInterrupt:
         pass
 
-    except SystemExit as e:
-        raise e
+
+    except SystemExit:
+        raise 
         
     except ConnectionAbortedError as e:
         logger.error(f"Error: {e}")        
