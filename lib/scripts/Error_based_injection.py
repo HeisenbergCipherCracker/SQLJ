@@ -28,6 +28,8 @@ from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from logger.sqljlog import logger as sqljlog
+from lib.Attacktype.Attacks import HeaderAttacks
 
 init()
 
@@ -61,7 +63,7 @@ async def Error_based_inj(urls):
             rows = payload.split("\n")
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) 
-            print(Fore.RED + str(sorted_payload)) 
+            logger.info(str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  
             req = requests.get(url=urls,verify=False)
             if req.status_code == 200:
@@ -69,6 +71,8 @@ async def Error_based_inj(urls):
                 logger.info(f"The website:{urls} is up with the status code:{req.status_code}")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.ERROR_BASED_SQL_INJECTION_HEADER.value}")
+
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,
@@ -157,3 +161,4 @@ async def Error_based_inj(urls):
             for res in result:
                 logger.info(res)
       
+asyncio.run(Error_based_inj("http://testphp.vulnweb.com/artists.php"))

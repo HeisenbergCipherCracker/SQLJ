@@ -52,7 +52,6 @@ threshold_for_error_parameter = 0
 threshold_for_id_parameter = 0
   
 async def Error_based_inj_HEADER(urls):
-    sqljlog.info(f"Testing:{HeaderAttacks.ERROR_BASED_SQL_INJECTION_HEADER.value}")
     """This is for error based SQL injection. You can realize to the SQL structure by this Injection if it works."""
     try: 
         global pattern,htmlpattern,threshold_for_error_parameter,threshold_for_id_parameter
@@ -74,6 +73,8 @@ async def Error_based_inj_HEADER(urls):
                 logger.info(f"The website:{urls} is up with the status code:{req.status_code}")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.ERROR_BASED_SQL_INJECTION_HEADER.value}")
+
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,

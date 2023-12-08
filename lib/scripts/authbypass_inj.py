@@ -59,7 +59,6 @@ __harmfull__ = HARMFULL.HIGH
 
 
 async def auth_SQL_inj(urls):
-    sqljlog.info(f"Testing:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}")
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         global pattern,htmlpattern 
@@ -81,6 +80,8 @@ async def auth_SQL_inj(urls):
                 ask = input(f"[{datetime.now()}]"+Fore.GREEN + f"Looks like the host is up with the url: {urls}\n Do you want to send the above payload to the website? ")
                 logger.info(f"The website:{urls} is returning 200 status code.\n\n")
                 if ask.lower() == "y": 
+                    sqljlog.info(f"Testing:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}")
+
                     for line in sorted_payload.split("\n"):
                         params = { 
                             "username": line,

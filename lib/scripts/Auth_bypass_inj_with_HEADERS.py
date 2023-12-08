@@ -70,7 +70,6 @@ headers = {
 
 
 async def auth_SQL_inj_HEADER(urls):
-    sqljlog.info(f"Testing:{HeaderAttacks.AUTH_BYPASS_SQL_INJECTION_HEADER.value}")
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """
@@ -93,6 +92,8 @@ async def auth_SQL_inj_HEADER(urls):
                 logger.info(f"The website:{urls}")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.AUTH_BYPASS_SQL_INJECTION_HEADER.value}")
+
                     for line in sorted_payload.split("\n"): 
 
                         params = { 
