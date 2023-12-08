@@ -23,6 +23,9 @@ class HeaderAttacks(Enum):
     PRIVILLAGE_ESCALATION_HEADER = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}privilege escalation using headers (payloads)"
     UNION_BASED_SQL_INJECTION = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}UNION ALL SELECT using headers (payloads)"
 
+class OracleAttacks(Enum):
+    DATABASE_COLUMN_LIST =  f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}database column list (payloads)"
+
 
 
 
