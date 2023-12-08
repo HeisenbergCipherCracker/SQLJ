@@ -29,11 +29,15 @@ By using SQLJ, you acknowledge that you have read and understood this disclaimer
 
 """
 
-def Agree():
-    print(term)
+import time
+import sys
 
+def Agree():
+
+    print(term)
     while True:
         try:
+            time.sleep(5)
             agree = input("Do you agree to the above terms? (y/n): ")
             if agree == "y":
                 break
@@ -41,7 +45,8 @@ def Agree():
             elif agree == "n":
                 raise SystemExit("You have to agree to the above terms.")
         except KeyboardInterrupt:
-            print("\nExiting...")        
+            sys.exit("\nExiting...")    
+                
 
     
 Agree()
