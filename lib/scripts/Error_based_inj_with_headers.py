@@ -31,6 +31,8 @@ from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
 from lib.Attacktype.Attacks import HeaderAttacks
 from lib.SQLJNGDataTypes.Magicdicts import magic_dict
+from 
+
 
 attack_type = "Error Based SQL Injection"
 headers = {

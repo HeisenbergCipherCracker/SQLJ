@@ -28,6 +28,7 @@ from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
 from lib.SQLJNGDataTypes.Magicdicts import magic_dict
 from lib.Attacktype.Attacks import HeaderAttacks
+from logger.sqljlog import logger as sqljlog
 
 attack_type = "authentication bypass SQL injection"
 
@@ -69,6 +70,7 @@ headers = {
 
 
 async def auth_SQL_inj_HEADER(urls):
+    sqljlog.info(f"Testing:{HeaderAttacks.AUTH_BYPASS_SQL_INJECTION_HEADER.value}")
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         """This is the main block of our exploit program which sending the payloads. """

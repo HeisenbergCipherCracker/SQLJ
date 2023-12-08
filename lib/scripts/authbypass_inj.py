@@ -31,6 +31,9 @@ from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response 
 from lib.Attacktype.Attacks import AttackType
 from lib.SQLJNGDataTypes.Magicdicts import magic_dict
+from logger.sqljlog import logger as sqljlog
+
+
 
 
 
@@ -51,9 +54,12 @@ capturesAUTHBYPASS = []
 __priority__ = PRIORITY.MEDIUM
 __harmfull__ = HARMFULL.HIGH
 
+# logger.setLevel(logging.CRITICAL)
+
 
 
 async def auth_SQL_inj(urls):
+    sqljlog.info(f"Testing:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}")
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
     try:
         global pattern,htmlpattern 
@@ -142,7 +148,7 @@ async def auth_SQL_inj(urls):
   
         
     finally:
-        magic_dict.insert_captures_to_dict(f"HTML:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}")
+        magic_dict.insert_captures_to_dict(f"HTML:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}",html_response)
         try:
             await SQLJNG_result_report(html_response)
         
