@@ -29,3 +29,5 @@ testjng/
 *t.py
 __pycache__/
 *.swp
+dist/
+build/
