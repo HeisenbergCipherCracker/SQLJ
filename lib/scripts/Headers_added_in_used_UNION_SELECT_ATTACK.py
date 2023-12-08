@@ -32,6 +32,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.Attacktype.Attacks import HeaderAttacks
+from logger.sqljlog import logger as sqljlog
 
 attack_type = "Header_union_sselect_sql_injection"
 
@@ -79,6 +81,7 @@ async def union_based_SQL_inj_HEADER(urls):
                 logger.info(f"Payload :{sorted_payload} is ready.")
                 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.UNION_BASED_SQL_INJECTION.value}")
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,
