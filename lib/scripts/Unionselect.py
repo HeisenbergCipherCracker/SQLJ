@@ -28,6 +28,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.Attacktype.Attacks import AttackType 
+from logger.sqljlog import logger as sqljlog
 
 
 attack_type = "Union Select injection"
@@ -70,6 +72,7 @@ async def union_based_SQL_inj(urls):
                 logger.info(f"Host is up with the status code: {req.status_code}")
                 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{AttackType.UNION_BASED_SQL_INJECTION.value}")
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,
