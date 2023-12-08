@@ -33,6 +33,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.Attacktype.Attacks import HeaderAttacks
+from logger.sqljlog import logger as sqljlog
 
 
 attack_type = "Time based SQL injection"
@@ -44,7 +46,6 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-##########################################
 
 """ 
               Reference : https://github.com/payloadbox/sql-injection-payload-list 
@@ -79,6 +80,7 @@ async def Time_based_sql_injection_HEADER(urls):
                 logger.info("Payload above is ready to be sent.")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{HeaderAttacks.TIME_BASED_SQL_INJECTION_HEADER.value}")
                     for line in sorted_payload.split("\n"):
                         params = {
                             "username": line,
