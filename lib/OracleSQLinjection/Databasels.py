@@ -25,18 +25,15 @@ from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
 from lib.Prints.prints import print_function_yellow as printy
+from logger.sqljlog import logger as sqljlog
+from lib.Attacktype.Attacks import OracleAttacks
 
 
-try:
 
-    __priority__ = PRIORITY.MEDIUM
-    __harmfull__ = HARMFULL.HIGH
+__priority__ = PRIORITY.MEDIUM
+__harmfull__ = HARMFULL.HIGH
 
-except:
-    try:
-        del __priority__,__harmfull__
-    except:
-        pass
+
 
 
 import logging
@@ -113,6 +110,7 @@ async def Database_LISTING(urls):
                 logger.info("payload is ready to send.")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{OracleAttacks.DATABASE_LIST.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
