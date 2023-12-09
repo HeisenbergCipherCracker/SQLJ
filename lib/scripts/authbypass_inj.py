@@ -164,4 +164,4 @@ async def auth_SQL_inj(urls):
 
 
 
-asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/level1.php"))
+# asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/level1.php"))
