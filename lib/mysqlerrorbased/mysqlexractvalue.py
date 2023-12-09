@@ -28,6 +28,8 @@ from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
 from lib.scripts.headers import *
+from lib.Attacktype.Attacks import ErrorBasedSQl
+from logger.logs import logger as sqljlog
 
 
 
@@ -110,6 +112,7 @@ async def Extract_value_injection(urls):
                 ask = input(f"[{datetime.now()}]{Fore.RESET}{Fore.GREEN}{Style.BRIGHT}[INFO]**Looks like the host is up: {Fore.RESET}{Fore.YELLOW}{urls} {Fore.RESET}{Fore.GREEN} \nDo you want to send the payload above to the website?** ")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{ErrorBasedSQl.MYSQL_EXTRACT_VALUE.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,

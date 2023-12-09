@@ -33,6 +33,7 @@ class OracleAttacks(Enum):
 class ErrorBasedSQl(Enum):
     INVALID_HTTP_REQ = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}invalid http request (payloads)"
     BASIC_SQL_Error_Based = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}basic sql (payloads)"
+    MYSQL_EXTRACT_VALUE = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}mysql extract value(payloads)"
 
 
 
