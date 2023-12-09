@@ -28,4 +28,6 @@ class Playsound:
 
 
 
-# Playsound.playsound_normal_macos("beep.wav")
+# if __name__ == "main":
+
+Playsound.playsound_normal_macos("beep.wav")

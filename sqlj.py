@@ -1,4 +1,8 @@
 import sys
+import os
+cur = os.getcwd()
+sys.path.append(cur)
+
 try:
     #these should be the first unusual imports
     __import__("lib")
@@ -11,8 +15,8 @@ try:
     __import__("nmap")
     __import__("requests")
 
-except (ImportError,ModuleNotFoundError):
-    sys.exit("[!]Wrong installation,please visit github page:https://github.com/HeisenbergCipherCracker/SQLJ\n and make sure you have installed the program properly")
+except (ImportError,ModuleNotFoundError) as e:
+    sys.exit(f"[!]Wrong installation,please visit github page:https://github.com/HeisenbergCipherCracker/SQLJ\n and make sure you have installed the program properly\n[ERROR]:{e}")
 
 except KeyboardInterrupt:
     sys.exit("[!]Aborted")
