@@ -1,6 +1,9 @@
 import asyncio
 import os
 import sys
+import warnings
+
+warnings.warn("This file is outdated!")
 
 class Constructor(object):
     def __init__(self, file):
