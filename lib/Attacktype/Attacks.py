@@ -28,6 +28,7 @@ class OracleAttacks(Enum):
     DATABASE_LIST = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}database list (payloads)"
     DATABASE_NAME = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}database name (payloads)"
     HOST_NAME_INJECTION = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}host name  (payloads)"
+    NORMAL_ORACLE = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}normal oracle(payloads)"
 
 
 
