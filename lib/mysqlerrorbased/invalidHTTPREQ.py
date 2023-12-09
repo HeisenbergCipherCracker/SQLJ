@@ -88,7 +88,7 @@ headers = {
 
 """Reference:https://sqlwiki.netspi.com/injectionTypes/errorBased/#oracle """
 
-#
+
 
 
 async def INVALID_HTTP_REQ(urls):

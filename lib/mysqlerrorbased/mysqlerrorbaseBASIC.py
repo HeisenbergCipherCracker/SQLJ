@@ -27,6 +27,8 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from lib.Attacktype.Attacks import ErrorBasedSQl
+from logger.logs import logger as sqljlog
 
 
 attack_type = "authentication bypass SQL injection"
@@ -105,6 +107,7 @@ async def SQL_inj_BASIC(urls):
                 logger.info(f"Host is up:{urls}")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{ErrorBasedSQl.BASIC_SQL_Error_Based.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
