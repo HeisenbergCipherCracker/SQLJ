@@ -6,9 +6,15 @@ try:
     __import__("Exceptions.exceptions")
     __import__("Core")
     __import__("colorama")
+    __import__("colorlog")
+    __import__("nmap")
+    __import__("requests")
 
 except (ImportError,ModuleNotFoundError):
     sys.exit("[!]Wrong installation,please visit github page:https://github.com/HeisenbergCipherCracker/SQLJ\n and make sure you have installed the program properly")
+
+except KeyboardInterrupt:
+    sys.exit("[!]Aborted")
 
 
 try:
