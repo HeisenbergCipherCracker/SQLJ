@@ -25,6 +25,7 @@ from lib.result.Results import safe_SQLJNG_result
 from logger.logs import logger
 from logger.sqljlog import logger as sqljlog
 from lib.Attacktype.Attacks import ErrorBasedSQl
+from Exceptions.exceptions import SQLJNGStackRangeError
 
 
 
@@ -181,7 +182,13 @@ async def My_sql_XML_attack(urls):
 
         
     finally:
-        pass
+        try:
+            await SQLJNG_result_report(html_response)
+        
+        except SQLJNGStackRangeError:
+            result = safe_SQLJNG_result(html_response)
+            for res in result:
+                logger.info(res)
      
         
         
