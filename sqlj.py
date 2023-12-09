@@ -1,5 +1,6 @@
 import sys
 try:
+    #these should be the first unusual imports
     __import__("lib")
     __import__("lib.scripts")
     __import__("Exceptions")
