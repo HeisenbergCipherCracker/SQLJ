@@ -25,6 +25,8 @@ from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.result.Results import safe_SQLJNG_result
 import logging
 from lib.Prints.prints import print_function_yellow as printy
+from lib.Attacktype.Attacks import OracleAttacks
+from logger.sqljlog import logger as sqljlog
 
 attack_type = "authentication bypass SQL injection"
 
@@ -98,6 +100,7 @@ async def ORACLE_SQL_injection(urls):
                 logger.info("payload is ready to send.")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{OracleAttacks.NORMAL_ORACLE.value}")
                     for line in sorted_payload: 
                         params = { 
                             "username": line,
