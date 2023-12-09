@@ -11,9 +11,7 @@ import sqlite3
 import os
 import sys
 
-current_directory = os.getcwd()
 
-sys.path.append(current_directory)
 import sys
 import os
 from lib.scripts.headers import Prepare_the_headers
@@ -30,6 +28,8 @@ from lib.Stacks.stack import html_response
 from lib.scripts.headers import *
 from lib.Attacktype.Attacks import ErrorBasedSQl
 from logger.logs import logger as sqljlog
+
+
 
 
 
