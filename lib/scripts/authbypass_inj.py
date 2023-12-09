@@ -56,7 +56,7 @@ __harmfull__ = HARMFULL.HIGH
 
 # logger.setLevel(logging.CRITICAL)
 
-
+init(autoreset=True)
 
 async def auth_SQL_inj(urls):
     """This is the authentication bypass sql injection block. it occurs when the input datas are not validated and attacker can inject its own code to the database and bypass the authentication"""
