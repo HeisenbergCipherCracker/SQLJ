@@ -79,7 +79,7 @@ except (ImportError,ModuleNotFoundError) as e:
     sys.exit(f"[!]Wrong installation:{e} \n please visit https://github.com/HeisenbergCipherCracker/SQLJ at github.")
 
 except KeyboardInterrupt:
-    print(Fore.RED+"[!]Aborted")
+    print("[!]Aborted")
     sys.exit(0)
 
 
