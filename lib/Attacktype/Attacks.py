@@ -30,6 +30,10 @@ class OracleAttacks(Enum):
     HOST_NAME_INJECTION = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}host name  (payloads)"
     NORMAL_ORACLE = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}normal oracle(payloads)"
 
+class ErrorBasedSQl(Enum):
+    INVALID_HTTP_REQ = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}invalid http request (payloads)"
+
+
 
 
 
