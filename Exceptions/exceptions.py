@@ -71,6 +71,10 @@ class SQLJNGInvalidArgumentError(SQLJNGBasicException):
 class SQLJNGMagicDictKeyMissing(SQLJNGBasicException):
     pass
 
+class SQLJNGPlatformError(SQLJNGBasicException):
+    pass
+
+
 
 
 

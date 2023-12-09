@@ -140,8 +140,10 @@ async def auth_SQL_inj(urls):
     except Exception as e:
         logger.error(f"Error: {e}")
         sqljlog.info(e)
+
     except KeyboardInterrupt:
         print(Fore.RED+"[ERROR]User exit")
+
 
     except SystemExit:
         raise 
@@ -162,4 +164,4 @@ async def auth_SQL_inj(urls):
 
 
 
-# asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/level1.php"))
+asyncio.run(auth_SQL_inj("https://redtiger.labs.overthewire.org/level1.php"))

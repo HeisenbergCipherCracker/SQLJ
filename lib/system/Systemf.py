@@ -7,6 +7,9 @@ sys.path.append(cur)
 
 
 class Platforms:
+    """
+    >>>print(platfrom.get_sys())
+    """
     @staticmethod
     def get_sys():
         # mac: darwin

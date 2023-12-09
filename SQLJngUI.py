@@ -42,7 +42,7 @@ from lib.Term.term import term
 from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
 from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
 from lib.ipv6.IPV6 import get_ipv6_address
-warnings.simplefilter('ignore')
+from lib.extra.safeplaysound import safe_play_sound
 #Reference: https://note.nkmk.me/en/python-warnings-ignore-warning/
 
 # logging.basicConfig(level=logging.INFO)
@@ -81,30 +81,39 @@ async def Argument_parser():
 
 async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     if "www.google.com" in url or "https://www.google.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on google.com")
         raise SystemExit
     elif "www.youtube.com" in url or "https://www.youtube.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on youtube.com")
         raise SystemExit
     elif "www.facebook.com" in url or "https://www.facebook.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on facebook.com")
         raise SystemExit
     elif "www.instagram.com" in url or "https://www.instagram.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
         raise SystemExit
     elif "www.twitter.com" in url or "https://www.twitter.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on twitter.com")
         raise SystemExit
     elif "www.reddit.com" in url or "https://www.reddit.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on reddit.com")
         raise SystemExit
     elif "www.linkedin.com" in url or "https://www.linkedin.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on linkedin.com")
         raise SystemExit
     elif "www.instagram.com" in url or "https://www.instagram.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on instagram.com")
         raise SystemExit
     elif "www.amazon.com" in url or "https://www.amazon.com" in url:
+        safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check")
         raise SystemExit
     
