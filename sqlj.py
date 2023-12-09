@@ -342,6 +342,11 @@ async def main():
                 get_ipv6_address(https_rm)
                 ipv4 = IPV4(https_rm)
                 await Find_open_ports_of_the_target(ipV4=ipv4)
+
+            case "22":
+                get_ipv6_address(https_rm)
+                ipv4 = IPV4(https_rm)
+                await Extract_value_injection(url)
             
             case "auto":
                 # while True:
