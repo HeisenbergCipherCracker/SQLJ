@@ -26,6 +26,7 @@ from logger.logs import logger
 from logger.sqljlog import logger as sqljlog
 from lib.Attacktype.Attacks import ErrorBasedSQl
 from Exceptions.exceptions import SQLJNGStackRangeError
+from lib.binmsg.binmess import msg
 
 
 

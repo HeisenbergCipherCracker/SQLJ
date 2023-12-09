@@ -45,8 +45,8 @@ from lib.ipv6.IPV6 import get_ipv6_address
 warnings.simplefilter('ignore')
 #Reference: https://note.nkmk.me/en/python-warnings-ignore-warning/
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.INFO)
+# logger = logging.getLogger(__name__)
 #python sqljng.py -A auto -u https://example.com --headers "User-Agent: Mozilla/5.0" 
 
 async def Argument_parser():
@@ -116,7 +116,10 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
         pass
 
     if verbose:
-        logger.setLevel(logger.info)
+        logger.setLevel(level=logging.INFO)
+    
+    else:
+        logger.setLevel(level=logging.CRITICAL)
 
 
     
@@ -272,5 +275,5 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     # Your logic here based on the provided arguments
 
 
-# if __name__ == "__main__":
-#     run(Argument_parser())
+if __name__ == "__main__":
+    run(Argument_parser())

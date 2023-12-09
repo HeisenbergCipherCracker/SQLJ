@@ -161,4 +161,4 @@ async def Error_based_inj(urls):
             for res in result:
                 logger.info(res)
       
-asyncio.run(Error_based_inj("http://testphp.vulnweb.com/artists.php"))
+# asyncio.run(Error_based_inj("http://testphp.vulnweb.com/artists.php"))

@@ -2,7 +2,7 @@ import logging
 import colorlog
 
 logger = logging.getLogger('my_logger')
-logger.setLevel(logging.CRITICAL)
+logger.setLevel(level=logging.NOTSET)
 
 formatter = colorlog.ColoredFormatter(
     "[%(asctime)s] [%(log_color)s%(levelname)s%(reset)s] %(log_color)s%(message)s%(reset)s",
