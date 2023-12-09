@@ -8,4 +8,4 @@ sys.path.append(cur)
 def safe_play_sound():
     subprocess.run(["python", "sound.py"],cwd="lib/sound")
 
-safe_play_sound()
+# safe_play_sound()
