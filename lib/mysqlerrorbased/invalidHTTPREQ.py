@@ -33,6 +33,8 @@ from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.SQLJNGDataTypes.Magicdicts import magic_dict
+from lib.Attacktype.Attacks import ErrorBasedSQl
+from logger.logs import logger as sqljlog
 
 
 
@@ -116,6 +118,7 @@ async def INVALID_HTTP_REQ(urls):
                 logger.info(msg)
             
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing payload:{ErrorBasedSQl.INVALID_HTTP_REQ.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
