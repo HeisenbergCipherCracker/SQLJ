@@ -26,6 +26,8 @@ from lib.Stacks.stack import html_response
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.result.Results import safe_SQLJNG_result
 from lib.Prints.prints import print_function_yellow as printy
+from lib.Attacktype.Attacks import OracleAttacks
+from logger.sqljlog import logger as sqljlog
 
 import logging
 
@@ -100,6 +102,7 @@ async def HOSTNAME_ORACLE(urls):
                 logger.info("payload is ready to send")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{OracleAttacks.HOST_NAME_INJECTION.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
