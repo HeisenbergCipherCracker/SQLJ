@@ -35,6 +35,7 @@ class ErrorBasedSQl(Enum):
     BASIC_SQL_Error_Based = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}basic sql (payloads)"
     MYSQL_EXTRACT_VALUE = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}mysql extract value(payloads)"
     MYSQL_NAME_CONST = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}name const(payloads)"
+    XML_ATTACK = f"{Fore.RESET}{Fore.WHITE}{Style.RESET_ALL}{Style.BRIGHT}xml attack(payloads)"
 
 
 

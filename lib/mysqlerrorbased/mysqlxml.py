@@ -24,6 +24,7 @@ from lib.result.Results import SQLJNG_result_report
 from lib.result.Results import safe_SQLJNG_result
 from logger.logs import logger
 from logger.sqljlog import logger as sqljlog
+from lib.Attacktype.Attacks import ErrorBasedSQl
 
 
 
@@ -72,20 +73,16 @@ for url in urls_to_attack:
 
 
 
-####################################33
 pattern = r"\berror\b"
 htmlpattern = r"\bid\b"
 capturesAUTHBYPASS = []
-########################################
 #* Setting a couple of user agents
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-###############################################
 
 
-#
 logging.basicConfig(filename="SQLJ.log",level=logging.DEBUG)
 
 
@@ -114,6 +111,7 @@ async def My_sql_XML_attack(urls):
                 logger.info(f"Host:{urls} is up with 200 code.")
 
                 if ask.lower() == "y":
+                    sqljlog.info(f"Testing:{ErrorBasedSQl.XML_ATTACK.value}")
                     for line in sorted_payload.split("\n"): 
                         params = { 
                             "username": line,
