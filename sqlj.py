@@ -79,6 +79,9 @@ try:
     from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
     from SQLJngUI import Argument_parser
     from lib.pversions.versions import version
+    from Exceptions.sqljngwarnings import SQLJNGPythonInterpreterNotRecommendedWarning
+    from Exceptions.sqljngwarnings import SQLJNGPython2IsNotSupportedWarning
+    from Exceptions.sqljngwarnings import SQLJNGPythonInterpreterNotFoundWarning
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -95,23 +98,23 @@ try:
         if ver == version[0]:
             continue
         elif ver  == version[1]:
-            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.")
+            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.",SQLJNGPythonInterpreterNotRecommendedWarning)
             continue
 
         elif ver  == version[2]:
-            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.")
+            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.",SQLJNGPythonInterpreterNotRecommendedWarning)
             continue
 
 
         elif ver  == version[3] or ver == version[4] or ver == version[5]:
-            sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.")
+            sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.",SQLJNGPythonInterpreterNotRecommendedWarning)
 
         elif ver == version[6]:
-            warnings.warn("python2 is not supported in this sqljng version")
+            warnings.warn("python2 is not supported in this sqljng version",SQLJNGPython2IsNotSupportedWarning)
             sys.exit("python2 is not supported in this sqljng version.")
 
         else:
-            warnings.warn("Could not find significant information about your python interpreter.")
+            warnings.warn("Could not find significant information about your python interpreter.",SQLJNGPythonInterpreterNotFoundWarning)
 
 except SystemExit:
     raise
