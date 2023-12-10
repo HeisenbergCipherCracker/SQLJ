@@ -43,6 +43,7 @@ from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_an
 from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
 from lib.ipv6.IPV6 import get_ipv6_address
 from lib.extra.safeplaysound import safe_play_sound
+from Exceptions.sqljngwarnings import SQLJNGVersionOutdated
 #Reference: https://note.nkmk.me/en/python-warnings-ignore-warning/
 
 # logging.basicConfig(level=logging.INFO)
@@ -74,12 +75,13 @@ async def Argument_parser():
     enable_feature = args.enable_feature
     attack_type = args.A 
     verbose = args.vv
+    version = args.version
 
 
-    await Args_UI(url, headers, port, enable_feature, attack_type, args.vv)
+    await Args_UI(url, headers, port, enable_feature, attack_type, args.vv,version)
     return(url,headers,port,enable_feature,attack_type,verbose)
 
-async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
+async def Args_UI(url, headers, port, enable_feature, attack_type, verbose,version):
     if "www.google.com" in url or "https://www.google.com" in url:
         safe_play_sound()
         logger.warn("This attack may encounter you with legal issues. Please check the url and try again. You are trying to perform an attack on google.com")
@@ -130,6 +132,8 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose):
     else:
         logger.setLevel(level=logging.CRITICAL)
 
+    if version >= "1.4.0":
+        warnings.warn("This version of SQLJng is outdated.",SQLJNGVersionOutdated)
 
     
     if attack_type == "Abypass":

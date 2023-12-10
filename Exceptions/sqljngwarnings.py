@@ -7,3 +7,5 @@ class SQLJNGPython2IsNotSupportedWarning(UserWarning):
 class SQLJNGPythonInterpreterNotFoundWarning(UserWarning):
     pass
 
+class SQLJNGVersionOutdated(UserWarning):
+    pass
