@@ -13,9 +13,14 @@ cur = os.getcwd()
 sys.path.append(cur)
 from lib.extra.safeplaysound import safe_play_sound
 
-def find_ipv4type_private(ip:str)->bool:
+def find_ipv4type_private(ip:str)->(bool,str):
+    """
+
+    returns: bool,string
+    """
     pattern = re.compile(r"^(?:192\.168|10|172\.(?:1[6-9]|2[0-9]|3[0-1]))\.\d{1,3}\.\d{1,3}$")
     if pattern.match(ip):
+        warnings.warn("This ip is designed to the private ip address.")
         return True,"this ip is private"
     
     return False,"this ip is not private"

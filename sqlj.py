@@ -78,10 +78,11 @@ try:
     from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
     from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
     from SQLJngUI import Argument_parser
-    from lib.pversions.versions import version
+    from lib.pversions.versions import version_311
     from Exceptions.sqljngwarnings import SQLJNGPythonInterpreterNotRecommendedWarning
     from Exceptions.sqljngwarnings import SQLJNGPython2IsNotSupportedWarning
     from Exceptions.sqljngwarnings import SQLJNGPythonInterpreterNotFoundWarning
+    from lib.regelexpression.ippatterns import find_ipv4type_private as isprivateipv4
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -93,25 +94,25 @@ except KeyboardInterrupt:
 
 
 try:
-    for _ in version:
+    for _ in version_311:
         ver = str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro)
-        if ver == version[0]:
+        if ver == version_311[0]:
             continue
-        elif ver  == version[1]:
+        elif ver  == version_311[1]:
             warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.",SQLJNGPythonInterpreterNotRecommendedWarning)
             continue
 
-        elif ver  == version[2]:
+        elif ver  == version_311[2]:
             warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.",SQLJNGPythonInterpreterNotRecommendedWarning)
             continue
 
 
-        elif ver  == version[3] or ver == version[4] or ver == version[5]:
+        elif ver  == version_311[3] or ver == version_311[4] or ver == version_311[5]:
             sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.",SQLJNGPythonInterpreterNotRecommendedWarning)
 
-        elif ver == version[6]:
-            warnings.warn("python2 is not supported in this sqljng version",SQLJNGPython2IsNotSupportedWarning)
-            sys.exit("python2 is not supported in this sqljng version.")
+        elif ver == version_311[6]:
+            warnings.warn("python2 is not supported in this sqljng version_311",SQLJNGPython2IsNotSupportedWarning)
+            sys.exit("python2 is not supported in this sqljng version_311.")
 
         else:
             warnings.warn("Could not find significant information about your python interpreter.",SQLJNGPythonInterpreterNotFoundWarning)
@@ -146,6 +147,8 @@ logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
 
 # url = None
 
+#Reference for testing:http://testphp.vulnweb.com/artists.php
+
 async def main():
     global host
     """The main function and the user side of the program
@@ -176,12 +179,15 @@ async def main():
                 https_rm = remove_ipv4_and_ipv6_https_http(url)
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
+                _,ipinfo = isprivateipv4(https_rm)
+                print(ipinfo)
                 await asyncio.gather(
                 extract_cookies(url),
                 auth_SQL_inj(url) )
 
                 
             case "02"|"2":
+                
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
                 await asyncio.gather(
