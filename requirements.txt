@@ -3,3 +3,4 @@ python-nmap
 bs4
 colorlog
 colorama
+psutil
