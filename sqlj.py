@@ -34,6 +34,7 @@ try:
     import asyncio
     import sys
     import os
+    import warnings
     from lib.scripts.authbypass_inj import htmlpattern
     from lib.scripts.Error_based_injection import *
     from lib.scripts.genericSQL import *
@@ -77,6 +78,7 @@ try:
     from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
     from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
     from SQLJngUI import Argument_parser
+    from lib.pversions.versions import version
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -85,6 +87,36 @@ except (ImportError,ModuleNotFoundError) as e:
 except KeyboardInterrupt:
     print("[!]Aborted")
     sys.exit(0)
+
+
+try:
+    for _ in version:
+        ver = str(sys.version_info.major) + "." + str(sys.version_info.minor) + "." + str(sys.version_info.micro)
+        if ver == version[0]:
+            continue
+        elif ver  == version[1]:
+            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.")
+            continue
+
+        elif ver  == version[2]:
+            warnings.warn("It is recommended to use python 3.12 or more for the asyncio improvements.")
+            continue
+
+
+        elif ver  == version[3] or ver == version[4] or ver == version[5]:
+            sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.")
+
+        elif ver == version[6]:
+            warnings.warn("python2 is not supported in this sqljng version")
+            sys.exit("python2 is not supported in this sqljng version.")
+
+        else:
+            warnings.warn("Could not find significant information about your python interpreter.")
+
+except SystemExit:
+    raise
+        
+        
 
 
 
