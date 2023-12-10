@@ -38,7 +38,7 @@ async def extract_cookies(host):
             msg += f"\nSecure: {cookie.secure}"
             logger.info(msg)
             sqljlog.info(msg)
-            con = input("do you want to continue with this cookies?(y/q)")
+            con = input("do you want to continue with this cookies(you can use your own cookies)?(y/q)")
             if con == "y":
                 pass
             elif con == "q":

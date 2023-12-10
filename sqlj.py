@@ -23,7 +23,7 @@ except KeyboardInterrupt:
 
 
 try:
-
+    import logging
     import sys
     import sys
     import sys
@@ -83,6 +83,8 @@ try:
     from Exceptions.sqljngwarnings import SQLJNGPython2IsNotSupportedWarning
     from Exceptions.sqljngwarnings import SQLJNGPythonInterpreterNotFoundWarning
     from lib.regelexpression.ippatterns import find_ipv4type_private as isprivateipv4
+    from logger.logs import logger
+    from logger.sqljlog import logger as sqljlog
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -144,6 +146,11 @@ options += OPTIONS
 print(logo)
 
 logging.basicConfig(filename="SQLJ.log",level=logging.ERROR)
+
+
+logger.setLevel(logging.CRITICAL)
+sqljlog.setLevel(logging.INFO)
+
 
 # url = None
 
