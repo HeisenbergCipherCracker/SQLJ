@@ -7,6 +7,7 @@ current_directory = os.getcwd()
 sys.path.append(current_directory)
 from Exceptions.exceptions import SQLJNGOptionError
 from logger.logs import logger
+from logger.sqljlog import logger as sqljlog
 
 try:
     import requests
@@ -36,6 +37,7 @@ async def extract_cookies(host):
             msg += f"\nExpires: {cookie.expires}"
             msg += f"\nSecure: {cookie.secure}"
             logger.info(msg)
+            sqljlog.info(msg)
             con = input("do you want to continue with this cookies?(y/q)")
             if con == "y":
                 pass
