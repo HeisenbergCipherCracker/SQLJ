@@ -3,6 +3,7 @@ import os
 cur = os.getcwd()
 sys.path.append(cur)
 
+
 try:
     #these should be the first unusual imports
     __import__("lib")
