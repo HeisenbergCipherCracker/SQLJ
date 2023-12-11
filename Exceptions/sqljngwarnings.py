@@ -9,3 +9,7 @@ class SQLJNGPythonInterpreterNotFoundWarning(UserWarning):
 
 class SQLJNGVersionOutdated(UserWarning):
     pass
+
+class SQLJMapNotRunningInMacos(UserWarning):
+    pass
+
