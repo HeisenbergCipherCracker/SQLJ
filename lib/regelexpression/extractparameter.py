@@ -19,16 +19,16 @@ def extract_parameter_name(url):
         return False
     
 
-parameter = None
+# parameter = None
 
-# Sample URL
-url = "http://testphp.vulnweb.com/artists.php?artist=1"
+# # Sample URL
+# url = "http://testphp.vulnweb.com/artists.php?artist=1"
 
-# Extract the parameter name
-parameter_name = extract_parameter_name(url)
+# # Extract the parameter name
+# parameter_name,_ = extract_parameter_name(url)
 
-# Display the result
-if parameter_name:
-    print("Parameter Name:", parameter_name)
-else:
-    print("No parameter found.")
+# # Display the result
+# if parameter_name:
+#     print("Parameter Name:", parameter_name)
+# else:
+#     print("No parameter found.")

