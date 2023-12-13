@@ -45,3 +45,18 @@ SELECT {column} FROM {view};
         payload = f"""
 SELECT DISTINCT {column} FROM {table};
  """
+        retval = payload
+        return retval
+    
+    @staticmethod 
+    def Host_name_oracle(hostname,viewcolumn,table):
+        payload = f"""
+SELECT {hostname} FROM {viewcolumn};
+SELECT UTL_INADDR.get_host_name FROM {table};
+SELECT UTL_INADDR.get_host_name('10.0.0.1') FROM {table};
+SELECT UTL_INADDR.get_host_address FROM {table};
+"""
+        retval = payload
+        return retval
+    
+    
