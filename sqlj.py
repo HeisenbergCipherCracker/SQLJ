@@ -111,7 +111,7 @@ try:
 
 
         elif ver  == version_311[3] or ver == version_311[4] or ver == version_311[5]:
-            sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.",SQLJNGPythonInterpreterNotRecommendedWarning)
+            sys.exit("[!]Your python interpreter does not support this program syntax,you'll need\npython 3.10 or more\n3.10 recommended.")
 
         elif ver == version_311[6]:
             warnings.warn("python2 is not supported in this sqljng version_311",SQLJNGPython2IsNotSupportedWarning)
