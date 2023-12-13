@@ -104,6 +104,8 @@ async def HOSTNAME_ORACLE(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{OracleAttacks.HOST_NAME_INJECTION.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

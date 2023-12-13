@@ -177,5 +177,5 @@ async def auth_SQL_inj_HEADER(urls):
                 logger.info(res)
 
 
-print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
+# print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
 # print(capturesAUTHBYPASS)

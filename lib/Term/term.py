@@ -1,7 +1,7 @@
 term = """
 
 
-Disclaimer: Use of SQLJ SQL Injection Tool
+[!]Disclaimer: Use of SQLJ SQL Injection Tool
 
 The SQLJ SQL Injection Tool (hereinafter referred to as "SQLJ") is a software application designed exclusively for educational and legitimate security testing purposes. It is intended to be used by cybersecurity professionals, system administrators, and ethical hackers for the explicit purpose of identifying vulnerabilities and strengthening the security of web applications.
 
@@ -34,18 +34,7 @@ import sys
 
 def Agree():
 
-    print(term)
-    while True:
-        try:
-            time.sleep(5)
-            agree = input("Do you agree to the above terms? (y/n): ")
-            if agree == "y":
-                break
-
-            elif agree == "n":
-                raise SystemExit("You have to agree to the above terms.")
-        except KeyboardInterrupt:
-            sys.exit("\nExiting...")    
+    print(term) 
                 
 
     

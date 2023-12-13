@@ -102,6 +102,8 @@ async def ORACLE_SQL_injection(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{OracleAttacks.NORMAL_ORACLE.value}")
                     for line in sorted_payload: 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

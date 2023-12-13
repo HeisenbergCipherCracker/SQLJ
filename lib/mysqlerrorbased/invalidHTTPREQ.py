@@ -120,6 +120,8 @@ async def INVALID_HTTP_REQ(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing payload:{ErrorBasedSQl.INVALID_HTTP_REQ.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

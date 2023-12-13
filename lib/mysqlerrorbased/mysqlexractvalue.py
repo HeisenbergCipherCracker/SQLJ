@@ -114,6 +114,8 @@ async def Extract_value_injection(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{ErrorBasedSQl.MYSQL_EXTRACT_VALUE.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line
@@ -190,9 +192,7 @@ async def Extract_value_injection(urls):
         except SQLJNGStackRangeError:
             result = safe_SQLJNG_result(html_response)
             for res in result:
-                logger.setLevel(logging.INFO)
                 logger.info("Result")
-                logger.setLevel(logging.CRITICAL)
      
         
         

@@ -112,6 +112,8 @@ async def Database_LISTING(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{OracleAttacks.DATABASE_LIST.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

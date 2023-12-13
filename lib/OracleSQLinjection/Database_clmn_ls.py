@@ -112,6 +112,8 @@ async def LIST_COLUMNS_ORACLE(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{OracleAttacks.DATABASE_COLUMN_LIST.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

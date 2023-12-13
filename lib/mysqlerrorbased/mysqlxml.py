@@ -103,7 +103,6 @@ async def My_sql_XML_attack(urls):
             rows = payload.split("\n") 
             sorted_rows = sorted(rows) 
             sorted_payload = "\n".join(sorted_rows) #* 
-            print(f"[{datetime.now()}]",Fore.RED + str(sorted_payload)) 
             requests.packages.urllib3.disable_warnings()  #! Disable SSL warnings for http requests and testing
             # url = "https://redtiger.labs.overthewire.org/level1.php"
             req = requests.get(url=urls,verify=False) 
@@ -115,6 +114,8 @@ async def My_sql_XML_attack(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{ErrorBasedSQl.XML_ATTACK.value}")
                     for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line
