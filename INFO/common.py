@@ -1,3 +1,4 @@
+from random import choice
 tables = [
     "users",
     "customers",
@@ -14,3 +15,6 @@ columns = [
     "create_at",
     "updated_at"
 ]
+
+table_common = choice(tables)
+columns_common = choice(columns)
