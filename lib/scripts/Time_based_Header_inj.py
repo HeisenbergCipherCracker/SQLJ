@@ -82,6 +82,8 @@ async def Time_based_sql_injection_HEADER(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{HeaderAttacks.TIME_BASED_SQL_INJECTION_HEADER.value}")
                     for line in sorted_payload.split("\n"):
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = {
                             "username": line,
                             "password": line

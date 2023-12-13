@@ -29,6 +29,7 @@ from lib.result.Results import safe_SQLJNG_result
 from lib.result.Results import SQLJNG_result_report
 from Exceptions.exceptions import SQLJNGStackRangeError
 from lib.Stacks.stack import html_response
+from logger.sqljlog import logger as sqljlog
 
 attack_type = "authentication bypass SQL injection"
 
@@ -69,6 +70,7 @@ async def auth_SQL_inj_json(urls):
 
                 if ask.lower() == "y": 
                     for line in sorted_payload.split("\n"):
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
                         #############################################################33
                         params = { 
                             "username": json.dumps(line),

@@ -32,6 +32,7 @@ from lib.Stacks.stack import html_response
 from Exceptions.exceptions import SQLJNGUserExit
 from Exceptions.exceptions import SQLJNGNotOptionSelected
 from Exceptions.exceptions import SQLJNGOptionError
+from logger.sqljlog import logger as sqljlog
 
 
 attack_type = "authentication bypass SQL injection"
@@ -73,6 +74,8 @@ async def err_based_json(urls):
                 logger.info(f"The website:{urls} is up with the status code:{req.status_code}")
 
                 if ask.lower() == "y": 
+                    sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                     for line in sorted_payload.split("\n"):
                         params = { 
                             "username": json.dumps(line),

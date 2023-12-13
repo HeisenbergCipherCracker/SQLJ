@@ -83,6 +83,8 @@ async def auth_SQL_inj(urls):
                     sqljlog.info(f"Testing:{AttackType.AUTH_BYPASS_SQL_INJECTION.value}")
 
                     for line in sorted_payload.split("\n"):
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
+
                         params = { 
                             "username": line,
                             "password": line

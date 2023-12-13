@@ -94,8 +94,9 @@ async def auth_SQL_inj_HEADER(urls):
                 if ask.lower() == "y":
                     sqljlog.info(f"Testing:{HeaderAttacks.AUTH_BYPASS_SQL_INJECTION_HEADER.value}")
 
-                    for line in sorted_payload.split("\n"): 
 
+                    for line in sorted_payload.split("\n"): 
+                        sqljlog.info(f"Testing:{line if len(line) <50 else line.split("\n")}")
                         params = { 
                             "username": line,
                             "password": line
@@ -176,5 +177,5 @@ async def auth_SQL_inj_HEADER(urls):
                 logger.info(res)
 
 
-# print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
+print(asyncio.run(auth_SQL_inj_HEADER("http://testfire.net/login.jsp")))
 # print(capturesAUTHBYPASS)

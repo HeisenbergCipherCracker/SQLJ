@@ -1,6 +1,15 @@
 
 
 def genericsqlpayload(parameter):
+    """
+    >>> payload = genericsqlpayload("id")
+    >>> rows = payload.split("\n") 
+    >>> sorted_rows = sorted(rows) 
+    >>> sorted_payload = "\n".join(sorted_rows)
+    >>> for i in sorted_payload.split("\n"):
+    >>>     print(i)
+    
+    """
 
     genericsql = f"""
 
@@ -94,11 +103,7 @@ def genericsqlpayload(parameter):
     `	    Backtick
 
     """
-    return genericsql
 
-# payload = genericsqlpayload("id")
-# rows = payload.split("\n") 
-# sorted_rows = sorted(rows) 
-# sorted_payload = "\n".join(sorted_rows)
-# for i in sorted_payload.split("\n"):
-#     print(i)
+    retval = genericsql
+    return retval
+
