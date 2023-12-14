@@ -417,7 +417,9 @@ async def main():
             case "A"|"a":
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
+                
                 threads_for_all = [
+                    extract_cookies(host=url),
                     OracleExploit.db_column_exploit(url),
                     OracleExploit.db_column_list_exploit(url),
                     OracleExploit.oracle_injection_exploit(url),
