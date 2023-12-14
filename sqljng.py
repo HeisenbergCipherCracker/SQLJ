@@ -66,6 +66,7 @@ try:
     from lib.regelexpression.patterns import Remove_https_for_ipv4 as remove_ipv4_and_ipv6_https_http
     from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
     from SQLJngUI import Argument_parser
+    from lib.OracleSQLinjection.oracleattack import OracleExploit
 
 
 except ImportError as e:

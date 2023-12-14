@@ -22,6 +22,7 @@ OPTIONS = """
 [21] Backend Server
 [22]Extract value attack
 [x] Full Attacks Using Headers
+[A]
 [Q] Quit
 """
 

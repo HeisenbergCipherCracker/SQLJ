@@ -86,6 +86,8 @@ try:
     from lib.regelexpression.ippatterns import find_ipv4type_private as isprivateipv4
     from logger.logs import logger
     from logger.sqljlog import logger as sqljlog
+    from lib.OracleSQLinjection.oracleattack import OracleExploit
+    from lib.mysqlerrorbased.errorbasedexploits import HTTPErrorReq
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -411,6 +413,23 @@ async def main():
                 get_ipv6_address(https_rm)
                 ipv4 = IPV4(https_rm)
                 await Extract_value_injection(url)
+            
+            case "A"|"a":
+                get_ipv6_address(https_rm)
+                IPV4(https_rm)
+                threads_for_all = [
+                    OracleExploit.db_column_exploit(url),
+                    OracleExploit.db_column_list_exploit(url),
+                    OracleExploit.oracle_injection_exploit(url),
+                    OracleExploit.Hostname_Attack(url),
+                    HTTPErrorReq.Extract_value(url),
+                    HTTPErrorReq.http_req(url)
+                ]
+                for thread in threads_for_all:
+                    Thread = threading.Thread(thread)
+                    Thread.start()
+                    Thread.join()
+
             
             case "auto":
                 # while True:
