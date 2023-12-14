@@ -18,10 +18,10 @@ class OraclePayloads:
         return str(retval)
     
     @staticmethod
-    def db_column_list(column,ret_table,table):
+    def db_column_list(table,column,tablename="blah",owner="foo",**kwargs):
         payload = f"""
-SELECT {column} FROM {ret_table} WHERE {table} = 'blah';
-SELECT {column} FROM {ret_table} WHERE {table} = 'blah' and owner = 'foo'; """
+SELECT {column} FROM all_tab_columns WHERE {table} = '{tablename}';
+SELECT column_name FROM all_tab_columns WHERE {table} = '{tablename}' and owner = '{owner}';"""
         retval = payload
         return str(retval)
     

