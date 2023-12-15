@@ -36,6 +36,7 @@ try:
     import sys
     import os
     import warnings
+    from colorama import Fore,init
     from datetime import datetime
     from lib.scripts.authbypass_inj import htmlpattern
     from lib.scripts.Error_based_injection import *
@@ -493,7 +494,7 @@ if __name__ == "main":
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
-            print(f"\n[*]Ending at(interruption by user):{datetime.now()}")
+            print(Fore.RESET+f"\n[*]Ending at(interruption by user):{datetime.now()}")
 
             raise SystemExit
 
@@ -507,7 +508,7 @@ else:
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
-            print(f"\n[*]Ending at(interruption by user):{datetime.now()}")
+            print(Fore.RESET+f"\n[*]Ending at(interruption by user):{datetime.now()}")
             raise SystemExit
 
 
