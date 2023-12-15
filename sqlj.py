@@ -475,13 +475,14 @@ async def main():
             
             
             
-            
-            
-                
-            
-    except Exception as e:
-        print(Fore.RED+"[ERROR] An error occurred:",e)
-    
+    except SystemExit:
+        sys.exit(Fore.RESET+f"\nEnding at:{datetime.now()}")   
+    except Exception as exc:
+        exc = str(exc)
+        if any(_ in exc for _ in ("MemoryError", "Cannot allocate memory")):
+            errmsg = "Error ocurred:%s"%exc    
+            errmsg += "Cannot handel the memory issues"
+            sqljlog.critical(errmsg)
 
     
 
