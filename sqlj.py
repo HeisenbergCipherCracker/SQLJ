@@ -513,6 +513,21 @@ async def main():
             sqljlog.critical(errmsg)
             raise SystemExit
         
+        elif ("FileNotFoundError:" in excp and isinstance(exc,FileNotFoundError)):
+            errmsg += "Some files are missing in the sqljng files\n"
+            errmsg += "\n visit (https://github.com/HeisenbergCipherCracker/SQLJ) for more info]\n"
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        elif (isinstance(exc,SQLJNGStackRangeError)):
+            errmsg += "Error in getting the stack range and preparing data structures\n"
+            errmsg += "\n visit (https://github.com/HeisenbergCipherCracker/SQLJ) for more info]\n"
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        elif (isinstance(exc,asyncio.TimeoutError) or isinstance(exc,asyncio.CancelledError) or isinstance(exc,asyncio.InvalidStateError) or isinstance(exc,asyncio.LimitOverrunError) or isinstance(exc,asyncio.BrokenBarrierError) or isinstance(exc,asyncio.IncompleteReadError) or isinstance(exc,asyncio.SendfileNotAvailableError)):
+            errmsg += "Error occurred with asyncio library"
+            sqljlog.critical(errmsg)
        
 if __name__ == "main": 
     while True: 
