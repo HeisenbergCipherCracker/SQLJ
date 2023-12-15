@@ -74,6 +74,9 @@ class SQLJNGMagicDictKeyMissing(SQLJNGBasicException):
 class SQLJNGPlatformError(SQLJNGBasicException):
     pass
 
+class SQLJNGParameterNotFoundError(SQLJNGBasicException):
+    pass
+
 
 
 
