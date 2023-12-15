@@ -478,11 +478,15 @@ async def main():
     except SystemExit:
         sys.exit(Fore.RESET+f"\nEnding at:{datetime.now()}")   
     except Exception as exc:
-        exc = str(exc)
-        if any(_ in exc for _ in ("MemoryError", "Cannot allocate memory")):
-            errmsg = "Error ocurred:%s"%exc    
+        excp = str(exc)
+        if any(_ in excp for _ in ("MemoryError", "Cannot allocate memory")) or type(exc) == MemoryError:
+            errmsg = "Error ocurred:%s"%excp   
             errmsg += "Cannot handel the memory issues"
             sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        elif type(exc) == asyncio.TimeoutError:
+            sqljlog.critical("Could not handle the run time of the program due to some issues.")
 
     
 
