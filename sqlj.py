@@ -480,13 +480,26 @@ async def main():
     except Exception as exc:
         excp = str(exc)
         if any(_ in excp for _ in ("MemoryError", "Cannot allocate memory")) or type(exc) == MemoryError:
-            errmsg = "Error ocurred:%s"%excp   
+            errmsg += "Error ocurred:%s"%excp   
             errmsg += "Cannot handel the memory issues"
             sqljlog.critical(errmsg)
             raise SystemExit
         
-        elif type(exc) == asyncio.TimeoutError:
-            sqljlog.critical("Could not handle the run time of the program due to some issues.")
+        elif type(exc) == requests.exceptions.Timeout:
+            errmsg = "Connection has been timeout to."
+            errmsg +="\nmake sure you have connected to the internet"
+            errmsg += "\nor the ISP is working properly."
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        elif any(_ in excp for _ in ("No space left", "Disk quota exceeded", "Disk full while accessing")):
+            errmsg += "No such enough space left on the disk"
+            errmsg += "\n make sure that you have enough space in the disk."
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+            
+
 
     
 
