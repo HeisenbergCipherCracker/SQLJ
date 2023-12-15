@@ -482,7 +482,7 @@ if __name__ == "main":
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
-            print(f"[*]Starting at:{datetime.now()}")
+            print(f"[*]Ending at:{datetime.now()}")
 
             raise SystemExit
 
@@ -496,7 +496,7 @@ else:
             asyncio.run(main())
         except KeyboardInterrupt:
             logger.info("Aborted")
-            print(f"[*]Starting at:{datetime.now()}")
+            print(f"[*]Ending at:{datetime.now()}")
             raise SystemExit
 
 
