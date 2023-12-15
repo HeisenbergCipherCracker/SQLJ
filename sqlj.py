@@ -89,6 +89,7 @@ try:
     from logger.sqljlog import logger as sqljlog
     from lib.OracleSQLinjection.oracleattack import OracleExploit
     from lib.mysqlerrorbased.errorbasedexploits import HTTPErrorReq
+    from lib.mysqlblind.blindsqlexploits import BlindSQlExploit
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -159,9 +160,9 @@ sqljlog.setLevel(logging.INFO)
 # url = None
 
 #Reference for testing:http://testphp.vulnweb.com/artists.php
+print(f"[*]Starting at:{datetime.now()}")
 
 async def main():
-    print(f"[*]Starting at:{datetime.now()}")
     global host
     """The main function and the user side of the program
     See file SQLJ.log for the error has been occurred and program issues.
@@ -434,7 +435,17 @@ async def main():
                     union_based_SQL_inj(url),
                     union_based_SQL_inj_HEADER(url),
                     auth_SQL_inj(url),
-                    auth_SQL_inj_HEADER(url)
+                    auth_SQL_inj_HEADER(url),
+                    BlindSQlExploit.binary_sql_exploit(url),
+                    BlindSQlExploit.conditional_blind_sql_inj_exploit(url),
+                    BlindSQlExploit.sub_string_sql_inj_exploit(url)
+                )
+            
+            case "23":
+                await asyncio.gather(
+                    BlindSQlExploit.binary_sql_exploit(url),
+                    BlindSQlExploit.conditional_blind_sql_inj_exploit(url),
+                    BlindSQlExploit.sub_string_sql_inj_exploit(url)
                 )
 
             

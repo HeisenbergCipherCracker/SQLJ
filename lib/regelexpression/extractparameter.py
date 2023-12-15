@@ -4,7 +4,7 @@ import os
 current_directory = os.getcwd()
 
 sys.path.append(current_directory)
-def extract_parameter_name(url):
+async def extract_parameter_name(url):
     # Define the pattern to Match the parameter name
     pattern = r'[?&]([^=]+)='
 
@@ -14,9 +14,9 @@ def extract_parameter_name(url):
     # Extract the parameter name
     if Match:
         parameter_name = Match.group(1)
-        return parameter_name,True
+        return parameter_name,""
     else:
-        return False
+        return "",""
     
 
 # parameter = None

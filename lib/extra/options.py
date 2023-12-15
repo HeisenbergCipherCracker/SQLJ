@@ -21,6 +21,7 @@ OPTIONS = """
 [20] Port Finder
 [21] Backend Server
 [22]Extract value attack
+[23]Blind sql attack
 [x] Full Attacks Using Headers
 [A]
 [Q] Quit
