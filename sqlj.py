@@ -91,6 +91,9 @@ try:
     from lib.OracleSQLinjection.oracleattack import OracleExploit
     from lib.mysqlerrorbased.errorbasedexploits import HTTPErrorReq
     from lib.mysqlblind.blindsqlexploits import BlindSQlExploit
+    from Exceptions.exceptions import SQLJNGBasicException
+    from Exceptions.exceptions import SQLJNGParameterNotFoundError
+    from lib.regelexpression.extractparameter import check_parameter_exists
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -148,6 +151,8 @@ logo = main_banner
 options = ""
 options += OPTIONS
 
+errmsg = ""
+
 
 print(logo)
 
@@ -172,9 +177,10 @@ async def main():
     """
     try:
         # while Tr
-        global logo,options,https_rm
+        global logo,options,https_rm,errmsg
         await asyncio.sleep(1)
         url = input(Fore.GREEN+">>>TARGET URL:") 
+        await check_parameter_exists(url=url)
         try:
             if url == "host":
                 await Get_host_name(Host=input("enter the host:"))
@@ -493,8 +499,17 @@ async def main():
             raise SystemExit
         
         elif any(_ in excp for _ in ("No space left", "Disk quota exceeded", "Disk full while accessing")):
+            #*Reference: sqlmap project
             errmsg += "No such enough space left on the disk"
             errmsg += "\n make sure that you have enough space in the disk."
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        elif ("No such parameter found in the target url." in excp) or type(exc) == SQLJNGParameterNotFoundError:
+            #*Reference: sqlmap project
+            errmsg += "No such parameter found in the target url."
+            errmsg += "\n example : www.site.com/index.php?id=1"
+            errmsg += "\n make sure you have included the parameter after question mark.\n"
             sqljlog.critical(errmsg)
             raise SystemExit
         
@@ -515,10 +530,6 @@ if __name__ == "main":
             print(Fore.RESET+f"\n[*]Ending at(interruption by user):{datetime.now()}")
 
             raise SystemExit
-
-elif __name__ == "SQLJngUI":
-    pass
-
 else:
 
     while True: 

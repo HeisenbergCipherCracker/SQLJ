@@ -4,6 +4,8 @@ import os
 current_directory = os.getcwd()
 
 sys.path.append(current_directory)
+
+from Exceptions.exceptions import SQLJNGParameterNotFoundError
 async def extract_parameter_name(url):
     # Define the pattern to Match the parameter name
     pattern = r'[?&]([^=]+)='
@@ -17,6 +19,20 @@ async def extract_parameter_name(url):
         return parameter_name,""
     else:
         return "",""
+    
+async def check_parameter_exists(url):
+        # Define the pattern to Match the parameter name
+    pattern = r'[?&]([^=]+)='
+
+    # Search for the pattern in the URL
+    Match = re.search(pattern, url)
+
+    # Extract the parameter name
+    if Match:
+        pass
+    else:
+        raise SQLJNGParameterNotFoundError("No such parameter found in the target url.")
+
     
 
 # parameter = None
