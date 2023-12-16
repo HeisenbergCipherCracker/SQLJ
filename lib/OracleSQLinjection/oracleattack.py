@@ -79,6 +79,15 @@ headers = {
 class OracleExploit(
     threading.Thread
 ):
+    """
+    Usage
+    >>> await OracleExploit.AttackType(url)
+    Recommended usage
+    >>> await asyncio.gather(
+    other,
+    OracleExploit.AttackType(url)
+    )
+    """
     def __init__(self):
         super().__init__(self)
     @staticmethod 
