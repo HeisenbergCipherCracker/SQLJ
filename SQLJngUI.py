@@ -44,6 +44,11 @@ from lib.getipv4.getipv4 import get_ipv4_of_host as IPV4
 from lib.ipv6.IPV6 import get_ipv6_address
 from lib.extra.safeplaysound import safe_play_sound
 from Exceptions.sqljngwarnings import SQLJNGVersionOutdated
+from lib.OracleSQLinjection.oracleattack import OracleExploit
+from lib.mysqlerrorbased.errorbasedexploits import HTTPErrorReq
+from lib.mysqlblind.blindsqlexploits import BlindSQlExploit
+from lib.scripts.FullattackExploits import FullAttackExploit
+from lib.privillageessscalation.privillageexploits import PrivillageExploit
 #Reference: https://note.nkmk.me/en/python-warnings-ignore-warning/
 
 # logging.basicConfig(level=logging.INFO)
@@ -278,6 +283,38 @@ async def Args_UI(url, headers, port, enable_feature, attack_type, verbose,versi
     
     elif attack_type == "Oracle" and header == "y":
         pass
+
+    elif attack_type == "Auto":
+        https_rm = remove_ipv4_and_ipv6_https_http(url)
+        get_ipv6_address(https_rm)
+        IPV4(https_rm)
+        await extract_cookies(url)
+        await asyncio.gather(
+            OracleExploit.db_column_exploit(url),
+            OracleExploit.db_column_list_exploit(url),
+            OracleExploit.oracle_injection_exploit(url),
+            OracleExploit.oracle_injection_database_list_attack(url),
+            HTTPErrorReq.Extract_value(url),
+            HTTPErrorReq.http_req(url),
+            Error_based_inj(url),
+            Error_based_inj_HEADER(url),
+            Time_based_sql_injection(url),
+            Time_based_sql_injection_HEADER(url),
+            union_based_SQL_inj(url),
+            union_based_SQL_inj_HEADER(url),
+            auth_SQL_inj(url),
+            auth_SQL_inj_HEADER(url),
+            BlindSQlExploit.binary_sql_exploit(url),
+            BlindSQlExploit.conditional_blind_sql_inj_exploit(url),
+            BlindSQlExploit.sub_string_sql_inj_exploit(url),
+            FullAttackExploit.auth_bypass_exploit(url),
+            FullAttackExploit.Error_based_inj_exploit(url),
+            FullAttackExploit.Generic_sql_exploit(url),
+            PrivillageExploit.DB_link_info_payloads_auto_exploit(url),
+            PrivillageExploit.DB_link_info_payloads_default_exploit(url),
+            PrivillageExploit.DBA_Exploit(url),
+            PrivillageExploit.Procedure_attack_exploit(url)
+        )
 
     else:
         pass
