@@ -67,6 +67,7 @@ async def Argument_parser():
     parser.add_argument("--enable-feature", action="store_true", help="Enable a specific feature", required=False)
     parser.add_argument("-A", type=str, help="Specify the type of the attack", required=True)
     parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.4.1")
+    parser.add_argument("-T","--tables",help="Specify the tables of database",required=False)
     parser.add_argument("-vv","-verbose", action="store_true", help="Enable verbose mode", required=False)
     parser.add_argument("-other", help="Enable other features", required=False)
 
@@ -81,10 +82,11 @@ async def Argument_parser():
     attack_type = args.A 
     verbose = args.vv
     version = args.version
+    table = args.T
 
 
-    await Args_UI(url, headers, port, enable_feature, attack_type, args.vv,version)
-    return(url,headers,port,enable_feature,attack_type,verbose)
+    await Args_UI(url, headers, port, enable_feature, attack_type, args.vv,version,table)
+    return(url,headers,port,enable_feature,attack_type,verbose,table)
 
 async def Args_UI(url, headers, port, enable_feature, attack_type, verbose,version):
     if "www.google.com" in url or "https://www.google.com" in url:
