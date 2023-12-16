@@ -2,6 +2,7 @@ import sys
 import os
 cur = os.getcwd()
 sys.path.append(cur)
+#*http://testphp.vulnweb.com/artists.php?artist=1
 
 
 try:
@@ -94,6 +95,7 @@ try:
     from Exceptions.exceptions import SQLJNGBasicException
     from Exceptions.exceptions import SQLJNGParameterNotFoundError
     from lib.regelexpression.extractparameter import check_parameter_exists
+    from lib.scripts.FullattackExploits import FullAttackExploit
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -165,7 +167,8 @@ sqljlog.setLevel(logging.INFO)
 
 # url = None
 
-#Reference for testing:http://testphp.vulnweb.com/artists.php
+#Reference for testing:http://testphp.vulnweb.com/artists.php 
+
 print(f"[*]Starting at:{datetime.now()}")
 
 async def main():
@@ -445,7 +448,10 @@ async def main():
                     auth_SQL_inj_HEADER(url),
                     BlindSQlExploit.binary_sql_exploit(url),
                     BlindSQlExploit.conditional_blind_sql_inj_exploit(url),
-                    BlindSQlExploit.sub_string_sql_inj_exploit(url)
+                    BlindSQlExploit.sub_string_sql_inj_exploit(url),
+                    FullAttackExploit.auth_bypass_exploit(url),
+                    FullAttackExploit.Error_based_inj_exploit(url),
+                    FullAttackExploit.Generic_sql_exploit(url)
                 )
             
             case "23":
@@ -528,6 +534,8 @@ async def main():
         elif (isinstance(exc,asyncio.TimeoutError) or isinstance(exc,asyncio.CancelledError) or isinstance(exc,asyncio.InvalidStateError) or isinstance(exc,asyncio.LimitOverrunError) or isinstance(exc,asyncio.BrokenBarrierError) or isinstance(exc,asyncio.IncompleteReadError) or isinstance(exc,asyncio.SendfileNotAvailableError)):
             errmsg += "Error occurred with asyncio library"
             sqljlog.critical(errmsg)
+            raise SystemExit
+        
        
 if __name__ == "main": 
     while True: 
