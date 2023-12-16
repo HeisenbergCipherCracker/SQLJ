@@ -35,6 +35,7 @@ from lib.OracleSQLinjection.oraclepayloads import OraclePayloads
 from lib.regelexpression.extractparameter import extract_parameter_name
 from INFO.common import columns
 from INFO.common import tables
+from lib.regelexpression.searchforvuln import detect_sql_injection as detector
 
 attack_type = "authentication bypass SQL injection"
 
@@ -100,7 +101,8 @@ class OracleExploit(
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
-                sqljlog.info(attack.text)
+                detector(attack.text)
+
             
             else:
                 logger.critical("Host is down.")
@@ -126,6 +128,8 @@ class OracleExploit(
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
+                detector(attack.text)
+
             
             else:
                 logger.critical("Host is down.")
@@ -150,6 +154,8 @@ class OracleExploit(
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
+                detector(attack.text)
+
             
             else:
                 logger.critical("Host is down.")
@@ -174,6 +180,8 @@ class OracleExploit(
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
+                detector(attack.text)
+
             
             else:
                 logger.critical("Host is down.")
@@ -198,6 +206,8 @@ class OracleExploit(
                 }
                 attack = requests.post(url=urls,data=params)
                 sqljlog.info(f"Testing:{Payloads}")
+                detector(attack.text)
+
             
             else:
                 logger.critical("Host is down.")
