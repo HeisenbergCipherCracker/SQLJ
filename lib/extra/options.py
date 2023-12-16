@@ -22,8 +22,9 @@ OPTIONS = """
 [21] Backend Server
 [22]Extract value attack
 [23]Blind sql attack
+[24]privilege escalation 
 [x] Full Attacks Using Headers
-[A]
+[A] All attacks
 [Q] Quit
 """
 

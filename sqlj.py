@@ -96,6 +96,7 @@ try:
     from Exceptions.exceptions import SQLJNGParameterNotFoundError
     from lib.regelexpression.extractparameter import check_parameter_exists
     from lib.scripts.FullattackExploits import FullAttackExploit
+    from lib.privillageessscalation.privillageexploits import PrivillageExploit
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -451,7 +452,11 @@ async def main():
                     BlindSQlExploit.sub_string_sql_inj_exploit(url),
                     FullAttackExploit.auth_bypass_exploit(url),
                     FullAttackExploit.Error_based_inj_exploit(url),
-                    FullAttackExploit.Generic_sql_exploit(url)
+                    FullAttackExploit.Generic_sql_exploit(url),
+                    PrivillageExploit.DB_link_info_payloads_auto_exploit(url),
+                    PrivillageExploit.DB_link_info_payloads_default_exploit(url),
+                    PrivillageExploit.DBA_Exploit(url),
+                    PrivillageExploit.Procedure_attack_exploit(url)
                 )
             
             case "23":
@@ -459,6 +464,14 @@ async def main():
                     BlindSQlExploit.binary_sql_exploit(url),
                     BlindSQlExploit.conditional_blind_sql_inj_exploit(url),
                     BlindSQlExploit.sub_string_sql_inj_exploit(url)
+                )
+
+            case "24":
+                await asyncio.gather(
+                    PrivillageExploit.DB_link_info_payloads_auto_exploit(url),
+                    PrivillageExploit.DB_link_info_payloads_default_exploit(url),
+                    PrivillageExploit.DBA_Exploit(url),
+                    PrivillageExploit.Procedure_attack_exploit(url)
                 )
 
             
