@@ -18,8 +18,8 @@ def detect_sql_injection(response_text:str):
     return sqljlog.info(f"[INFO]SQL keyword:{'|'.join(matches)}appears to be injectable.") if len(matches) > 0 else ""
 
 # response_text = "This is a response with a SELECT statement and UNION ALL injection.FROM"
-response_text = ""
-sql_injection_matches = detect_sql_injection(response_text)
+# response_text = ""
+# sql_injection_matches = detect_sql_injection(response_text)
 
-if sql_injection_matches:
-    print(sql_injection_matches)
+# if sql_injection_matches:
+#     print(sql_injection_matches)
