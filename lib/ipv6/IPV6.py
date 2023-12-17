@@ -8,6 +8,12 @@ sys.path.append(current_directory)
 from logger.logs import logger
 
 def get_ipv6_address(hostname):
+    """
+    Function returns ipv6 of target
+    Usage
+    >>> var = get_ipv6_address(hostname)
+    >>> print(var if var is not None else "")
+    """
     try:
         # Get IPv6 address information for the given hostname
         result = socket.getaddrinfo(hostname, None, socket.AF_INET6)
