@@ -549,6 +549,13 @@ async def main():
             sqljlog.critical(errmsg)
             raise SystemExit
         
+        elif (isinstance(exc,SyntaxError) or "SyntaxError: invalid syntax" in excp):
+            errmsg += "Python interpreter is not set to the python 3.10 more."
+            errmsg += "\n make sure your python interpreter is up to date."
+            sqljlog.critical(errmsg)
+            raise SystemExit
+        
+        
        
 if __name__ == "main": 
     while True: 

@@ -1,6 +1,6 @@
 FROM python:3.11
 COPY . /app
-RUN pip install requests
+RUN pip install -r requirements.txt
 WORKDIR /app
-CMD python SQLJng.py 
+CMD python sql.py
 
