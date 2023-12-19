@@ -106,6 +106,9 @@ try:
     from INFO.combined import usernames
     from INFO.common import tables
     from lib.DBMS.Connector.Options4DBMS import mysql_dbms_interface
+    from lib.extra.options import advanced_options
+    from lib.DBMS.Connector.Sqlitedbexploits import Sqlite3DBMS
+
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -484,8 +487,22 @@ async def main():
                     PrivillageExploit.Procedure_attack_exploit(url)
                 )
             
+            
             case "INJ":
                 mysql_dbms_interface(hosturl=url)
+            
+            case "":
+                pass
+            
+            case "other"|"OTHER"|"Other":
+                print(advanced_options)
+                match input(">>>"):
+                    case "1"|"01":
+
+                        sqlite_db_handler = Sqlite3DBMS(database=input("enter database name:"),column="enter column name",tablename="enter the table name")
+                        sqlite_db_handler.show_database_columns_info()
+
+
 
             
             case "auto":
@@ -510,6 +527,7 @@ async def main():
                 
                 else:
                     pass
+            
             
             
             

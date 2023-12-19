@@ -26,10 +26,16 @@ OPTIONS = """
 [x] Full Attacks Using Headers
 [A] All attacks
 [INJ]Attack Database Blind(mysql)
+[AUTO]automatic attack
+[OTHER]other advanced options
 [Q] Quit
 """
 
 
+advanced_options = """
+[01]sqlite attacks(extracting all database files in the pc)
+[02]setting
+"""
 
 
 
