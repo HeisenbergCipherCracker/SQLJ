@@ -4,7 +4,6 @@ cur = os.getcwd()
 sys.path.append(cur)
 #*http://testphp.vulnweb.com/artists.php?artist=1
 
-
 try:
     #these should be the first unusual imports
     __import__("lib")
@@ -32,6 +31,7 @@ try:
     import os
     from colorama import Style
     import threading
+    import random
     import requests
     import asyncio
     import sys
@@ -97,6 +97,14 @@ try:
     from lib.regelexpression.extractparameter import check_parameter_exists
     from lib.scripts.FullattackExploits import FullAttackExploit
     from lib.privillageessscalation.privillageexploits import PrivillageExploit
+    from lib.DBMS.Connector.Connection import db_handler
+    from lib.getipv4.getipv4 import get_ipv4_string
+    from INFO.combined import username
+    from INFO.combined import password
+    from lib.DBMS.Connector.Connection import DBMS_mysql
+    from INFO.combined import passwords
+    from INFO.combined import usernames
+    from INFO.common import tables
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -473,6 +481,9 @@ async def main():
                     PrivillageExploit.DBA_Exploit(url),
                     PrivillageExploit.Procedure_attack_exploit(url)
                 )
+            
+            case "INJ":
+                db_handler._show_database_columns_info()
 
             
             case "auto":
@@ -529,8 +540,9 @@ async def main():
             errmsg += "No such parameter found in the target url."
             errmsg += "\n example : www.site.com/index.php?id=1"
             errmsg += "\n make sure you have included the parameter after question mark.\n"
-            sqljlog.critical(errmsg)
-            raise SystemExit
+            sqljlog.warn(errmsg)
+
+
         
         elif ("FileNotFoundError:" in excp and isinstance(exc,FileNotFoundError)):
             errmsg += "Some files are missing in the sqljng files\n"

@@ -52,7 +52,10 @@ passwords = [
     random.choice([generate_password(password_length), generate_password_from_list(common_passwords)])
     for _ in range(num_users)
 ]
+# print(usernames)
+# print(passwords)
 
 # Print the generated usernames and passwords
 for username, password in zip(usernames, passwords):
-    print(f"Username: {username}, Password: {password}")
+    pass
+    # print(f"Username: {username}, Password: {password}")

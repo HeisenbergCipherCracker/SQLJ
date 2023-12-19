@@ -1,10 +1,17 @@
 import mysql.connector
 from prettytable import PrettyTable
 import re
+import sys,os
+
+cur = os.getcwd()
+sys.path.append(cur)
+
+from INFO.combined import *
+from INFO.common import tables
 
 
 class DBMS_mysql:
-    def __init__(self, host, user, password, database,tablename=None) -> None:
+    def __init__(self, host="localhost", user="root", password="alimirmohammad", database="mysql",tablename="mmd") -> None:
         self.host = host
         self.user = user
         self.password = password
@@ -100,7 +107,33 @@ class DBMS_mysql:
     def create_database(self):
         self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS Your_security_is_fucked_up_and_suck_dicks")
     
+    
 
 # Example usage
-obj = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
-obj.create_database()
+# db_handler = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
+# db_handler.select_from_table()
+db_handler = DBMS_mysql()
+        
+
+def Database_handler(hosts):
+    Username = input("Do you want to provide username?(press enter if do not want to provide)")
+    if Username == "":
+        pass
+
+    Password = input("enter password")
+    if Password == "":
+        pass
+    db_name = input("enter databasename:")
+    if db_name == "":
+        pass
+
+    tableN = input("enter the tablename:")
+    if tableN  == "":
+        pass
+
+    
+
+    db_handler = DBMS_mysql(host=hosts,user=Username if username is not "" else random.choice(usernames),password=Password if Password is not "" else random.choice(passwords),tablename=tableN if tableN is not "" else random.choice(tables) )
+    return db_handler
+
+

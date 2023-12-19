@@ -18,6 +18,12 @@ def get_ipv4_of_host(target,*args):
         logger.error(errmsg)
         raise SQLJNGGetHostNameError
 
+def get_ipv4_string(host):
+    retval = socket.gethostbyname(host)
+    return str(socket.gethostbyname(host))
+
+# print(get_ipv4_string("www.google.com"))
+
 # e,t = get_ipv4_of_host("www.google.com","www.youtube.com")
 
 # print(e)

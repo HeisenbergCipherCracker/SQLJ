@@ -25,6 +25,7 @@ OPTIONS = """
 [24]privilege escalation 
 [x] Full Attacks Using Headers
 [A] All attacks
+[INJ]Attack Database Blind(mysql)
 [Q] Quit
 """
 
@@ -44,3 +45,19 @@ OPTIONS = """
 # 4.TimebasedSQL
 # 5.UNIONselect
 # 6.privilege escalation
+
+
+db_options = """
+
+[01]database columns
+[02]show database tables
+[03]drop table
+[04]alter table
+[05]show all tables
+[06]show databases
+[07]describe table
+[08]select data from table
+[09]drop database
+[10]create database
+
+"""
