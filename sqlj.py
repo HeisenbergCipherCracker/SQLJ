@@ -105,6 +105,7 @@ try:
     from INFO.combined import passwords
     from INFO.combined import usernames
     from INFO.common import tables
+    from lib.DBMS.Connector.Options4DBMS import mysql_dbms_interface
 
 
 except (ImportError,ModuleNotFoundError) as e:
@@ -163,6 +164,7 @@ options = ""
 options += OPTIONS
 
 errmsg = ""
+
 
 
 print(logo)
@@ -483,7 +485,7 @@ async def main():
                 )
             
             case "INJ":
-                db_handler._show_database_columns_info()
+                mysql_dbms_interface(hosturl=url)
 
             
             case "auto":
