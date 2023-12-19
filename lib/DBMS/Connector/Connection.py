@@ -3,7 +3,7 @@ from prettytable import PrettyTable
 import re
 
 
-class DBMS:
+class DBMS_mysql:
     def __init__(self, host, user, password, database,tablename=None) -> None:
         self.host = host
         self.user = user
@@ -71,5 +71,5 @@ class DBMS:
         print(self.table)
 
 # Example usage
-obj = DBMS("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
+obj = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
 obj.show_all_tables()
