@@ -13,3 +13,6 @@ class SQLJNGVersionOutdated(UserWarning):
 class SQLJMapNotRunningInMacos(UserWarning):
     pass
 
+class SQLJNGSelectStatementWarning(UserWarning):
+    pass
+

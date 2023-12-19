@@ -8,6 +8,9 @@ sys.path.append(cur)
 
 from INFO.combined import *
 from INFO.common import tables
+from logger.sqljlog import logger as sqljlog
+import warnings
+from Exceptions.sqljngwarnings import SQLJNGSelectStatementWarning
 
 
 class DBMS_mysql:
@@ -94,6 +97,7 @@ class DBMS_mysql:
         print(self.column_table)
     
     def select_data_from_table(self):
+        warnings.warn("Using SELECT command in mysql in not recommended in SQLJNG.",category=SQLJNGSelectStatementWarning)
         self.cursor.execute(f"SELECT * FROM {self.tablename}")
         result = self.cursor.fetchall()
         for row in result:
@@ -107,33 +111,33 @@ class DBMS_mysql:
     def create_database(self):
         self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS Your_security_is_fucked_up_and_suck_dicks")
     
+    def show_database_individual(self):
+        try:
+            self.cursor.execute(f"SHOW TABLE {self.table}")
+            result = self.cursor.fetchall()
+            for table in result:
+                self.table.add_row(table)
+            
+            print(self.table)
+            
+        
+        except mysql.connector.ProgrammingError:
+            errmsg = "The host %s DBMS"%self.host
+            errmsg += "does not appear to interact with the current SQLJng mysql commands."
+            errmsg += "please check the SQLJng live version from github."
+            errmsg += "\ncurrent version: 1.4.4"
+            sqljlog.critical(errmsg)
+
+    
     
 
 # Example usage
-# db_handler = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
+db_handler = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
 # db_handler.select_from_table()
-db_handler = DBMS_mysql()
+db_handler.show_database_individual()
         
 
 def Database_handler(hosts):
-    Username = input("Do you want to provide username?(press enter if do not want to provide)")
-    if Username == "":
-        pass
-
-    Password = input("enter password")
-    if Password == "":
-        pass
-    db_name = input("enter databasename:")
-    if db_name == "":
-        pass
-
-    tableN = input("enter the tablename:")
-    if tableN  == "":
-        pass
-
-    
-
-    db_handler = DBMS_mysql(host=hosts,user=Username if username is not "" else random.choice(usernames),password=Password if Password is not "" else random.choice(passwords),tablename=tableN if tableN is not "" else random.choice(tables) )
-    return db_handler
+    pass
 
 
