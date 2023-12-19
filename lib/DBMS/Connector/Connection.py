@@ -11,10 +11,11 @@ from INFO.common import tables
 from logger.sqljlog import logger as sqljlog
 import warnings
 from Exceptions.sqljngwarnings import SQLJNGSelectStatementWarning
+from lib.mysqlerrorbased.errorbasedpayload import ErrorBasedPayload
 
 
 class DBMS_mysql:
-    def __init__(self, host="localhost", user="root", password="alimirmohammad", database="mysql",tablename="mmd") -> None:
+    def __init__(self, host="localhost", user="root", password="alimirmohammad", database="mysql",tablename="mmd",column="id") -> None:
         self.host = host
         self.user = user
         self.password = password
@@ -29,6 +30,7 @@ class DBMS_mysql:
         self.table = PrettyTable(['Database'])
         self.column_table = PrettyTable(['Field', 'Type', 'Null', 'Key', 'Default', 'Extra'])
         self.tablename = tablename
+        self.column = column
     
     def _show_database_columns_info(self):
         self._set_database_name()
@@ -127,6 +129,41 @@ class DBMS_mysql:
             errmsg += "please check the SQLJng live version from github."
             errmsg += "\ncurrent version: 1.4.4"
             sqljlog.critical(errmsg)
+        
+    
+    def extract_value_attack(self):
+        rows = ErrorBasedPayload.Extractvalue(self.column)
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall()
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except mysql.connector.ProgrammingError:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                sqljlog.critical(errmsg)
+            
+            finally:
+                try:
+                    _ = self.cursor.fetchall()
+                    for i in _:
+                        self.table.add_row(_)
+                    
+                    print(self.table)
+                
+                except:
+                    pass
+                
+                finally:
+                    pass
 
     
     
