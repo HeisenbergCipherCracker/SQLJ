@@ -70,6 +70,37 @@ class DBMS_mysql:
 
         print(self.table)
 
+    def show_databases(self):
+        self.cursor.execute("SHOW DATABASES")
+        result = self.cursor.fetchall()
+        for database in result:
+            self.table.add_row(database)
+
+        print(self.table)
+        
+    def _describe_table(self):
+        self.cursor.execute(f"DESCRIBE {self.tablename}")
+        result = self.cursor.fetchall()
+        for row in result:
+            self.column_table.add_row(row)
+
+        print(self.column_table)
+    
+    def select_data_from_table(self):
+        self.cursor.execute(f"SELECT * FROM {self.tablename}")
+        result = self.cursor.fetchall()
+        for row in result:
+            self.table.add_column(row)
+        
+        print(self.table)
+    
+    def drop_data_base(self):
+        self.cursor.execute(f"DROP DATABASE IF EXISTS {self.database}")
+    
+    def create_database(self):
+        self.cursor.execute(f"CREATE DATABASE IF NOT EXISTS Your_security_is_fucked_up_and_suck_dicks")
+    
+
 # Example usage
 obj = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
-obj.show_all_tables()
+obj.create_database()
