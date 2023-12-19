@@ -23,7 +23,7 @@ def mysql_dbms_interface(hosturl):
         tableN = input("Enter the possible table name of the target website:")
         if tableN == "":
             pass
-        DB_handler = DBMS_mysql(host=hosturl,user=username if username is not "" else "root",password=password if password is not "" else "alimirmohammad",database=db_name if db_name is not "" else "mysql",tablename=tableN if tableN is not "" else "db")
+        DB_handler = DBMS_mysql(host=hosturl,user=username,password=password ,database=db_name ,tablename=tableN)
         print(db_options)
         match input("(sqljng)>>>"):
             case "1":
@@ -66,6 +66,5 @@ def mysql_dbms_interface(hosturl):
             
 
 
-mysql_dbms_interface("localhost")
 
 

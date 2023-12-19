@@ -32,6 +32,7 @@ try:
     from colorama import Style
     import threading
     import random
+    import traceback
     import requests
     import asyncio
     import sys
@@ -589,8 +590,7 @@ async def main():
         
 
    
-       
-if __name__ == "main": 
+if __name__ == "main" or __name__ == "__main__": 
     while True: 
         try:
             asyncio.run(main())
@@ -599,14 +599,16 @@ if __name__ == "main":
             print(Fore.RESET+f"\n[*]Ending at(interruption by user):{datetime.now()}")
 
             raise SystemExit
+        except:
+            traceback.print_exc()
+        finally:
+            if threading.active_count() > 1:
+                os._exit(0)
+            else:
+                sys.exit(0)
+
 else:
-    while True:
-        try:
-            asyncio.run(main())
-        except KeyboardInterrupt:
-            logger.info("Aborted")
-            print(Fore.RESET+f"\n[*]Ending at(interruption by user):{datetime.now()}")
-            raise SystemExit
+    sys.exit("[!] The program is not being run properly,\nplease run it directly using:\npython sqlj.py.")
 
 
 
