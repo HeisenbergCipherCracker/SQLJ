@@ -555,7 +555,8 @@ async def main():
             sqljlog.critical(errmsg)
             raise SystemExit
         
-        
+
+   
        
 if __name__ == "main": 
     while True: 
@@ -567,8 +568,7 @@ if __name__ == "main":
 
             raise SystemExit
 else:
-
-    while True: 
+    while True:
         try:
             asyncio.run(main())
         except KeyboardInterrupt:

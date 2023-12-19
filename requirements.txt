@@ -4,3 +4,5 @@ bs4
 colorlog
 colorama
 psutil
+prettytable
+mysql-connector-python
