@@ -12,6 +12,7 @@ from logger.sqljlog import logger as sqljlog
 import warnings
 from Exceptions.sqljngwarnings import SQLJNGSelectStatementWarning
 from lib.mysqlerrorbased.errorbasedpayload import ErrorBasedPayload
+from lib.mysqlblind.blindsqlpayloads import BlindSqlPayloads
 
 
 class DBMS_mysql:
@@ -123,16 +124,18 @@ class DBMS_mysql:
             print(self.table)
             
         
-        except mysql.connector.ProgrammingError:
+        except mysql.connector.ProgrammingError as exc:
             errmsg = "The host %s DBMS"%self.host
             errmsg += "does not appear to interact with the current SQLJng mysql commands."
             errmsg += "please check the SQLJng live version from github."
             errmsg += "\ncurrent version: 1.4.4"
+            errmsg += f"\n {str(exc)}"
+
             sqljlog.critical(errmsg)
         
     
     def extract_value_attack(self):
-        rows = ErrorBasedPayload.Extractvalue(self.column)
+        rows = ErrorBasedPayload.Extractvalue(self.table).split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
@@ -144,11 +147,12 @@ class DBMS_mysql:
                     self.table.add_row(row)
                 
                 print(self.table)
-            except mysql.connector.ProgrammingError:
+            except mysql.connector.ProgrammingError as exc:
                 errmsg = "The host %s DBMS"%self.host
                 errmsg += "does not appear to interact with the current SQLJng mysql commands."
                 errmsg += "please check the SQLJng live version from github."
                 errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
                 sqljlog.critical(errmsg)
             
             finally:
@@ -166,7 +170,7 @@ class DBMS_mysql:
                     pass
     
     def error_http_req_exploit(self):
-        rows = ErrorBasedPayload.http_error_req(self.table)
+        rows = ErrorBasedPayload.http_error_req(self.table).split("\n")
         sorted_rows = sorted(rows)
         sorted_payload = "\n".join(sorted_rows)
 
@@ -178,11 +182,12 @@ class DBMS_mysql:
                     self.table.add_row(row)
                 
                 print(self.table)
-            except mysql.connector.ProgrammingError:
+            except mysql.connector.ProgrammingError as exc:
                 errmsg = "The host %s DBMS"%self.host
                 errmsg += "does not appear to interact with the current SQLJng mysql commands."
                 errmsg += "please check the SQLJng live version from github."
                 errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
                 sqljlog.critical(errmsg)
             
             finally:
@@ -197,13 +202,110 @@ class DBMS_mysql:
                 finally:
                     pass
 
+    def bin_sql_injection(self):
+        rows = BlindSqlPayloads.binsqlpayload(column=self.column,table=self.table).split("\n")
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall()
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except mysql.connector.ProgrammingError as exc:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
+                sqljlog.critical(errmsg)
+            
+            finally:
+                pass
+    
+    def conditional_blind_sql_injection(self):
+        rows = BlindSqlPayloads.conditional_blind_sql_injection()
+        rows = rows.split("\n")
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall()
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except mysql.connector.ProgrammingError as exc:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
+                sqljlog.critical(errmsg)
+            
+            finally:
+                pass
+    
+    def make_set_sql_injection(self):
+        rows = BlindSqlPayloads.make_set_sql_injection().split("\n")
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall()
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except mysql.connector.ProgrammingError as exc:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
+                sqljlog.critical(errmsg)
+
+            
+            finally:
+                pass
+    
+    def substring_sql_injection(self):
+        rows = BlindSqlPayloads.sub_string_sql_inj(column=self.column).split("\n")
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall() if self.cursor.execute(Payloads) is not None or self.cursor.execute(Payloads) is not "" else os._exit(0) 
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except (mysql.connector.ProgrammingError,mysql.connector.errors.DatabaseError,mysql.connector.InterfaceError) as exc:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                errmsg += f"\n {str(exc)}"
+                sqljlog.critical(errmsg)
+            
+            finally:
+                pass
     
     
 
 # Example usage
-db_handler = DBMS_mysql("localhost", "root", "alimirmohammad", "mysql",tablename="mmd")
+db_handler = DBMS_mysql("localhost", "root", "alimirmohammad", "Cars",tablename="mmd")
 # db_handler.select_from_table()
-db_handler.show_database_individual()
+db_handler.substring_sql_injection()
         
 
 def Database_handler(hosts):
