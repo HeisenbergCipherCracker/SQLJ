@@ -164,6 +164,38 @@ class DBMS_mysql:
                 
                 finally:
                     pass
+    
+    def error_http_req_exploit(self):
+        rows = ErrorBasedPayload.http_error_req(self.table)
+        sorted_rows = sorted(rows)
+        sorted_payload = "\n".join(sorted_rows)
+
+        for Payloads in sorted_payload.split("\n"):
+            try:
+                self.cursor.execute(Payloads)
+                result = self.cursor.fetchall()
+                for row in result:
+                    self.table.add_row(row)
+                
+                print(self.table)
+            except mysql.connector.ProgrammingError:
+                errmsg = "The host %s DBMS"%self.host
+                errmsg += "does not appear to interact with the current SQLJng mysql commands."
+                errmsg += "please check the SQLJng live version from github."
+                errmsg += "\ncurrent version: 1.4.4"
+                sqljlog.critical(errmsg)
+            
+            finally:
+                try:
+                    _ = self.cursor.fetchall()
+                    for i in _:
+                        self.table.add_row(_)
+                
+                except:
+                    pass
+                
+                finally:
+                    pass
 
     
     
