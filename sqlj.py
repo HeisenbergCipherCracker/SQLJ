@@ -590,7 +590,7 @@ async def main():
         
 
    
-if __name__ == "main" or __name__ == "__main__": 
+if __name__ == "__main__": 
     while True: 
         try:
             asyncio.run(main())
