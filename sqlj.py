@@ -606,7 +606,7 @@ if __name__ == "__main__":
                 sys.exit(0)
 
 else:
-    sys.exit("[!] The program is not being run properly,\nplease run it directly using:\npython sqlj.py.")
+    sys.exit("[!] The program is not being executed properly,\nplease run it directly using:\npython sqlj.py.")
 
 
 
