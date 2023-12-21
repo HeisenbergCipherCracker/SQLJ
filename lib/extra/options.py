@@ -55,15 +55,10 @@ advanced_options = """
 
 db_options = """
 
-[01]database columns
-[02]show database tables
-[03]drop table
-[04]alter table
-[05]show all tables
-[06]show databases
-[07]describe table
-[08]select data from table
-[09]drop database
-[10]create database
+[01]database tables info
+[02]show database columns info
+[03]database info
+[04]view columns
+[05]show all tables info
 
 """
