@@ -16,6 +16,8 @@ except ImportError:
 
 async def extract_cookies(host):
     try:
+        import urllib3
+        urllib3.disable_warnings()
         # Create a session and cookie jar
         session = requests.Session()
         cookie_jar = CookieJar()
@@ -52,6 +54,9 @@ async def extract_cookies(host):
         raise
     except SQLJNGOptionError:
         logger.error("Invalid prompt given.please use y to continue or q to exit.")
+    
+    except Exception as e:
+        sqljlog.critical(e)
         
 
 # Example usage

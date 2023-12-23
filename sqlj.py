@@ -26,6 +26,7 @@ except KeyboardInterrupt:
 try:
     import logging
     import sys
+    import requests
     import sys
     import sys
     import os
@@ -532,6 +533,9 @@ async def main():
             
     except SystemExit:
         sys.exit(Fore.RESET+f"\nEnding at:{datetime.now()}")   
+    
+    except requests.HTTPError:
+        pass
     except Exception as exc:
         excp = str(exc)
         if any(_ in excp for _ in ("MemoryError", "Cannot allocate memory")) or type(exc) == MemoryError:
@@ -587,6 +591,8 @@ async def main():
             raise SystemExit
         
 
+        
+
    
 if __name__ == "__main__": 
     while True: 
@@ -599,11 +605,6 @@ if __name__ == "__main__":
             raise SystemExit
         except:
             traceback.print_exc()
-        finally:
-            if threading.active_count() > 1:
-                os._exit(0)
-            else:
-                sys.exit(0)
 
 else:
     sys.exit("[!] The program is not being executed properly,\nplease run it directly using:\npython sqlj.py.")
