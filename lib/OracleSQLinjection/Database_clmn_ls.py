@@ -97,6 +97,7 @@ async def LIST_COLUMNS_ORACLE(urls):
         current_directory = os.path.dirname(os.path.abspath(__file__)) 
         file_path = os.path.join(current_directory, filename) 
 
+
         with open(file_path, "r") as file: 
             payload = file.read()
             rows = payload.split("\n") 
