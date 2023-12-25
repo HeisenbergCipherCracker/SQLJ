@@ -15,7 +15,7 @@ def detect_sql_injection(response_text:str):
 
     matches = re.findall(sql_injection_pattern, response_text)
 
-    return sqljlog.info(f"[INFO]SQL keyword:{'|'.join(matches)}appears to be injectable.") if len(matches) > 0 else ""
+    return sqljlog.info(f"[INFO]SQL keyword:{'|'.join(matches)} appears to be injectable.") if len(matches) > 0 else ""
 
 # response_text = "This is a response with a SELECT statement and UNION ALL injection.FROM"
 # response_text = ""

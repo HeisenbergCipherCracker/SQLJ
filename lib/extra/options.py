@@ -27,6 +27,7 @@ OPTIONS = """
 [A] All attacks
 [INJ]Attack Database Blind(mysql)
 [AUTO]automatic attack
+[ADV]advanced testing
 [OTHER]other advanced options
 [Q] Quit
 """

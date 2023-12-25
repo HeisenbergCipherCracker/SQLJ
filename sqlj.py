@@ -110,6 +110,7 @@ try:
     from lib.DBMS.Connector.Options4DBMS import mysql_dbms_interface
     from lib.extra.options import advanced_options
     from lib.DBMS.Connector.Sqlitedbexploits import main_sqlite_section
+    from lib.regelexpression.parampayloadsexploits import Parampayloads
 
 
 
@@ -501,6 +502,14 @@ async def main():
                 match input(">>>"):
                     case "1"|"01":
                         main_sqlite_section()
+            
+            case "ADV"|"adv":
+                await asyncio.gather(
+                    Parampayloads.db_column_list_payloads(url=url),
+                    Parampayloads.host_name_oracle_payloads_paramed(url=url),
+                    Parampayloads.make_set_sql_payloads(url=url),
+                    Parampayloads.oracle_injection_payloads_paramed(url=url)
+                )
 
 
 
