@@ -3,9 +3,8 @@ import sys
 
 def commom_table_naming():
     """
-    >>> coln = commom_table_naming()
-    >>> for c in coln:
-        >>> print(coln if coln is not None else "")
+    >>> for num in commom_table_naming():
+        >>> print(num)
     """
     filename = "commoncolums.txt"
     current_directory = os.path.dirname(os.path.abspath(__file__)) 
@@ -15,6 +14,9 @@ def commom_table_naming():
         rows = columns.split("\n") 
         sorted_rows = sorted(rows) 
         sorted_payload = "\n".join(sorted_rows) #* 
-        return sorted_payload if not sorted_payload.startswith("#") else None
+        for line in sorted_payload.split("\n"):
+            yield line
+    
+
     
 
