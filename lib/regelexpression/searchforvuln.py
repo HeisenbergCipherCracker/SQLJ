@@ -23,3 +23,4 @@ def detect_sql_injection(response_text:str):
 
 # if sql_injection_matches:
 #     print(sql_injection_matches)
+
